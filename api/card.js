@@ -60,14 +60,17 @@ module.exports = async (req, res) => {
     const shareMessage = buildShareMessage(userMessage);
 
     // Build meta tag content
+    const baseUrl = `${protocol}://${host}`;
     const ogTitle = escapeHtml(`${theme.name} - Holiday Greeting`);
     const ogDescription = escapeHtml(truncate(shareMessage, 200));
-    const ogImage = '/placeholder-preview.png';
+    const ogImage = `${baseUrl}/placeholder-preview.png`;
+    const ogUrl = cardUrl;
 
     // Generate OG meta tags
     const ogTags = `
     <!-- Open Graph Meta Tags (Dynamic) -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="${ogUrl}" />
     <meta property="og:title" content="${ogTitle}" />
     <meta property="og:description" content="${ogDescription}" />
     <meta property="og:image" content="${ogImage}" />
