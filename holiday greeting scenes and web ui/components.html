@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Generator - Components</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Boogaloo&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #C1E1F5;
+            --deep-sky: #63B3ED;
+            --snow-white: #F9FAFB;
+            --primary-red: #B91C1C;
+            --secondary-green: #065F46;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.1)),
+                        linear-gradient(to bottom, var(--deep-sky) 0%, var(--sky-blue) 40%, var(--sky-blue) 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .font-display { font-family: 'Limelight', cursive; }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-red);
+            font-family: 'Limelight', cursive;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--secondary-green);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(180deg, #dc3545 0%, #b71c1c 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Boogaloo', cursive;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .component-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .component-card h3 {
+            color: var(--secondary-green);
+            font-family: 'Boogaloo', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .component-preview {
+            position: relative;
+            width: 100%;
+            min-height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 20px;
+        }
+
+        .section-title {
+            color: var(--primary-red);
+            font-family: 'Limelight', cursive;
+            font-size: 2rem;
+            text-align: center;
+            margin: 50px 0 30px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary-red);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ========================================= */
+        /* SNOWY CABIN COMPONENTS                   */
+        /* ========================================= */
+
+        /* Log Cabin */
+        .cabin-component {
+            position: relative;
+            width: 200px;
+            height: 150px;
+        }
+
+        .cabin-component .cabin-walls {
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 13px, rgba(0,0,0,0.3) 13px, rgba(0,0,0,0.4) 14px, rgba(255,255,255,0.1) 15px, transparent 16px),
+                linear-gradient(180deg, #A0724D 0%, #8B5A2B 20%, #6d4422 50%, #5D3A1A 80%, #4a2e14 100%);
+            width: 100%;
+            height: 62%;
+            position: absolute;
+            bottom: 0;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.15), inset 0 -4px 8px rgba(0,0,0,0.3);
+            border: 1px solid;
+            border-color: #9a6b3a #3d2510 #2a1a0c #6d4422;
+            z-index: 1;
+        }
+
+        /* Chimney - behind roof */
+        .cabin-component .cabin-walls::before {
+            content: '';
+            position: absolute;
+            top: -45px;
+            right: 25px;
+            width: 22px;
+            height: 45px;
+            background: linear-gradient(90deg, #a08070 0%, #8b7060 30%, #705545 70%, #5a4535 100%);
+            border-radius: 2px 2px 0 0;
+            z-index: -1;
+        }
+
+        .cabin-component .cabin-roof {
+            position: absolute;
+            top: 2px;
+            left: -8%;
+            width: 116%;
+            height: 58px;
+            background: linear-gradient(135deg, #6d4c0e 0%, #5a3d0a 20%, #4A2508 50%, #3d1f06 80%, #2a1504 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 2;
+        }
+
+        .cabin-component .cabin-window {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            width: 40px;
+            height: 35px;
+            background: radial-gradient(ellipse at center, #FEF9C3 0%, #FEF3C7 40%, #FDE68A 70%, #FCD34D 100%);
+            border: 3px solid #5a3d0a;
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(254, 243, 199, 0.8), 0 0 40px rgba(254, 243, 199, 0.4);
+            z-index: 3;
+        }
+
+        .cabin-component .cabin-door {
+            position: absolute;
+            bottom: 0;
+            right: 30px;
+            width: 35px;
+            height: 55px;
+            background: linear-gradient(135deg, #5a3d0a 0%, #4A2508 30%, #3D1D0D 60%, #2a1504 100%);
+            border-radius: 4px 4px 0 0;
+            border: 2px solid #6d4c0e;
+            z-index: 3;
+        }
+
+        /* Door knob */
+        .cabin-component .cabin-door::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 6px;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle at 30% 30%, #ffd700 0%, #b8960c 60%, #8b7000 100%);
+            border-radius: 50%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+
+        /* Smoke from chimney */
+        .cabin-component .cabin-walls::after {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: 26px;
+            width: 20px;
+            height: 45px;
+            background:
+                radial-gradient(ellipse at 50% 90%, rgba(200,200,200,0.6) 0%, transparent 70%),
+                radial-gradient(ellipse at 30% 60%, rgba(180,180,180,0.5) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(160,160,160,0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 10%, rgba(140,140,140,0.3) 0%, transparent 40%);
+            filter: blur(2px);
+            z-index: -2;
+        }
+
+        /* Pine Tree */
+        .pine-tree-component {
+            position: relative;
+            width: 60px;
+            height: 100px;
+        }
+
+        .pine-tree-component::before {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 75px solid #2D5A3D;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+        }
+
+        .pine-tree-component::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 18px;
+            background: #4A3525;
+        }
+
+        /* Sleigh */
+        .sleigh-component {
+            position: relative;
+            width: 80px;
+            height: 50px;
+        }
+
+        .sleigh-component::before {
+            content: '';
+            position: absolute;
+            bottom: 12px;
+            left: 0;
+            width: 70px;
+            height: 25px;
+            background: linear-gradient(180deg, #C41E3A 0%, #A01830 100%);
+            border-radius: 3px 25px 8px 3px;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sleigh-component::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 3px;
+            width: 75px;
+            height: 14px;
+            border: 5px solid #8B4513;
+            border-top: none;
+            border-radius: 0 0 12px 20px;
+            background: transparent;
+        }
+
+        /* ========================================= */
+        /* SANTA'S WORKSHOP COMPONENTS              */
+        /* ========================================= */
+
+        /* Christmas Tree */
+        .xmas-tree-component {
+            position: relative;
+            width: 100px;
+            height: 160px;
+        }
+
+        .xmas-tree-component::before {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 130px solid #228B22;
+        }
+
+        .xmas-tree-component::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #8B4513;
+        }
+
+        .xmas-tree-component .star {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: #ffd700;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        .xmas-tree-component .ornament {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .xmas-tree-component .ornament.red { background: radial-gradient(circle at 30% 30%, #ff6666 0%, #cc0000 100%); }
+        .xmas-tree-component .ornament.blue { background: radial-gradient(circle at 30% 30%, #6666ff 0%, #0000cc 100%); }
+        .xmas-tree-component .ornament.gold { background: radial-gradient(circle at 30% 30%, #ffff66 0%, #cccc00 100%); }
+
+        /* Bookshelf */
+        .bookshelf-component {
+            position: relative;
+            width: 80px;
+            height: 120px;
+            background: linear-gradient(180deg, #6d4422 0%, #5a3d2b 100%);
+            border: 3px solid #4a2d1b;
+        }
+
+        .bookshelf-component::before {
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #4a2d1b;
+            box-shadow: 0 30px 0 #4a2d1b, 0 60px 0 #4a2d1b;
+        }
+
+        /* Present/Gift Box */
+        .present-component {
+            position: relative;
+            width: 50px;
+            height: 40px;
+            border-radius: 4px;
+        }
+
+        .present-component.red {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+        }
+
+        .present-component.blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+        }
+
+        .present-component.green {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+        }
+
+        .present-component .ribbon-v {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+        }
+
+        .present-component .ribbon-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+        }
+
+        .present-component .bow-left,
+        .present-component .bow-right {
+            position: absolute;
+            top: -10px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fde047 0%, #fbbf24 50%, #f59e0b 100%);
+        }
+
+        .present-component .bow-left { left: calc(50% - 14px); }
+        .present-component .bow-right { left: calc(50% + 2px); }
+
+        /* Elf */
+        .elf-component {
+            position: relative;
+            width: 70px;
+            height: 110px;
+        }
+
+        .elf-component .body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 50px;
+            background: linear-gradient(180deg, #2e8b57 0%, #228b22 100%);
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* Elf arms */
+        .elf-component .body::before,
+        .elf-component .body::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            width: 10px;
+            height: 28px;
+            background: linear-gradient(180deg, #2e8b57 0%, #228b22 100%);
+            border-radius: 5px;
+        }
+
+        .elf-component .body::before { left: -8px; transform: rotate(15deg); }
+        .elf-component .body::after { right: -8px; transform: rotate(-15deg); }
+
+        .elf-component .head {
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 35px;
+            background: #ffdbac;
+            border-radius: 50%;
+        }
+
+        /* Elf eyes */
+        .elf-component .head::before,
+        .elf-component .head::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            width: 5px;
+            height: 5px;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #fff 20%, #1a1a1a 35%, #000 100%);
+            border-radius: 50%;
+        }
+
+        .elf-component .head::before { left: 8px; }
+        .elf-component .head::after { right: 8px; }
+
+        .elf-component .hat {
+            position: absolute;
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 22px solid transparent;
+            border-right: 22px solid transparent;
+            border-bottom: 38px solid #c41e3a;
+        }
+
+        .elf-component .hat::after {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: -8px;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .elf-component .ear {
+            position: absolute;
+            bottom: 55px;
+            width: 10px;
+            height: 14px;
+            background: #ffdbac;
+        }
+
+        .elf-component .ear.left {
+            left: 12px;
+            border-radius: 50% 50% 20% 50%;
+            transform: rotate(-20deg);
+        }
+
+        .elf-component .ear.right {
+            right: 12px;
+            border-radius: 50% 50% 50% 20%;
+            transform: rotate(20deg);
+        }
+
+        /* Girl Elf with Blonde Hair */
+        .girl-elf-component {
+            position: relative;
+            width: 70px;
+            height: 110px;
+        }
+
+        .girl-elf-component .body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 38px;
+            height: 42px;
+            background: linear-gradient(180deg, #c41e3a 0%, #a01830 100%);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .girl-elf-component .body::before,
+        .girl-elf-component .body::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            width: 10px;
+            height: 28px;
+            background: linear-gradient(180deg, #c41e3a 0%, #a01830 100%);
+            border-radius: 5px;
+        }
+
+        .girl-elf-component .body::before { left: -8px; transform: rotate(15deg); }
+        .girl-elf-component .body::after { right: -8px; transform: rotate(-15deg); }
+
+        .girl-elf-component .head {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: #ffdbac;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .girl-elf-component .head::before,
+        .girl-elf-component .head::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            width: 5px;
+            height: 5px;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #fff 20%, #1a1a1a 35%, #000 100%);
+            border-radius: 50%;
+        }
+
+        .girl-elf-component .head::before { left: 7px; }
+        .girl-elf-component .head::after { right: 7px; }
+
+        .girl-elf-component .hair {
+            position: absolute;
+            bottom: 38px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 36px;
+            height: 28px;
+            background: #f4d03f;
+            border-radius: 50% 50% 40% 40%;
+            z-index: 1;
+        }
+
+        .girl-elf-component .hair::before {
+            content: '';
+            position: absolute;
+            bottom: -14px;
+            left: -3px;
+            width: 12px;
+            height: 20px;
+            background: #f4d03f;
+            border-radius: 0 0 50% 50%;
+        }
+
+        .girl-elf-component .hair::after {
+            content: '';
+            position: absolute;
+            bottom: -14px;
+            right: -3px;
+            width: 12px;
+            height: 20px;
+            background: #f4d03f;
+            border-radius: 0 0 50% 50%;
+        }
+
+        .girl-elf-component .bangs {
+            position: absolute;
+            bottom: 62px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 26px;
+            height: 6px;
+            background: #f4d03f;
+            border-radius: 0 0 40% 40%;
+            z-index: 2;
+        }
+
+        .girl-elf-component .bangs::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 3px;
+            width: 6px;
+            height: 5px;
+            background: #f4d03f;
+            border-radius: 50%;
+            box-shadow: 7px 0 0 0 #f4d03f, 14px 0 0 0 #f4d03f;
+        }
+
+        .girl-elf-component .ear {
+            position: absolute;
+            bottom: 50px;
+            width: 7px;
+            height: 11px;
+            background: #ffdbac;
+        }
+
+        .girl-elf-component .ear.left {
+            left: 16px;
+            border-radius: 50% 50% 20% 50%;
+            transform: rotate(-20deg);
+        }
+
+        .girl-elf-component .ear.right {
+            right: 16px;
+            border-radius: 50% 50% 50% 20%;
+            transform: rotate(20deg);
+        }
+
+        .girl-elf-component .hat {
+            position: absolute;
+            bottom: 66px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-bottom: 32px solid #228b22;
+            z-index: 3;
+        }
+
+        .girl-elf-component .hat::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -7px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        /* Santa */
+        .santa-component {
+            position: relative;
+            width: 100px;
+            height: 150px;
+        }
+
+        .santa-component .body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(180deg, #c41e3a 0%, #a01830 100%);
+            border-radius: 35px 35px 10px 10px;
+        }
+
+        /* Santa arms */
+        .santa-component .body::before,
+        .santa-component .body::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            width: 14px;
+            height: 35px;
+            background: linear-gradient(180deg, #c41e3a 0%, #a01830 100%);
+            border-radius: 7px;
+        }
+
+        .santa-component .body::before { left: -10px; transform: rotate(12deg); }
+        .santa-component .body::after { right: -10px; transform: rotate(-12deg); }
+
+        .santa-component .belt {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 12px;
+            background: #1a1a1a;
+        }
+
+        .santa-component .buckle {
+            position: absolute;
+            bottom: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 10px;
+            background: #ffd700;
+        }
+
+        .santa-component .head {
+            position: absolute;
+            bottom: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 45px;
+            background: #ffdbac;
+            border-radius: 50%;
+        }
+
+        /* Santa eyes */
+        .santa-component .head::before,
+        .santa-component .head::after {
+            content: '';
+            position: absolute;
+            top: 14px;
+            width: 5px;
+            height: 5px;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #fff 20%, #1a1a1a 35%, #000 100%);
+            border-radius: 50%;
+        }
+
+        .santa-component .head::before { left: 12px; }
+        .santa-component .head::after { right: 12px; }
+
+        .santa-component .beard {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 35px;
+            background: #fff;
+            border-radius: 0 0 25px 25px;
+        }
+
+        .santa-component .hat {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 45px solid #c41e3a;
+        }
+
+        .santa-component .hat::before {
+            content: '';
+            position: absolute;
+            bottom: -48px;
+            left: -28px;
+            width: 56px;
+            height: 10px;
+            background: #fff;
+            border-radius: 5px;
+        }
+
+        .santa-component .hat::after {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        /* String Lights */
+        .string-lights-component {
+            position: relative;
+            width: 250px;
+            height: 30px;
+        }
+
+        .string-lights-component::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #333;
+        }
+
+        .string-lights-component::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 12px;
+            height: 14px;
+            background: radial-gradient(ellipse, #ff6666 0%, #cc0000 100%);
+            border-radius: 50%;
+            box-shadow:
+                30px 4px 0 0 #66ff66,
+                60px -3px 0 0 #ffff66,
+                90px 4px 0 0 #6666ff,
+                120px -2px 0 0 #ff66ff,
+                150px 4px 0 0 #66ffff,
+                180px -3px 0 0 #ff6666,
+                210px 4px 0 0 #66ff66;
+        }
+
+        /* ========================================= */
+        /* DECORATIVE COMPONENTS                    */
+        /* ========================================= */
+
+        /* Snowman */
+        .snowman-component {
+            position: relative;
+            width: 100px;
+            height: 170px;
+        }
+
+        .snowman-component .base {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e8f4f8 50%, #d0e8f0 100%);
+            border-radius: 50%;
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.08), 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .snowman-component .middle {
+            position: absolute;
+            bottom: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e8f4f8 50%, #d0e8f0 100%);
+            border-radius: 50%;
+            box-shadow: inset -8px -8px 15px rgba(0,0,0,0.08), 0 3px 10px rgba(0,0,0,0.12);
+        }
+
+        .snowman-component .head {
+            position: absolute;
+            bottom: 112px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e8f4f8 50%, #d0e8f0 100%);
+            border-radius: 50%;
+            box-shadow: inset -6px -6px 12px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .snowman-component .hat-top {
+            position: absolute;
+            bottom: 155px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 50%, #0d1117 100%);
+            border-radius: 3px 3px 0 0;
+            border-bottom: 4px solid #dc2626;
+        }
+
+        .snowman-component .hat-brim {
+            position: absolute;
+            bottom: 149px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 6px;
+            background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
+            border-radius: 2px;
+        }
+
+        .snowman-component .scarf {
+            position: absolute;
+            bottom: 109px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55px;
+            height: 10px;
+            background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
+            border-radius: 2px;
+        }
+
+        .snowman-component .nose {
+            position: absolute;
+            bottom: 130px;
+            left: 22px;
+            width: 18px;
+            height: 8px;
+            background: linear-gradient(90deg, #ff6b35 0%, #ff8c42 100%);
+            clip-path: polygon(0 50%, 100% 0, 100% 100%);
+            transform: scaleX(-1);
+        }
+
+        /* Gift Collection */
+        .gift-collection-component {
+            display: flex;
+            align-items: flex-end;
+            gap: -5px;
+        }
+
+        .gift-collection-component .gift {
+            position: relative;
+            border-radius: 3px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .gift-collection-component .gift.red {
+            width: 38px;
+            height: 32px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+            z-index: 3;
+            margin-right: -8px;
+        }
+
+        .gift-collection-component .gift.blue {
+            width: 30px;
+            height: 42px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+            z-index: 1;
+            margin-right: -6px;
+        }
+
+        .gift-collection-component .gift.green {
+            width: 34px;
+            height: 28px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+            z-index: 2;
+        }
+
+        /* ========================================= */
+        /* WINTER WONDERLAND COMPONENTS             */
+        /* ========================================= */
+
+        /* Penguin */
+        .penguin-component {
+            position: relative;
+            width: 60px;
+            height: 80px;
+        }
+
+        .penguin-component .body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            border-radius: 25px 25px 22px 22px;
+            box-shadow:
+                inset 3px 3px 8px rgba(255,255,255,0.1),
+                inset -3px -3px 8px rgba(0,0,0,0.3),
+                0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .penguin-component .belly {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 34px;
+            height: 45px;
+            background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+            border-radius: 17px 17px 15px 15px;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.05);
+        }
+
+        .penguin-component .head {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 40px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            border-radius: 50%;
+            box-shadow:
+                inset 2px 2px 6px rgba(255,255,255,0.1),
+                0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .penguin-component .face {
+            position: absolute;
+            bottom: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 28px;
+            background: radial-gradient(ellipse at 50% 40%, #ffffff 0%, #f5f5f5 70%, #e8e8e8 100%);
+            border-radius: 50%;
+        }
+
+        .penguin-component .eye {
+            position: absolute;
+            width: 8px;
+            height: 10px;
+            background: radial-gradient(circle at 30% 30%, #4a4a4a 0%, #1a1a1a 60%, #000 100%);
+            border-radius: 50%;
+            bottom: 68px;
+        }
+
+        .penguin-component .eye.left { left: 16px; }
+        .penguin-component .eye.right { right: 16px; }
+
+        .penguin-component .eye::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .penguin-component .beak {
+            position: absolute;
+            bottom: 58px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #ff9500;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+        }
+
+        .penguin-component .beak::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: -6px;
+            width: 12px;
+            height: 6px;
+            background: linear-gradient(180deg, #ffb347 0%, #ff9500 100%);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .penguin-component .flipper {
+            position: absolute;
+            bottom: 15px;
+            width: 14px;
+            height: 35px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 7px 7px 10px 10px;
+        }
+
+        .penguin-component .flipper.left {
+            left: 0;
+            transform: rotate(20deg);
+            transform-origin: top center;
+        }
+
+        .penguin-component .flipper.right {
+            right: 0;
+            transform: rotate(-20deg);
+            transform-origin: top center;
+        }
+
+        .penguin-component .foot {
+            position: absolute;
+            bottom: -2px;
+            width: 18px;
+            height: 8px;
+            background: linear-gradient(180deg, #ff9500 0%, #e68600 100%);
+            border-radius: 50%;
+        }
+
+        .penguin-component .foot.left { left: 10px; }
+        .penguin-component .foot.right { right: 10px; }
+
+        /* Penguin on Sled */
+        .penguin-sled-component {
+            position: relative;
+            width: 120px;
+            height: 100px;
+        }
+
+        .penguin-sled-component .sled {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(-8deg);
+            width: 90px;
+            height: 20px;
+            background: linear-gradient(180deg, #c41e3a 0%, #a01830 50%, #8b1528 100%);
+            border-radius: 5px 45px 8px 5px;
+            box-shadow:
+                inset 0 2px 4px rgba(255,255,255,0.3),
+                inset 0 -2px 4px rgba(0,0,0,0.3),
+                0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .penguin-sled-component .sled::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 5px;
+            width: 85px;
+            height: 10px;
+            border: 4px solid #8B4513;
+            border-top: none;
+            border-radius: 0 0 15px 25px;
+            background: transparent;
+        }
+
+        .penguin-sled-component .sled-handle {
+            position: absolute;
+            bottom: 18px;
+            left: 20px;
+            width: 8px;
+            height: 18px;
+            background: linear-gradient(90deg, #a01830 0%, #8b1528 100%);
+            border-radius: 4px;
+            transform: rotate(-8deg);
+        }
+
+        .penguin-sled-component .penguin-sitting {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-8deg);
+        }
+
+        .penguin-sled-component .penguin-sitting .body {
+            width: 40px;
+            height: 45px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            border-radius: 20px 20px 18px 18px;
+            position: relative;
+        }
+
+        .penguin-sled-component .penguin-sitting .belly {
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px;
+            height: 35px;
+            background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+            border-radius: 14px 14px 12px 12px;
+        }
+
+        .penguin-sled-component .penguin-sitting .head {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 36px;
+            height: 32px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            border-radius: 50%;
+        }
+
+        .penguin-sled-component .penguin-sitting .face {
+            position: absolute;
+            top: -23px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 26px;
+            height: 22px;
+            background: radial-gradient(ellipse at 50% 40%, #ffffff 0%, #f5f5f5 100%);
+            border-radius: 50%;
+        }
+
+        .penguin-sled-component .penguin-sitting .eye {
+            position: absolute;
+            width: 6px;
+            height: 7px;
+            background: radial-gradient(circle at 30% 30%, #4a4a4a 0%, #1a1a1a 60%, #000 100%);
+            border-radius: 50%;
+            top: -18px;
+        }
+
+        .penguin-sled-component .penguin-sitting .eye.left { left: 10px; }
+        .penguin-sled-component .penguin-sitting .eye.right { right: 10px; }
+
+        .penguin-sled-component .penguin-sitting .eye::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .penguin-sled-component .penguin-sitting .beak {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 10px solid #ff9500;
+        }
+
+        .penguin-sled-component .penguin-sitting .flipper {
+            position: absolute;
+            top: 5px;
+            width: 12px;
+            height: 28px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 6px 6px 8px 8px;
+        }
+
+        .penguin-sled-component .penguin-sitting .flipper.left {
+            left: -8px;
+            transform: rotate(45deg);
+        }
+
+        .penguin-sled-component .penguin-sitting .flipper.right {
+            right: -8px;
+            transform: rotate(-45deg);
+        }
+
+        .penguin-sled-component .scarf {
+            position: absolute;
+            top: 38px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-8deg);
+            width: 38px;
+            height: 8px;
+            background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+            border-radius: 4px;
+            z-index: 5;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .penguin-sled-component .scarf-tail {
+            position: absolute;
+            top: 42px;
+            left: 50%;
+            margin-left: 8px;
+            width: 8px;
+            height: 18px;
+            background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+            border-radius: 0 0 4px 4px;
+            transform: rotate(-8deg);
+            z-index: 4;
+            box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Snow-covered Pine Tree */
+        .snowy-pine-component {
+            position: relative;
+            width: 80px;
+            height: 120px;
+        }
+
+        .snowy-pine-component .trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 20px;
+            background: linear-gradient(90deg, #5D4037 0%, #4E342E 50%, #3E2723 100%);
+            border-radius: 2px;
+        }
+
+        .snowy-pine-component .tree-layer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+        }
+
+        .snowy-pine-component .tree-layer.bottom {
+            bottom: 15px;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 45px solid #2D5A3D;
+        }
+
+        .snowy-pine-component .tree-layer.middle {
+            bottom: 40px;
+            border-left: 32px solid transparent;
+            border-right: 32px solid transparent;
+            border-bottom: 40px solid #2D5A3D;
+        }
+
+        .snowy-pine-component .tree-layer.top {
+            bottom: 65px;
+            border-left: 24px solid transparent;
+            border-right: 24px solid transparent;
+            border-bottom: 35px solid #2D5A3D;
+        }
+
+        .snowy-pine-component .snow-layer {
+            display: none; /* Removed - doesn't look natural */
+        }
+
+        .snowy-pine-component .snow-layer.bottom {
+            display: none;
+        }
+
+        .snowy-pine-component .snow-layer.middle {
+            display: none;
+        }
+
+        .snowy-pine-component .snow-layer.top {
+            display: none;
+        }
+
+        .snowy-pine-component .snow-cap {
+            display: none; /* Removed - doesn't look natural */
+        }
+
+        /* Frozen Pond */
+        .frozen-pond-component {
+            position: relative;
+            width: 180px;
+            height: 60px;
+        }
+
+        .frozen-pond-component .ice-surface {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 50px;
+            background:
+                radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.6) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.4) 0%, transparent 40%),
+                linear-gradient(135deg, #a8daef 0%, #87ceeb 20%, #7ec8e3 40%, #6bb9d9 60%, #5aaccc 80%, #4a9fc0 100%);
+            border-radius: 50%;
+            box-shadow:
+                inset 0 5px 15px rgba(255,255,255,0.5),
+                inset 0 -5px 15px rgba(0,80,120,0.2),
+                0 4px 8px rgba(0,0,0,0.15);
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        .frozen-pond-component .ice-crack {
+            position: absolute;
+            background: rgba(255,255,255,0.6);
+            height: 2px;
+            border-radius: 1px;
+        }
+
+        .frozen-pond-component .ice-crack.crack-1 {
+            bottom: 25px;
+            left: 40px;
+            width: 30px;
+            transform: rotate(-15deg);
+        }
+
+        .frozen-pond-component .ice-crack.crack-2 {
+            bottom: 30px;
+            left: 100px;
+            width: 25px;
+            transform: rotate(20deg);
+        }
+
+        .frozen-pond-component .ice-crack.crack-3 {
+            bottom: 18px;
+            left: 70px;
+            width: 20px;
+            transform: rotate(-5deg);
+        }
+
+        .frozen-pond-component .snow-edge {
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            height: 12px;
+            background: radial-gradient(ellipse at 50% 0%, #ffffff 0%, #e8f4f8 70%, transparent 100%);
+            border-radius: 50%;
+        }
+
+        /* Falling Snowflakes */
+        .snowflakes-component {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .snowflakes-component .snowflake {
+            position: absolute;
+            color: #fff;
+            font-size: 16px;
+            text-shadow: 0 0 4px rgba(255,255,255,0.8);
+            animation: snowfall 3s linear infinite;
+        }
+
+        .snowflakes-component .snowflake:nth-child(1) { left: 10%; top: -10%; animation-delay: 0s; font-size: 14px; }
+        .snowflakes-component .snowflake:nth-child(2) { left: 25%; top: -15%; animation-delay: 0.5s; font-size: 18px; }
+        .snowflakes-component .snowflake:nth-child(3) { left: 40%; top: -5%; animation-delay: 1s; font-size: 12px; }
+        .snowflakes-component .snowflake:nth-child(4) { left: 55%; top: -20%; animation-delay: 1.5s; font-size: 16px; }
+        .snowflakes-component .snowflake:nth-child(5) { left: 70%; top: -8%; animation-delay: 0.3s; font-size: 20px; }
+        .snowflakes-component .snowflake:nth-child(6) { left: 85%; top: -12%; animation-delay: 0.8s; font-size: 14px; }
+        .snowflakes-component .snowflake:nth-child(7) { left: 15%; top: -18%; animation-delay: 1.2s; font-size: 16px; }
+        .snowflakes-component .snowflake:nth-child(8) { left: 60%; top: -6%; animation-delay: 2s; font-size: 12px; }
+
+        @keyframes snowfall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(170px) rotate(360deg); opacity: 0.3; }
+        }
+
+        /* CSS Snowflake (no emoji) */
+        .css-snowflake {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+        }
+
+        .css-snowflake::before,
+        .css-snowflake::after {
+            content: '';
+            position: absolute;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .css-snowflake::before {
+            width: 12px;
+            height: 2px;
+            top: 5px;
+            left: 0;
+            box-shadow:
+                0 0 0 #fff,
+                5px -4px 0 #fff,
+                5px 4px 0 #fff,
+                -5px -4px 0 #fff,
+                -5px 4px 0 #fff;
+        }
+
+        .css-snowflake::after {
+            width: 2px;
+            height: 12px;
+            top: 0;
+            left: 5px;
+        }
+
+        /* Snow Gift Box */
+        .snow-gift-component {
+            position: relative;
+            width: 70px;
+            height: 70px;
+        }
+
+        .snow-gift-component .snow-mound {
+            display: none; /* Removed - doesn't look natural */
+        }
+
+        .snow-gift-component .gift-box {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 38px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+            border-radius: 4px;
+            box-shadow:
+                inset 0 2px 4px rgba(255,255,255,0.2),
+                inset 0 -3px 6px rgba(0,0,0,0.2),
+                0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .snow-gift-component .gift-ribbon-v {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 38px;
+            background: linear-gradient(90deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+        }
+
+        .snow-gift-component .gift-ribbon-h {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 8px;
+            background: linear-gradient(180deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+        }
+
+        .snow-gift-component .gift-bow-l,
+        .snow-gift-component .gift-bow-r {
+            position: absolute;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 30% 30%, #4ade80 0%, #22c55e 50%, #16a34a 100%);
+            border-radius: 50%;
+        }
+
+        .snow-gift-component .gift-bow-l { left: calc(50% - 14px); }
+        .snow-gift-component .gift-bow-r { left: calc(50% + 2px); }
+
+        .snow-gift-component .snow-cap-gift {
+            display: none; /* Removed - doesn't look natural */
+        }
+
+        /* Baby Penguin */
+        .baby-penguin-component {
+            position: relative;
+            width: 45px;
+            height: 55px;
+        }
+
+        .baby-penguin-component .body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 40px;
+            background: linear-gradient(135deg, #374151 0%, #1f2937 50%, #111827 100%);
+            border-radius: 18px 18px 15px 15px;
+        }
+
+        .baby-penguin-component .belly {
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 30px;
+            background: radial-gradient(ellipse at 50% 30%, #f3f4f6 0%, #e5e7eb 70%, #d1d5db 100%);
+            border-radius: 12px 12px 10px 10px;
+        }
+
+        .baby-penguin-component .head {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 28px;
+            background: linear-gradient(135deg, #374151 0%, #1f2937 50%, #111827 100%);
+            border-radius: 50%;
+        }
+
+        .baby-penguin-component .face {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 18px;
+            background: #f3f4f6;
+            border-radius: 50%;
+        }
+
+        .baby-penguin-component .eye {
+            position: absolute;
+            width: 6px;
+            height: 7px;
+            background: radial-gradient(circle at 30% 30%, #4a4a4a 0%, #1a1a1a 60%, #000 100%);
+            border-radius: 50%;
+            bottom: 44px;
+        }
+
+        .baby-penguin-component .eye.left { left: 12px; }
+        .baby-penguin-component .eye.right { right: 12px; }
+
+        .baby-penguin-component .eye::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .baby-penguin-component .beak {
+            position: absolute;
+            bottom: 38px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid #ff9500;
+        }
+
+        .baby-penguin-component .flipper {
+            position: absolute;
+            bottom: 8px;
+            width: 10px;
+            height: 22px;
+            background: #1f2937;
+            border-radius: 5px 5px 7px 7px;
+        }
+
+        .baby-penguin-component .flipper.left { left: 0; transform: rotate(15deg); }
+        .baby-penguin-component .flipper.right { right: 0; transform: rotate(-15deg); }
+
+        .baby-penguin-component .foot {
+            position: absolute;
+            bottom: -2px;
+            width: 12px;
+            height: 6px;
+            background: #ff9500;
+            border-radius: 50%;
+        }
+
+        .baby-penguin-component .foot.left { left: 10px; }
+        .baby-penguin-component .foot.right { right: 10px; }
+
+        /* Baby penguin hat */
+        .baby-penguin-component .hat {
+            position: absolute;
+            bottom: 56px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 26px;
+            height: 13px;
+            background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+            border-radius: 50% 50% 0 0;
+            z-index: 5;
+        }
+
+        .baby-penguin-component .hat::before {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: -2px;
+            width: 30px;
+            height: 5px;
+            background: linear-gradient(180deg, #fde047 0%, #facc15 100%);
+            border-radius: 3px;
+        }
+
+        .baby-penguin-component .hat::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 40% 30%, #fef08a 0%, #facc15 100%);
+            border-radius: 50%;
+        }
+
+        /* Ice Skating Polar Bear - BIGGER with kicked up leg and sweater */
+        .polar-bear-component {
+            position: relative;
+            width: 100px;
+            height: 130px;
+        }
+
+        .polar-bear-component .body {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-8deg);
+            width: 60px;
+            height: 65px;
+            background: radial-gradient(ellipse at 40% 30%, #ffffff 0%, #f5f5f5 40%, #e8e8e8 70%, #d8d8d8 100%);
+            border-radius: 30px 30px 25px 25px;
+            box-shadow: inset -4px -4px 12px rgba(0,0,0,0.1);
+        }
+
+        .polar-bear-component .head {
+            position: absolute;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 44px;
+            background: radial-gradient(ellipse at 40% 30%, #ffffff 0%, #f5f5f5 50%, #e8e8e8 100%);
+            border-radius: 50%;
+            box-shadow: inset -3px -3px 8px rgba(0,0,0,0.08);
+        }
+
+        .polar-bear-component .snout {
+            position: absolute;
+            bottom: 88px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 16px;
+            background: radial-gradient(ellipse at 50% 30%, #f0f0f0 0%, #e0e0e0 100%);
+            border-radius: 50%;
+        }
+
+        .polar-bear-component .nose {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 8px;
+            background: #333;
+            border-radius: 50% 50% 40% 40%;
+        }
+
+        .polar-bear-component .eye {
+            position: absolute;
+            width: 7px;
+            height: 8px;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #fff 20%, #1a1a1a 35%, #000 100%);
+            border-radius: 50%;
+            bottom: 110px;
+        }
+
+        .polar-bear-component .eye.left { left: 30px; }
+        .polar-bear-component .eye.right { right: 30px; }
+
+        .polar-bear-component .ear {
+            position: absolute;
+            width: 16px;
+            height: 14px;
+            background: radial-gradient(ellipse at 50% 50%, #f5f5f5 0%, #e0e0e0 100%);
+            border-radius: 50% 50% 30% 30%;
+            bottom: 120px;
+        }
+
+        .polar-bear-component .ear.left { left: 25px; }
+        .polar-bear-component .ear.right { right: 25px; }
+
+        .polar-bear-component .arm {
+            position: absolute;
+            bottom: 65px;
+            width: 16px;
+            height: 38px;
+            background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+            border-radius: 8px;
+        }
+
+        .polar-bear-component .arm.left { left: 12px; transform: rotate(50deg); }
+        .polar-bear-component .arm.right { right: 12px; transform: rotate(-50deg); }
+
+        /* Standing leg */
+        .polar-bear-component .leg {
+            position: absolute;
+            bottom: 14px;
+            left: 42px;
+            width: 18px;
+            height: 20px;
+            background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+            border-radius: 9px;
+        }
+
+        /* Standing ice skate - red */
+        .polar-bear-component .skate {
+            position: absolute;
+            bottom: 0;
+            left: 36px;
+            width: 28px;
+            height: 14px;
+            background: linear-gradient(180deg, #c41e3a 0%, #a01830 100%);
+            border-radius: 5px 14px 5px 5px;
+        }
+
+        .polar-bear-component .skate::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: -3px;
+            width: 32px;
+            height: 5px;
+            background: linear-gradient(180deg, #c0c0c0 0%, #888 100%);
+            border-radius: 2px;
+        }
+
+        /* Raised back leg with skate */
+        .polar-bear-component .raised-leg {
+            position: absolute;
+            bottom: 50px;
+            right: 15px;
+            width: 18px;
+            height: 28px;
+            background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+            border-radius: 9px;
+            transform: rotate(-55deg);
+        }
+
+        /* Skate boot on raised leg - red */
+        .polar-bear-component .raised-leg::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%) rotate(10deg);
+            width: 22px;
+            height: 14px;
+            background: linear-gradient(180deg, #c41e3a 0%, #a01830 100%);
+            border-radius: 4px 10px 4px 4px;
+        }
+
+        /* Skate blade on raised leg */
+        .polar-bear-component .raised-leg::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(10deg);
+            width: 28px;
+            height: 4px;
+            background: linear-gradient(180deg, #c0c0c0 0%, #888 100%);
+            border-radius: 2px;
+        }
+
+        /* Snowball Pile */
+        .snowball-pile-component {
+            position: relative;
+            width: 55px;
+            height: 45px;
+        }
+
+        .snowball-pile-component .snowball {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f5f5f5 40%, #e0e5e8 100%);
+            border-radius: 50%;
+            box-shadow: inset -2px -2px 5px rgba(0,0,0,0.18);
+        }
+
+        /* Bottom row - 4 snowballs */
+        .snowball-pile-component .sb1 { bottom: 0; left: 0; }
+        .snowball-pile-component .sb2 { bottom: 0; left: 13px; }
+        .snowball-pile-component .sb3 { bottom: 0; left: 26px; }
+        .snowball-pile-component .sb4 { bottom: 0; left: 39px; }
+
+        /* Second row - 3 snowballs */
+        .snowball-pile-component .sb5 { bottom: 10px; left: 6px; }
+        .snowball-pile-component .sb6 { bottom: 10px; left: 19px; }
+        .snowball-pile-component .sb7 { bottom: 10px; left: 32px; }
+
+        /* Third row - 2 snowballs */
+        .snowball-pile-component .sb8 { bottom: 20px; left: 13px; }
+        .snowball-pile-component .sb9 { bottom: 20px; left: 26px; }
+
+        /* Top - 1 snowball */
+        .snowball-pile-component .sb10 { bottom: 30px; left: 19px; }
+    </style>
+</head>
+<body>
+    <a href="webpage-skeleton.html" class="back-btn">← Back to Generator</a>
+
+    <h1 class="font-display">Component Library</h1>
+    <p class="subtitle">All postcard scene assets in one place</p>
+
+    <!-- SNOWY CABIN SECTION -->
+    <h2 class="section-title">Snowy Cabin</h2>
+    <div class="components-grid">
+        <div class="component-card">
+            <h3>Log Cabin</h3>
+            <div class="component-preview">
+                <div class="cabin-component">
+                    <div class="cabin-roof"></div>
+                    <div class="cabin-walls"></div>
+                    <div class="cabin-window"></div>
+                    <div class="cabin-door"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Pine Tree</h3>
+            <div class="component-preview">
+                <div class="pine-tree-component"></div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Sleigh</h3>
+            <div class="component-preview">
+                <div class="sleigh-component"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SANTA'S WORKSHOP SECTION -->
+    <h2 class="section-title">Santa's Workshop</h2>
+    <div class="components-grid">
+        <div class="component-card">
+            <h3>Christmas Tree</h3>
+            <div class="component-preview">
+                <div class="xmas-tree-component">
+                    <div class="star"></div>
+                    <div class="ornament red" style="top: 40px; left: 45px;"></div>
+                    <div class="ornament blue" style="top: 60px; left: 30px;"></div>
+                    <div class="ornament gold" style="top: 80px; left: 55px;"></div>
+                    <div class="ornament red" style="top: 100px; left: 25px;"></div>
+                    <div class="ornament blue" style="top: 110px; left: 60px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Bookshelf</h3>
+            <div class="component-preview">
+                <div class="bookshelf-component"></div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>String Lights</h3>
+            <div class="component-preview" style="align-items: center;">
+                <div class="string-lights-component"></div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Santa Claus</h3>
+            <div class="component-preview">
+                <div class="santa-component">
+                    <div class="body"></div>
+                    <div class="belt"></div>
+                    <div class="buckle"></div>
+                    <div class="beard"></div>
+                    <div class="head"></div>
+                    <div class="hat"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Elf</h3>
+            <div class="component-preview">
+                <div class="elf-component">
+                    <div class="body"></div>
+                    <div class="ear left"></div>
+                    <div class="ear right"></div>
+                    <div class="head"></div>
+                    <div class="hat"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Girl Elf</h3>
+            <div class="component-preview">
+                <div class="girl-elf-component">
+                    <div class="body"></div>
+                    <div class="hair"></div>
+                    <div class="head"></div>
+                    <div class="ear left"></div>
+                    <div class="ear right"></div>
+                    <div class="bangs"></div>
+                    <div class="hat"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DECORATIVE ELEMENTS SECTION -->
+    <h2 class="section-title">Decorative Elements</h2>
+    <div class="components-grid">
+        <div class="component-card">
+            <h3>Snowman</h3>
+            <div class="component-preview">
+                <div class="snowman-component">
+                    <div class="base"></div>
+                    <div class="middle"></div>
+                    <div class="head"></div>
+                    <div class="hat-brim"></div>
+                    <div class="hat-top"></div>
+                    <div class="scarf"></div>
+                    <div class="nose"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Gift Box (Red)</h3>
+            <div class="component-preview">
+                <div class="present-component red">
+                    <div class="ribbon-v"></div>
+                    <div class="ribbon-h"></div>
+                    <div class="bow-left"></div>
+                    <div class="bow-right"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Gift Box (Blue)</h3>
+            <div class="component-preview">
+                <div class="present-component blue">
+                    <div class="ribbon-v"></div>
+                    <div class="ribbon-h"></div>
+                    <div class="bow-left"></div>
+                    <div class="bow-right"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Gift Box (Green)</h3>
+            <div class="component-preview">
+                <div class="present-component green">
+                    <div class="ribbon-v"></div>
+                    <div class="ribbon-h"></div>
+                    <div class="bow-left"></div>
+                    <div class="bow-right"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Gift Collection</h3>
+            <div class="component-preview">
+                <div class="gift-collection-component">
+                    <div class="gift red"></div>
+                    <div class="gift blue"></div>
+                    <div class="gift green"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WINTER WONDERLAND SECTION -->
+    <h2 class="section-title">Winter Wonderland</h2>
+    <div class="components-grid">
+        <div class="component-card">
+            <h3>Penguin</h3>
+            <div class="component-preview">
+                <div class="penguin-component">
+                    <div class="body"></div>
+                    <div class="belly"></div>
+                    <div class="flipper left"></div>
+                    <div class="flipper right"></div>
+                    <div class="head"></div>
+                    <div class="face"></div>
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="beak"></div>
+                    <div class="foot left"></div>
+                    <div class="foot right"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Baby Penguin</h3>
+            <div class="component-preview">
+                <div class="baby-penguin-component">
+                    <div class="body"></div>
+                    <div class="belly"></div>
+                    <div class="flipper left"></div>
+                    <div class="flipper right"></div>
+                    <div class="head"></div>
+                    <div class="face"></div>
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="beak"></div>
+                    <div class="foot left"></div>
+                    <div class="foot right"></div>
+                    <div class="hat"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Penguin on Sled</h3>
+            <div class="component-preview">
+                <div class="penguin-sled-component">
+                    <div class="sled"></div>
+                    <div class="sled-handle"></div>
+                    <div class="penguin-sitting">
+                        <div class="body">
+                            <div class="belly"></div>
+                        </div>
+                        <div class="head"></div>
+                        <div class="face"></div>
+                        <div class="eye left"></div>
+                        <div class="eye right"></div>
+                        <div class="beak"></div>
+                        <div class="flipper left"></div>
+                        <div class="flipper right"></div>
+                    </div>
+                    <div class="scarf"></div>
+                    <div class="scarf-tail"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Pine Tree</h3>
+            <div class="component-preview">
+                <div class="snowy-pine-component">
+                    <div class="trunk"></div>
+                    <div class="tree-layer bottom"></div>
+                    <div class="tree-layer middle"></div>
+                    <div class="tree-layer top"></div>
+                    <div class="snow-layer bottom"></div>
+                    <div class="snow-layer middle"></div>
+                    <div class="snow-layer top"></div>
+                    <div class="snow-cap"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Frozen Pond</h3>
+            <div class="component-preview" style="align-items: center;">
+                <div class="frozen-pond-component">
+                    <div class="snow-edge"></div>
+                    <div class="ice-surface"></div>
+                    <div class="ice-crack crack-1"></div>
+                    <div class="ice-crack crack-2"></div>
+                    <div class="ice-crack crack-3"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Falling Snowflakes</h3>
+            <div class="component-preview" style="align-items: center; padding: 0;">
+                <div class="snowflakes-component">
+                    <div class="snowflake">❄</div>
+                    <div class="snowflake">❄</div>
+                    <div class="snowflake">❄</div>
+                    <div class="snowflake">❄</div>
+                    <div class="snowflake">❄</div>
+                    <div class="snowflake">❄</div>
+                    <div class="snowflake">❄</div>
+                    <div class="snowflake">❄</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Gift Box</h3>
+            <div class="component-preview">
+                <div class="snow-gift-component">
+                    <div class="snow-mound"></div>
+                    <div class="gift-box"></div>
+                    <div class="gift-ribbon-v"></div>
+                    <div class="gift-ribbon-h"></div>
+                    <div class="gift-bow-l"></div>
+                    <div class="gift-bow-r"></div>
+                    <div class="snow-cap-gift"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Ice Skating Polar Bear</h3>
+            <div class="component-preview">
+                <div class="polar-bear-component">
+                    <div class="body"></div>
+                    <div class="arm left"></div>
+                    <div class="arm right"></div>
+                    <div class="head"></div>
+                    <div class="ear left"></div>
+                    <div class="ear right"></div>
+                    <div class="snout"></div>
+                    <div class="nose"></div>
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="leg"></div>
+                    <div class="skate"></div>
+                    <div class="raised-leg"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-card">
+            <h3>Snowball Pile</h3>
+            <div class="component-preview">
+                <div class="snowball-pile-component">
+                    <div class="snowball sb1"></div>
+                    <div class="snowball sb2"></div>
+                    <div class="snowball sb3"></div>
+                    <div class="snowball sb4"></div>
+                    <div class="snowball sb5"></div>
+                    <div class="snowball sb6"></div>
+                    <div class="snowball sb7"></div>
+                    <div class="snowball sb8"></div>
+                    <div class="snowball sb9"></div>
+                    <div class="snowball sb10"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 60px;"></div>
+</body>
+</html>

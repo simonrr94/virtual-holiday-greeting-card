@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Zip archives (keep source files, not zips)
+*.zip
+
+# Editor folders
+.vscode/
+.idea/
+
+# Node modules (if using npm/bun)
+node_modules/
+
+# Logs
+*.log

@@ -1,0 +1,3358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Greeting Planner</title>
+    
+    <!-- Load Limelight and Boogaloo fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Boogaloo&display=swap" rel="stylesheet">
+    <link href="scene-snowy-cabin.css" rel="stylesheet">
+    <link href="scene-santas-workshop.css" rel="stylesheet">
+    <link href="scene-winter-wonderland.css" rel="stylesheet">
+    
+    <style>
+        /* === UTILITY CLASSES (replacing Tailwind) === */
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+        
+        /* Display & Flexbox */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-wrap { flex-wrap: wrap; }
+        .flex-grow { flex-grow: 1; }
+        .flex-1 { flex: 1 1 0%; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-end { justify-content: flex-end; }
+        .justify-between { justify-content: space-between; }
+        .block { display: block; }
+        .hidden { display: none; }
+        .inline-block { display: inline-block; }
+        
+        /* Width & Height */
+        .w-full { width: 100%; }
+        .w-11\/12 { width: 91.666667%; }
+        .h-12 { height: 3rem; }
+        .max-w-7xl { max-width: 80rem; }
+        
+        /* Spacing - Margin */
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-10 { margin-bottom: 2.5rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-10 { margin-top: 2.5rem; }
+        
+        /* Spacing - Padding */
+        .p-2 { padding: 0.5rem; }
+        .p-3 { padding: 0.75rem; }
+        .pr-10 { padding-right: 2.5rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .px-8 { padding-left: 2rem; padding-right: 2rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .pt-8 { padding-top: 2rem; }
+        .pb-4 { padding-bottom: 1rem; }
+        .p-1\.5 { padding: 0.375rem; }
+        
+        /* Gap & Space */
+        .space-x-2 > * + * { margin-left: 0.5rem; }
+        .space-x-3 > * + * { margin-left: 0.75rem; }
+        .space-x-4 > * + * { margin-left: 1rem; }
+        .space-x-6 > * + * { margin-left: 1.5rem; }
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        
+        /* Typography */
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-md { font-size: 1rem; line-height: 1.5rem; }
+        .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+        .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+        .text-5xl { font-size: 3rem; line-height: 1; }
+        .font-sans { font-family: system-ui, -apple-system, sans-serif; }
+        .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .font-extrabold { font-weight: 800; }
+        .font-medium { font-weight: 500; }
+        .text-center { text-align: center; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .whitespace-nowrap { white-space: nowrap; }
+        .resize-none { resize: none; }
+        
+        /* Colors */
+        .text-gray-800 { color: #1f2937; }
+        .text-gray-700 { color: #374151; }
+        .text-white { color: #fff; }
+        .text-primary-red { color: var(--primary-red); }
+        .text-secondary-green { color: var(--secondary-green); }
+        .bg-gray-50 { background-color: #f9fafb; }
+        .bg-gray-800 { background-color: #1f2937; }
+        .bg-opacity-75 { --tw-bg-opacity: 0.75; background-color: rgba(31, 41, 55, 0.75); }
+        .border-gray-200 { border-color: #e5e7eb; }
+        .border-gray-300 { border-color: #d1d5db; }
+        .border-secondary-green { border-color: var(--secondary-green); }
+        
+        /* Borders */
+        .border { border-width: 1px; border-style: solid; }
+        .border-2 { border-width: 2px; border-style: solid; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-2xl { border-radius: 1rem; }
+        .rounded-3xl { border-radius: 1.5rem; }
+        .rounded-l-xl { border-top-left-radius: 0.75rem; border-bottom-left-radius: 0.75rem; }
+        .rounded-r-xl { border-top-right-radius: 0.75rem; border-bottom-right-radius: 0.75rem; }
+        
+        /* Shadows */
+        .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); }
+        .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+        .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
+        
+        /* Positioning */
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .fixed { position: fixed; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .z-20 { z-index: 20; }
+        .z-50 { z-index: 50; }
+        
+        /* Transitions */
+        .transition { transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+        .transition-opacity { transition-property: opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        .duration-200 { transition-duration: 200ms; }
+        .duration-300 { transition-duration: 300ms; }
+        .duration-500 { transition-duration: 500ms; }
+        .ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Transform */
+        .transform { transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)); }
+        .rotate-180 { --tw-rotate: 180deg; transform: rotate(180deg); }
+        
+        /* Focus */
+        .focus\:outline-none:focus { outline: none; }
+        .focus\:ring-2:focus { box-shadow: 0 0 0 2px rgba(185, 28, 28, 0.5); }
+        .focus\:border-primary-red:focus { border-color: var(--primary-red); }
+        
+        /* Responsive - md breakpoint (768px) */
+        @media (min-width: 768px) {
+            .md\:pt-12 { padding-top: 3rem; }
+            .md\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+            .md\:p-8 { padding: 2rem; }
+            .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
+            .md\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+            .md\:flex-none { flex: none; }
+            .md\:mb-0 { margin-bottom: 0; }
+            .md\:flex { display: flex; }
+            .md\:space-y-0 > * + * { margin-top: 0; }
+            .md\:space-x-6 > * + * { margin-left: 1.5rem; }
+        }
+        
+        /* Responsive - sm breakpoint (640px) */
+        @media (min-width: 640px) {
+            .sm\:space-x-4 > * + * { margin-left: 1rem; }
+        }
+        
+        /* Custom padding with arbitrary values */
+        .pt-\[20px\] { padding-top: 20px; }
+        .pb-\[30px\] { padding-bottom: 30px; }
+        .mb-\[44px\] { margin-bottom: 44px; }
+        .pb-\[160px\] { padding-bottom: 160px; }
+
+        /* Define Colors for Easy Reference */
+        :root {
+            --sky-blue: #C1E1F5;
+            --deep-sky: #63B3ED;
+            --snow-white: #F9FAFB;
+            --primary-red: #B91C1C;
+            --primary-red-light: #D93B3B;
+            --secondary-green: #065F46;
+            --secondary-green-light: #088c68;
+            --gold-yellow: #FCD34D;
+            --gift-blue: #3B82F6;
+            --gift-purple: #8B5CF6;
+            
+            /* Gradients for 3D Effect */
+            --btn-red-gradient: linear-gradient(180deg, var(--primary-red-light) 0%, var(--primary-red) 100%);
+            --btn-green-gradient: linear-gradient(180deg, var(--secondary-green-light) 0%, var(--secondary-green) 100%);
+            --btn-gray-gradient: linear-gradient(180deg, #F3F4F6 0%, #D1D5DB 100%);
+            --btn-white-gradient: linear-gradient(180deg, #FFFFFF 0%, #F3F4F6 100%);
+        }
+
+        /* --- STABLE BACKGROUND --- */
+        .winter-background {
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.1)), linear-gradient(to bottom, var(--deep-sky) 0%, var(--sky-blue) 40%, var(--sky-blue) 100%);
+            background-color: var(--sky-blue);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+        
+        .hill-layer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 100vh; z-index: -2; overflow: hidden; pointer-events: none;
+        }
+
+        .hill-layer::before {
+            content: ''; position: absolute; bottom: 0; left: -50%; width: 200%; height: 100%; background-color: var(--snow-white); opacity: 0.85; border-radius: 90% 10% 0 0 / 100% 100% 0 0; transform: translateY(80%); z-index: 5;
+        }
+
+        .hill-layer::after {
+            content: ''; position: absolute; bottom: 0; left: -40%; width: 180%; height: 100%; background-color: var(--snow-white); border-radius: 40% 60% 70% 30% / 100% 100% 0 0; transform: translateY(90%); z-index: 10;
+        }
+
+        /* --- SCENERY LAYER --- */
+        .scenery-layer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 40vh; z-index: 6; pointer-events: none; overflow: hidden;
+        }
+        .log-cabin { position: absolute; bottom: 25%; right: 8%; width: 130px; height: 90px; z-index: 7; }
+        .cabin-walls { 
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 9px, rgba(0,0,0,0.3) 9px, rgba(0,0,0,0.4) 10px, rgba(255,255,255,0.1) 11px, transparent 12px),
+                linear-gradient(180deg, #A0724D 0%, #8B5A2B 20%, #6d4422 50%, #5D3A1A 80%, #4a2e14 100%);
+            width: 100%; 
+            height: 60%; 
+            position: absolute; 
+            bottom: 0; 
+            border-radius: 3px; 
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.2),
+                inset 0 2px 4px rgba(255,255,255,0.15),
+                inset 0 -4px 8px rgba(0,0,0,0.3),
+                inset 3px 0 6px rgba(0,0,0,0.2),
+                inset -3px 0 6px rgba(0,0,0,0.2);
+            border: 1px solid;
+            border-color: #9a6b3a #3d2510 #2a1a0c #6d4422;
+        }
+        .cabin-roof { 
+            position: absolute; 
+            top: -15px; 
+            left: -10%; 
+            width: 120%; 
+            height: 55px; 
+            background: linear-gradient(135deg, #6d4c0e 0%, #5a3d0a 20%, #4A2508 50%, #3d1f06 80%, #2a1504 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%); 
+            z-index: 2;
+            box-shadow: 
+                0 4px 8px rgba(0,0,0,0.4),
+                inset 0 -8px 16px rgba(0,0,0,0.4),
+                inset 4px 0 8px rgba(255,255,255,0.1);
+        }
+        .cabin-roof::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.2) 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .cabin-window { 
+            position: absolute; 
+            bottom: 20px; 
+            left: 20px; 
+            width: 30px; 
+            height: 25px; 
+            background: radial-gradient(ellipse at center, #FEF9C3 0%, #FEF3C7 40%, #FDE68A 70%, #FCD34D 100%);
+            border: 3px solid;
+            border-color: #5a3d0a #2a1504 #2a1504 #4A2508;
+            border-radius: 2px; 
+            box-shadow: 
+                0 0 20px rgba(254, 243, 199, 0.8),
+                0 0 40px rgba(254, 243, 199, 0.4),
+                inset 0 0 10px rgba(255,255,255,0.5);
+            animation: windowGlow 3s ease-in-out infinite;
+        }
+        .cabin-window::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -1px;
+            right: -1px;
+            height: 2px;
+            background: #3D1D0D;
+            z-index: 3;
+        }
+        .cabin-window::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: -1px;
+            bottom: -1px;
+            width: 2px;
+            background: #3D1D0D;
+            z-index: 3;
+        }
+        .window-tree {
+            position: absolute;
+            right: 1px;
+            bottom: 1px;
+            top: 1px;
+            width: 14px;
+            z-index: 1;
+            background: linear-gradient(to left, 
+                rgba(20, 50, 30, 0.45) 0%,
+                rgba(25, 55, 35, 0.35) 20%,
+                rgba(30, 60, 40, 0.2) 50%,
+                transparent 100%);
+            clip-path: polygon(
+                100% 100%,
+                100% 0%,
+                70% 0%,
+                50% 8%,
+                65% 10%,
+                40% 20%,
+                60% 22%,
+                30% 35%,
+                55% 38%,
+                20% 55%,
+                50% 58%,
+                15% 75%,
+                45% 78%,
+                35% 100%
+            );
+        }
+        @keyframes windowGlow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(254, 243, 199, 0.8), 0 0 40px rgba(254, 243, 199, 0.4), inset 0 0 10px rgba(255,255,255,0.5);
+                background: radial-gradient(ellipse at center, #FEF9C3 0%, #FEF3C7 40%, #FDE68A 70%, #FCD34D 100%);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(254, 243, 199, 1), 0 0 60px rgba(254, 243, 199, 0.6), inset 0 0 15px rgba(255,255,255,0.7);
+                background: radial-gradient(ellipse at center, #FFFBEB 0%, #FEF9C3 40%, #FEF3C7 70%, #FDE68A 100%);
+            }
+        }
+        .cabin-door { 
+            position: absolute; 
+            bottom: 0; 
+            right: 25px; 
+            width: 24px; 
+            height: 38px; 
+            background: linear-gradient(135deg, #5a3d0a 0%, #4A2508 30%, #3D1D0D 60%, #2a1504 100%);
+            border-radius: 4px 4px 0 0; 
+            border: 2px solid;
+            border-color: #6d4c0e #2a1504 transparent #4A2508;
+            box-shadow: 
+                inset 0 2px 4px rgba(255,255,255,0.1),
+                inset 0 -4px 8px rgba(0,0,0,0.4),
+                inset 2px 0 4px rgba(0,0,0,0.2),
+                inset -2px 0 4px rgba(0,0,0,0.2);
+        }
+        .cabin-door::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 4px;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle at 30% 30%, #fcd34d 0%, #b8860b 60%, #8b6914 100%);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .woodpile {
+            position: absolute;
+            bottom: 0;
+            left: 52px;
+            width: 35px;
+            height: 25px;
+            z-index: 2;
+        }
+        .log {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at 30% 30%, #A0724D 0%, #8B5A2B 40%, #6d4422 70%, #5D3A1A 100%);
+            border: 1px solid #4a2e14;
+            box-shadow: inset 0 0 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .log::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: 40%;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, #D4A574 0%, #C4956A 50%, #A0724D 100%);
+            border: 1px solid #8B5A2B;
+        }
+        .log-1 { width: 12px; height: 10px; bottom: 0; left: 0; }
+        .log-2 { width: 11px; height: 9px; bottom: 0; left: 10px; }
+        .log-3 { width: 12px; height: 10px; bottom: 0; left: 19px; }
+        .log-4 { width: 10px; height: 8px; bottom: 8px; left: 4px; }
+        .log-5 { width: 11px; height: 9px; bottom: 8px; left: 13px; }
+        .log-6 { width: 10px; height: 8px; bottom: 15px; left: 8px; }
+        .cabin-chimney { 
+            position: absolute; 
+            top: 5px; 
+            right: 15%; 
+            width: 18px; 
+            height: 35px; 
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 30%, #374151 60%, #1f2937 100%);
+            border-radius: 2px; 
+            z-index: 1;
+            box-shadow: 
+                inset 0 2px 4px rgba(255,255,255,0.15),
+                inset 0 -4px 8px rgba(0,0,0,0.4),
+                inset 2px 0 4px rgba(0,0,0,0.2),
+                inset -2px 0 4px rgba(0,0,0,0.2),
+                2px 2px 4px rgba(0,0,0,0.3);
+            border: 1px solid;
+            border-color: #9ca3af #1f2937 #111827 #6b7280;
+        }
+        .cabin-chimney::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -2px;
+            right: -2px;
+            height: 6px;
+            background: linear-gradient(180deg, #4b5563 0%, #374151 50%, #1f2937 100%);
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        /* Chimney Smoke - Wispy flowing animation */
+        .chimney-smoke {
+            position: absolute;
+            bottom: 100%;
+            margin-bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        /* Constant smoke base that stays at chimney */
+        .chimney-smoke::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 35px;
+            background: linear-gradient(to top,
+                rgba(60, 60, 60, 0.8) 0%,
+                rgba(80, 80, 80, 0.5) 40%,
+                rgba(100, 100, 100, 0.2) 80%,
+                transparent 100%
+            );
+            border-radius: 50% 50% 30% 30%;
+            filter: blur(3px);
+            animation: smoke-base 3s ease-in-out infinite;
+        }
+        
+        @keyframes smoke-base {
+            0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1); }
+            50% { transform: translateX(-50%) scaleX(1.15) scaleY(1.05); }
+        }
+        
+        /* Main smoke column */
+        .smoke-puff {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 70px;
+            background: linear-gradient(to top,
+                rgba(70, 70, 70, 0.6) 0%,
+                rgba(90, 90, 90, 0.4) 30%,
+                rgba(110, 110, 110, 0.25) 60%,
+                rgba(130, 130, 130, 0.1) 85%,
+                transparent 100%
+            );
+            border-radius: 50% 50% 30% 30%;
+            filter: blur(3px);
+            animation: smoke-wisp 4s ease-in-out infinite;
+        }
+        
+        .smoke-puff:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .smoke-puff:nth-child(2) {
+            animation-delay: 1s;
+            width: 10px;
+            height: 60px;
+        }
+        
+        .smoke-puff:nth-child(3) {
+            animation-delay: 2s;
+            width: 11px;
+            height: 65px;
+        }
+        
+        .smoke-puff:nth-child(4) {
+            animation-delay: 3s;
+            width: 9px;
+            height: 55px;
+        }
+        
+        @keyframes smoke-wisp {
+            0% {
+                transform: translateX(-50%) translateY(0) scaleX(1) scaleY(0.6);
+                opacity: 0.6;
+            }
+            25% {
+                opacity: 0.5;
+                transform: translateX(-50%) translateY(-15px) scaleX(1.1) scaleY(0.8);
+            }
+            50% {
+                transform: translateX(calc(-50% + 5px)) translateY(-30px) scaleX(1.3) scaleY(0.9);
+                opacity: 0.35;
+            }
+            75% {
+                transform: translateX(calc(-50% + 12px)) translateY(-45px) scaleX(1.5) scaleY(1);
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateX(calc(-50% + 20px)) translateY(-60px) scaleX(1.8) scaleY(1.1);
+                opacity: 0;
+            }
+        }
+        
+        .pine-tree { position: absolute; filter: drop-shadow(3px 6px 8px rgba(0,0,0,0.25)); }
+        .pine-1 { right: 2%; bottom: 22%; width: 50px; height: 85px; z-index: 8; }
+        .pine-2 { right: 20%; bottom: 26%; width: 55px; height: 100px; z-index: 6; }
+        .pine-3 { right: 26%; bottom: 22%; width: 40px; height: 70px; z-index: 6; }
+        .pine-4 { right: 1%; bottom: 35%; width: 28px; height: 45px; z-index: 4; }
+        .pine-5 { right: 24%; bottom: 34%; width: 32px; height: 52px; z-index: 4; }
+        .pine-6 { right: 10%; bottom: 38%; width: 24px; height: 40px; z-index: 3; }
+        .pine-7 { right: 17%; bottom: 36%; width: 26px; height: 44px; z-index: 3; }
+        .pine-8 { right: 5%; bottom: 33%; width: 30px; height: 48px; z-index: 4; }
+        
+        /* Footsteps - REMOVED */
+        
+        /* Front hill footsteps container - REMOVED */
+
+        /* === POSTCARD SCENE SYSTEM === */
+        .postcard-scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .scene-sky,
+        .scene-background,
+        .scene-midground,
+        .scene-foreground {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .scene-sky { z-index: 1; }
+        .scene-background { z-index: 2; }
+        .scene-midground { z-index: 3; }
+        .scene-foreground { z-index: 4; }
+        
+
+        /* =========================== */
+        /* SCENE CSS GOES HERE         */
+        /* =========================== */
+        /* 
+         * Scene-specific CSS has been removed from this skeleton.
+         * Include your scene CSS files here:
+         * - Snowy Cabin scene (~375 lines)
+         * - Santa's Workshop scene (~1800 lines)  
+         * - Winter Wonderland scene (~200 lines)
+         */
+
+        /* --- TICKER --- */
+        .countdown-ticker {
+            position: relative;
+            display: inline-block;
+            font-family: 'Boogaloo', cursive !important;
+            color: #ffd700 !important;
+            text-shadow: 
+                1px 1px 2px rgba(0, 0, 0, 0.5),
+                0 0 10px rgba(255, 215, 0, 0.3);
+            padding: 1rem 3.5rem;
+            font-size: 1.6rem;
+            letter-spacing: 0.08em;
+            font-weight: bold;
+            z-index: 10;
+            /* Curved ribbon shape - lighter in center, darker on edges */
+            background: radial-gradient(ellipse 80% 100% at 50% 50%, 
+                #ef4444 0%, 
+                #dc2626 40%,
+                #b91c1c 70%,
+                #991b1b 100%
+            );
+            border-radius: 4px;
+            box-shadow: 
+                0 6px 12px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.15),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+            border: none !important;
+        }
+        
+        /* Gold trim lines on ribbon */
+        .countdown-ticker::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 15px;
+            right: 15px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5) 20%, rgba(255, 215, 0, 0.5) 80%, transparent);
+        }
+        
+        .countdown-ticker::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 15px;
+            right: 15px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5) 20%, rgba(255, 215, 0, 0.5) 80%, transparent);
+        }
+        
+        /* Ribbon wrapper with tail ends */
+        .countdown-ribbon-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 0 25px;
+        }
+        
+        /* Left ribbon tail - folded under part */
+        .countdown-ribbon-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 44px;
+            background: linear-gradient(135deg, 
+                #991b1b 0%, 
+                #7f1d1d 100%
+            );
+            clip-path: polygon(100% 0, 100% 100%, 0% 80%, 40% 50%, 0% 20%);
+            z-index: 5;
+            filter: drop-shadow(-2px 3px 3px rgba(0,0,0,0.3));
+        }
+        
+        /* Right ribbon tail - folded under part */
+        .countdown-ribbon-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 44px;
+            background: linear-gradient(225deg, 
+                #991b1b 0%, 
+                #7f1d1d 100%
+            );
+            clip-path: polygon(0 0, 0 100%, 100% 80%, 60% 50%, 100% 20%);
+            z-index: 5;
+            filter: drop-shadow(2px 3px 3px rgba(0,0,0,0.3));
+        }
+
+        /* --- SNOWFLAKES (IMPROVED RANDOMIZATION) --- */
+        .snowflake { 
+            color: #fff; font-size: 2em; font-family: Arial, sans-serif; position: fixed; top: -10%; z-index: 2; user-select: none; pointer-events: none; 
+            animation-name: snowflakes-shake; animation-duration: 3s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; 
+        }
+        .snowflake .inner { 
+            animation-name: snowflakes-fall; animation-duration: 10s; animation-timing-function: linear; animation-iteration-count: infinite; display: inline-block; 
+        }
+        @keyframes snowflakes-fall { 0% { transform: translateY(0); } 100% { transform: translateY(110vh); } }
+        @keyframes snowflakes-shake { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(80px); } }
+        
+        .snowflake:nth-of-type(1) { left: 2%; animation-delay: 0s; } .snowflake:nth-of-type(1) .inner { animation-duration: 11s; animation-delay: 0s; }
+        .snowflake:nth-of-type(2) { left: 12%; animation-delay: 2s; } .snowflake:nth-of-type(2) .inner { animation-duration: 14s; animation-delay: 1s; }
+        .snowflake:nth-of-type(3) { left: 22%; animation-delay: 5s; } .snowflake:nth-of-type(3) .inner { animation-duration: 9s; animation-delay: 3s; }
+        .snowflake:nth-of-type(4) { left: 32%; animation-delay: 1s; } .snowflake:nth-of-type(4) .inner { animation-duration: 12s; animation-delay: 5s; }
+        .snowflake:nth-of-type(5) { left: 42%; animation-delay: 6s; } .snowflake:nth-of-type(5) .inner { animation-duration: 15s; animation-delay: 2s; }
+        .snowflake:nth-of-type(6) { left: 52%; animation-delay: 3s; } .snowflake:nth-of-type(6) .inner { animation-duration: 10s; animation-delay: 4s; }
+        .snowflake:nth-of-type(7) { left: 62%; animation-delay: 8s; } .snowflake:nth-of-type(7) .inner { animation-duration: 13s; animation-delay: 1s; }
+        .snowflake:nth-of-type(8) { left: 72%; animation-delay: 2s; } .snowflake:nth-of-type(8) .inner { animation-duration: 11s; animation-delay: 6s; }
+        .snowflake:nth-of-type(9) { left: 82%; animation-delay: 4s; } .snowflake:nth-of-type(9) .inner { animation-duration: 14s; animation-delay: 0s; }
+        .snowflake:nth-of-type(10) { left: 92%; animation-delay: 7s; } .snowflake:nth-of-type(10) .inner { animation-duration: 12s; animation-delay: 2s; }
+        .snowflake:nth-of-type(11) { left: 25%; animation-delay: 9s; } .snowflake:nth-of-type(11) .inner { animation-duration: 15s; animation-delay: 3s; }
+        .snowflake:nth-of-type(12) { left: 75%; animation-delay: 3s; } .snowflake:nth-of-type(12) .inner { animation-duration: 10s; animation-delay: 5s; }
+
+        /* --- VIRTUAL CROSS STITCH EFFECT --- */
+        .cross-stitch-container { position: relative; width: 100%; height: 100%; background-color: #f8f6f2; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
+        .cross-stitch-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 5;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.06) 1.5px, transparent 1.5px),
+                linear-gradient(90deg, rgba(0,0,0,0.06) 1.5px, transparent 1.5px);
+            background-size: 8px 8px;
+        }
+        .cross-stitch-image { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; filter: contrast(1.1) saturate(0.9); }
+        .scandi-border { width: 100%; height: 100px; z-index: 2; background-repeat: repeat-x; background-size: auto 100px; }
+
+        .pattern-hatch {
+            background-image: url("data:image/svg+xml,%3Csvg width='128' height='100' viewBox='0 0 128 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E.red%7Bfill:%23B91C1C;%7D.green%7Bfill:%23065F46;%7D%3C/style%3E%3C!-- RED CHEVRON LINE --%3E%3Crect class='red' x='0' y='16' width='8' height='8'/%3E%3Crect class='red' x='8' y='8' width='8' height='8'/%3E%3Crect class='red' x='16' y='0' width='8' height='8'/%3E%3Crect class='red' x='24' y='8' width='8' height='8'/%3E%3Crect class='red' x='32' y='16' width='8' height='8'/%3E%3Crect class='red' x='40' y='8' width='8' height='8'/%3E%3Crect class='red' x='48' y='0' width='8' height='8'/%3E%3Crect class='red' x='56' y='8' width='8' height='8'/%3E%3Crect class='red' x='64' y='16' width='8' height='8'/%3E%3Crect class='red' x='72' y='8' width='8' height='8'/%3E%3Crect class='red' x='80' y='0' width='8' height='8'/%3E%3Crect class='red' x='88' y='8' width='8' height='8'/%3E%3Crect class='red' x='96' y='16' width='8' height='8'/%3E%3Crect class='red' x='104' y='8' width='8' height='8'/%3E%3Crect class='red' x='112' y='0' width='8' height='8'/%3E%3Crect class='red' x='120' y='8' width='8' height='8'/%3E%3C!-- GREEN DIAMOND --%3E%3Crect class='green' x='16' y='48' width='8' height='8'/%3E%3Crect class='green' x='8' y='56' width='8' height='8'/%3E%3Crect class='green' x='24' y='56' width='8' height='8'/%3E%3Crect class='green' x='16' y='64' width='8' height='8'/%3E%3C!-- GREEN SNOWFLAKE --%3E%3Crect class='green' x='48' y='40' width='8' height='8'/%3E%3Crect class='green' x='40' y='48' width='8' height='8'/%3E%3Crect class='green' x='56' y='48' width='8' height='8'/%3E%3Crect class='green' x='48' y='56' width='8' height='8'/%3E%3Crect class='green' x='40' y='64' width='8' height='8'/%3E%3Crect class='green' x='56' y='64' width='8' height='8'/%3E%3Crect class='green' x='48' y='72' width='8' height='8'/%3E%3C!-- GREEN DIAMOND --%3E%3Crect class='green' x='80' y='48' width='8' height='8'/%3E%3Crect class='green' x='72' y='56' width='8' height='8'/%3E%3Crect class='green' x='88' y='56' width='8' height='8'/%3E%3Crect class='green' x='80' y='64' width='8' height='8'/%3E%3C!-- GREEN SNOWFLAKE --%3E%3Crect class='green' x='112' y='40' width='8' height='8'/%3E%3Crect class='green' x='104' y='48' width='8' height='8'/%3E%3Crect class='green' x='120' y='48' width='8' height='8'/%3E%3Crect class='green' x='112' y='56' width='8' height='8'/%3E%3Crect class='green' x='104' y='64' width='8' height='8'/%3E%3Crect class='green' x='120' y='64' width='8' height='8'/%3E%3Crect class='green' x='112' y='72' width='8' height='8'/%3E%3C/svg%3E");
+        }
+
+        /* Sledding Penguins Scene */
+        .pattern-penguins {
+            background-color: #f8f6f2;
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='200' viewBox='0 0 400 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E.black%7Bfill:%23222;%7D.white%7Bfill:%23fff;%7D.orange%7Bfill:%23FF6600;%7D.red%7Bfill:%23B91C1C;%7D.blue%7Bfill:%2363B3ED;%7D.green%7Bfill:%23065F46;%7D%3C/style%3E%3C!-- Snow hill slope --%3E%3Crect class='blue' x='0' y='0' width='8' height='8'/%3E%3Crect class='blue' x='8' y='0' width='8' height='8'/%3E%3Crect class='blue' x='16' y='0' width='8' height='8'/%3E%3Crect class='blue' x='392' y='0' width='8' height='8'/%3E%3Crect class='blue' x='384' y='0' width='8' height='8'/%3E%3Crect class='blue' x='376' y='0' width='8' height='8'/%3E%3C!-- Penguin 1 on sled (top left) --%3E%3Crect class='black' x='40' y='24' width='8' height='8'/%3E%3Crect class='black' x='48' y='24' width='8' height='8'/%3E%3Crect class='black' x='32' y='32' width='8' height='8'/%3E%3Crect class='white' x='40' y='32' width='8' height='8'/%3E%3Crect class='white' x='48' y='32' width='8' height='8'/%3E%3Crect class='black' x='56' y='32' width='8' height='8'/%3E%3Crect class='black' x='32' y='40' width='8' height='8'/%3E%3Crect class='white' x='40' y='40' width='8' height='8'/%3E%3Crect class='white' x='48' y='40' width='8' height='8'/%3E%3Crect class='black' x='56' y='40' width='8' height='8'/%3E%3Crect class='orange' x='40' y='48' width='8' height='8'/%3E%3Crect class='orange' x='48' y='48' width='8' height='8'/%3E%3Crect class='red' x='24' y='56' width='8' height='8'/%3E%3Crect class='red' x='32' y='56' width='8' height='8'/%3E%3Crect class='red' x='40' y='56' width='8' height='8'/%3E%3Crect class='red' x='48' y='56' width='8' height='8'/%3E%3Crect class='red' x='56' y='56' width='8' height='8'/%3E%3Crect class='red' x='64' y='56' width='8' height='8'/%3E%3C!-- Penguin 2 on sled (middle) --%3E%3Crect class='black' x='168' y='64' width='8' height='8'/%3E%3Crect class='black' x='176' y='64' width='8' height='8'/%3E%3Crect class='black' x='160' y='72' width='8' height='8'/%3E%3Crect class='white' x='168' y='72' width='8' height='8'/%3E%3Crect class='white' x='176' y='72' width='8' height='8'/%3E%3Crect class='black' x='184' y='72' width='8' height='8'/%3E%3Crect class='black' x='160' y='80' width='8' height='8'/%3E%3Crect class='white' x='168' y='80' width='8' height='8'/%3E%3Crect class='white' x='176' y='80' width='8' height='8'/%3E%3Crect class='black' x='184' y='80' width='8' height='8'/%3E%3Crect class='orange' x='168' y='88' width='8' height='8'/%3E%3Crect class='orange' x='176' y='88' width='8' height='8'/%3E%3Crect class='green' x='152' y='96' width='8' height='8'/%3E%3Crect class='green' x='160' y='96' width='8' height='8'/%3E%3Crect class='green' x='168' y='96' width='8' height='8'/%3E%3Crect class='green' x='176' y='96' width='8' height='8'/%3E%3Crect class='green' x='184' y='96' width='8' height='8'/%3E%3Crect class='green' x='192' y='96' width='8' height='8'/%3E%3C!-- Penguin 3 on sled (bottom right) --%3E%3Crect class='black' x='296' y='112' width='8' height='8'/%3E%3Crect class='black' x='304' y='112' width='8' height='8'/%3E%3Crect class='black' x='288' y='120' width='8' height='8'/%3E%3Crect class='white' x='296' y='120' width='8' height='8'/%3E%3Crect class='white' x='304' y='120' width='8' height='8'/%3E%3Crect class='black' x='312' y='120' width='8' height='8'/%3E%3Crect class='black' x='288' y='128' width='8' height='8'/%3E%3Crect class='white' x='296' y='128' width='8' height='8'/%3E%3Crect class='white' x='304' y='128' width='8' height='8'/%3E%3Crect class='black' x='312' y='128' width='8' height='8'/%3E%3Crect class='orange' x='296' y='136' width='8' height='8'/%3E%3Crect class='orange' x='304' y='136' width='8' height='8'/%3E%3Crect class='red' x='280' y='144' width='8' height='8'/%3E%3Crect class='red' x='288' y='144' width='8' height='8'/%3E%3Crect class='red' x='296' y='144' width='8' height='8'/%3E%3Crect class='red' x='304' y='144' width='8' height='8'/%3E%3Crect class='red' x='312' y='144' width='8' height='8'/%3E%3Crect class='red' x='320' y='144' width='8' height='8'/%3E%3C!-- Snowflakes scattered --%3E%3Crect class='blue' x='120' y='32' width='8' height='8'/%3E%3Crect class='blue' x='112' y='40' width='8' height='8'/%3E%3Crect class='blue' x='128' y='40' width='8' height='8'/%3E%3Crect class='blue' x='120' y='48' width='8' height='8'/%3E%3Crect class='blue' x='240' y='56' width='8' height='8'/%3E%3Crect class='blue' x='232' y='64' width='8' height='8'/%3E%3Crect class='blue' x='248' y='64' width='8' height='8'/%3E%3Crect class='blue' x='240' y='72' width='8' height='8'/%3E%3Crect class='blue' x='360' y='88' width='8' height='8'/%3E%3Crect class='blue' x='352' y='96' width='8' height='8'/%3E%3Crect class='blue' x='368' y='96' width='8' height='8'/%3E%3Crect class='blue' x='360' y='104' width='8' height='8'/%3E%3C!-- Snow ground line --%3E%3Crect class='white' x='0' y='168' width='400' height='8'/%3E%3Crect class='white' x='0' y='176' width='400' height='8'/%3E%3Crect class='white' x='0' y='184' width='400' height='8'/%3E%3Crect class='white' x='0' y='192' width='400' height='8'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        /* Santa's Sleigh Scene */
+        .pattern-sleigh {
+            background-color: #f8f6f2;
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='200' viewBox='0 0 400 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E.red%7Bfill:%23B91C1C;%7D.darkred%7Bfill:%237F1D1D;%7D.gold%7Bfill:%23FCD34D;%7D.brown%7Bfill:%235D2E0C;%7D.tan%7Bfill:%23D2B48C;%7D.white%7Bfill:%23fff;%7D.black%7Bfill:%23222;%7D.green%7Bfill:%23065F46;%7D%3C/style%3E%3C!-- Stars in sky --%3E%3Crect class='gold' x='32' y='16' width='8' height='8'/%3E%3Crect class='gold' x='96' y='32' width='8' height='8'/%3E%3Crect class='gold' x='200' y='8' width='8' height='8'/%3E%3Crect class='gold' x='280' y='24' width='8' height='8'/%3E%3Crect class='gold' x='344' y='16' width='8' height='8'/%3E%3Crect class='gold' x='368' y='40' width='8' height='8'/%3E%3C!-- Moon --%3E%3Crect class='gold' x='320' y='40' width='8' height='8'/%3E%3Crect class='gold' x='328' y='40' width='8' height='8'/%3E%3Crect class='gold' x='312' y='48' width='8' height='8'/%3E%3Crect class='gold' x='320' y='48' width='8' height='8'/%3E%3Crect class='gold' x='328' y='48' width='8' height='8'/%3E%3Crect class='gold' x='336' y='48' width='8' height='8'/%3E%3Crect class='gold' x='312' y='56' width='8' height='8'/%3E%3Crect class='gold' x='320' y='56' width='8' height='8'/%3E%3Crect class='gold' x='328' y='56' width='8' height='8'/%3E%3Crect class='gold' x='336' y='56' width='8' height='8'/%3E%3Crect class='gold' x='320' y='64' width='8' height='8'/%3E%3Crect class='gold' x='328' y='64' width='8' height='8'/%3E%3C!-- Reindeer 1 --%3E%3Crect class='brown' x='56' y='72' width='8' height='8'/%3E%3Crect class='brown' x='64' y='72' width='8' height='8'/%3E%3Crect class='brown' x='48' y='80' width='8' height='8'/%3E%3Crect class='tan' x='56' y='80' width='8' height='8'/%3E%3Crect class='tan' x='64' y='80' width='8' height='8'/%3E%3Crect class='brown' x='72' y='80' width='8' height='8'/%3E%3Crect class='brown' x='80' y='80' width='8' height='8'/%3E%3Crect class='brown' x='88' y='80' width='8' height='8'/%3E%3Crect class='red' x='64' y='88' width='8' height='8'/%3E%3Crect class='brown' x='48' y='96' width='8' height='8'/%3E%3Crect class='brown' x='80' y='96' width='8' height='8'/%3E%3C!-- Reindeer 2 (Rudolph) --%3E%3Crect class='brown' x='8' y='72' width='8' height='8'/%3E%3Crect class='brown' x='16' y='72' width='8' height='8'/%3E%3Crect class='tan' x='8' y='80' width='8' height='8'/%3E%3Crect class='tan' x='16' y='80' width='8' height='8'/%3E%3Crect class='brown' x='24' y='80' width='8' height='8'/%3E%3Crect class='brown' x='32' y='80' width='8' height='8'/%3E%3Crect class='red' x='8' y='88' width='8' height='8'/%3E%3Crect class='brown' x='0' y='96' width='8' height='8'/%3E%3Crect class='brown' x='32' y='96' width='8' height='8'/%3E%3C!-- Reins --%3E%3Crect class='gold' x='96' y='88' width='8' height='8'/%3E%3Crect class='gold' x='104' y='88' width='8' height='8'/%3E%3Crect class='gold' x='112' y='88' width='8' height='8'/%3E%3Crect class='gold' x='40' y='88' width='8' height='8'/%3E%3C!-- Sleigh body --%3E%3Crect class='red' x='120' y='72' width='8' height='8'/%3E%3Crect class='red' x='128' y='72' width='8' height='8'/%3E%3Crect class='red' x='136' y='72' width='8' height='8'/%3E%3Crect class='red' x='144' y='72' width='8' height='8'/%3E%3Crect class='red' x='152' y='72' width='8' height='8'/%3E%3Crect class='red' x='160' y='72' width='8' height='8'/%3E%3Crect class='red' x='168' y='72' width='8' height='8'/%3E%3Crect class='red' x='176' y='72' width='8' height='8'/%3E%3Crect class='red' x='120' y='80' width='8' height='8'/%3E%3Crect class='darkred' x='128' y='80' width='8' height='8'/%3E%3Crect class='darkred' x='136' y='80' width='8' height='8'/%3E%3Crect class='darkred' x='144' y='80' width='8' height='8'/%3E%3Crect class='darkred' x='152' y='80' width='8' height='8'/%3E%3Crect class='darkred' x='160' y='80' width='8' height='8'/%3E%3Crect class='darkred' x='168' y='80' width='8' height='8'/%3E%3Crect class='red' x='176' y='80' width='8' height='8'/%3E%3Crect class='red' x='120' y='88' width='8' height='8'/%3E%3Crect class='darkred' x='128' y='88' width='8' height='8'/%3E%3Crect class='darkred' x='136' y='88' width='8' height='8'/%3E%3Crect class='darkred' x='144' y='88' width='8' height='8'/%3E%3Crect class='darkred' x='152' y='88' width='8' height='8'/%3E%3Crect class='darkred' x='160' y='88' width='8' height='8'/%3E%3Crect class='darkred' x='168' y='88' width='8' height='8'/%3E%3Crect class='red' x='176' y='88' width='8' height='8'/%3E%3Crect class='gold' x='128' y='96' width='8' height='8'/%3E%3Crect class='gold' x='136' y='96' width='8' height='8'/%3E%3Crect class='gold' x='144' y='96' width='8' height='8'/%3E%3Crect class='gold' x='152' y='96' width='8' height='8'/%3E%3Crect class='gold' x='160' y='96' width='8' height='8'/%3E%3Crect class='gold' x='168' y='96' width='8' height='8'/%3E%3C!-- Santa in sleigh --%3E%3Crect class='red' x='144' y='56' width='8' height='8'/%3E%3Crect class='red' x='152' y='56' width='8' height='8'/%3E%3Crect class='white' x='144' y='64' width='8' height='8'/%3E%3Crect class='white' x='152' y='64' width='8' height='8'/%3E%3Crect class='red' x='136' y='64' width='8' height='8'/%3E%3Crect class='red' x='160' y='64' width='8' height='8'/%3E%3C!-- Gift sack --%3E%3Crect class='green' x='168' y='56' width='8' height='8'/%3E%3Crect class='green' x='176' y='56' width='8' height='8'/%3E%3Crect class='green' x='168' y='64' width='8' height='8'/%3E%3Crect class='green' x='176' y='64' width='8' height='8'/%3E%3C!-- Rooftops silhouette at bottom --%3E%3Crect class='black' x='0' y='160' width='8' height='8'/%3E%3Crect class='black' x='8' y='152' width='8' height='8'/%3E%3Crect class='black' x='16' y='144' width='8' height='8'/%3E%3Crect class='black' x='24' y='152' width='8' height='8'/%3E%3Crect class='black' x='32' y='160' width='8' height='8'/%3E%3Crect class='black' x='40' y='160' width='8' height='8'/%3E%3Crect class='black' x='48' y='160' width='8' height='8'/%3E%3Crect class='black' x='56' y='152' width='8' height='8'/%3E%3Crect class='black' x='64' y='160' width='8' height='8'/%3E%3Crect class='black' x='72' y='160' width='8' height='8'/%3E%3Crect class='black' x='80' y='144' width='8' height='8'/%3E%3Crect class='black' x='88' y='136' width='8' height='8'/%3E%3Crect class='black' x='96' y='144' width='8' height='8'/%3E%3Crect class='black' x='104' y='160' width='8' height='8'/%3E%3Crect class='black' x='112' y='160' width='8' height='8'/%3E%3Crect class='black' x='120' y='160' width='8' height='8'/%3E%3Crect class='black' x='128' y='152' width='8' height='8'/%3E%3Crect class='black' x='136' y='144' width='8' height='8'/%3E%3Crect class='black' x='144' y='152' width='8' height='8'/%3E%3Crect class='black' x='152' y='160' width='8' height='8'/%3E%3Crect class='black' x='160' y='160' width='8' height='8'/%3E%3Crect class='black' x='168' y='160' width='8' height='8'/%3E%3Crect class='black' x='176' y='160' width='8' height='8'/%3E%3Crect class='black' x='184' y='152' width='8' height='8'/%3E%3Crect class='black' x='192' y='160' width='8' height='8'/%3E%3Crect class='black' x='200' y='160' width='8' height='8'/%3E%3Crect class='black' x='208' y='144' width='8' height='8'/%3E%3Crect class='black' x='216' y='136' width='8' height='8'/%3E%3Crect class='black' x='224' y='128' width='8' height='8'/%3E%3Crect class='black' x='232' y='136' width='8' height='8'/%3E%3Crect class='black' x='240' y='144' width='8' height='8'/%3E%3Crect class='black' x='248' y='160' width='8' height='8'/%3E%3Crect class='black' x='256' y='160' width='8' height='8'/%3E%3Crect class='black' x='264' y='152' width='8' height='8'/%3E%3Crect class='black' x='272' y='160' width='8' height='8'/%3E%3Crect class='black' x='280' y='160' width='8' height='8'/%3E%3Crect class='black' x='288' y='160' width='8' height='8'/%3E%3Crect class='black' x='296' y='152' width='8' height='8'/%3E%3Crect class='black' x='304' y='144' width='8' height='8'/%3E%3Crect class='black' x='312' y='152' width='8' height='8'/%3E%3Crect class='black' x='320' y='160' width='8' height='8'/%3E%3Crect class='black' x='328' y='160' width='8' height='8'/%3E%3Crect class='black' x='336' y='160' width='8' height='8'/%3E%3Crect class='black' x='344' y='152' width='8' height='8'/%3E%3Crect class='black' x='352' y='160' width='8' height='8'/%3E%3Crect class='black' x='360' y='160' width='8' height='8'/%3E%3Crect class='black' x='368' y='160' width='8' height='8'/%3E%3Crect class='black' x='376' y='152' width='8' height='8'/%3E%3Crect class='black' x='384' y='144' width='8' height='8'/%3E%3Crect class='black' x='392' y='152' width='8' height='8'/%3E%3Crect class='black' x='0' y='168' width='400' height='8'/%3E%3Crect class='black' x='0' y='176' width='400' height='8'/%3E%3Crect class='black' x='0' y='184' width='400' height='8'/%3E%3Crect class='black' x='0' y='192' width='400' height='8'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        /* Tree + Mantle Scene */
+        .pattern-mantle {
+            background-color: #f8f6f2;
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='200' viewBox='0 0 400 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E.red%7Bfill:%23B91C1C;%7D.green%7Bfill:%23065F46;%7D.darkgreen%7Bfill:%23064E3B;%7D.gold%7Bfill:%23FCD34D;%7D.brown%7Bfill:%235D2E0C;%7D.orange%7Bfill:%23FF6600;%7D.white%7Bfill:%23fff;%7D.gray%7Bfill:%23666;%7D.brick%7Bfill:%23A0522D;%7D.blue%7Bfill:%233B82F6;%7D%3C/style%3E%3C!-- Fireplace mantle --%3E%3Crect class='brown' x='232' y='64' width='8' height='8'/%3E%3Crect class='brown' x='240' y='64' width='8' height='8'/%3E%3Crect class='brown' x='248' y='64' width='8' height='8'/%3E%3Crect class='brown' x='256' y='64' width='8' height='8'/%3E%3Crect class='brown' x='264' y='64' width='8' height='8'/%3E%3Crect class='brown' x='272' y='64' width='8' height='8'/%3E%3Crect class='brown' x='280' y='64' width='8' height='8'/%3E%3Crect class='brown' x='288' y='64' width='8' height='8'/%3E%3Crect class='brown' x='296' y='64' width='8' height='8'/%3E%3Crect class='brown' x='304' y='64' width='8' height='8'/%3E%3Crect class='brown' x='312' y='64' width='8' height='8'/%3E%3Crect class='brown' x='320' y='64' width='8' height='8'/%3E%3Crect class='brown' x='328' y='64' width='8' height='8'/%3E%3Crect class='brown' x='336' y='64' width='8' height='8'/%3E%3Crect class='brown' x='344' y='64' width='8' height='8'/%3E%3Crect class='brown' x='352' y='64' width='8' height='8'/%3E%3Crect class='brown' x='360' y='64' width='8' height='8'/%3E%3C!-- Garland on mantle --%3E%3Crect class='green' x='240' y='56' width='8' height='8'/%3E%3Crect class='green' x='248' y='56' width='8' height='8'/%3E%3Crect class='red' x='256' y='56' width='8' height='8'/%3E%3Crect class='green' x='264' y='56' width='8' height='8'/%3E%3Crect class='green' x='272' y='56' width='8' height='8'/%3E%3Crect class='green' x='280' y='56' width='8' height='8'/%3E%3Crect class='red' x='288' y='56' width='8' height='8'/%3E%3Crect class='green' x='296' y='56' width='8' height='8'/%3E%3Crect class='green' x='304' y='56' width='8' height='8'/%3E%3Crect class='green' x='312' y='56' width='8' height='8'/%3E%3Crect class='red' x='320' y='56' width='8' height='8'/%3E%3Crect class='green' x='328' y='56' width='8' height='8'/%3E%3Crect class='green' x='336' y='56' width='8' height='8'/%3E%3Crect class='green' x='344' y='56' width='8' height='8'/%3E%3Crect class='red' x='352' y='56' width='8' height='8'/%3E%3C!-- Stockings --%3E%3Crect class='red' x='256' y='72' width='8' height='8'/%3E%3Crect class='white' x='256' y='80' width='8' height='8'/%3E%3Crect class='red' x='256' y='88' width='8' height='8'/%3E%3Crect class='red' x='256' y='96' width='8' height='8'/%3E%3Crect class='red' x='248' y='104' width='8' height='8'/%3E%3Crect class='green' x='296' y='72' width='8' height='8'/%3E%3Crect class='white' x='296' y='80' width='8' height='8'/%3E%3Crect class='green' x='296' y='88' width='8' height='8'/%3E%3Crect class='green' x='296' y='96' width='8' height='8'/%3E%3Crect class='green' x='288' y='104' width='8' height='8'/%3E%3Crect class='red' x='336' y='72' width='8' height='8'/%3E%3Crect class='white' x='336' y='80' width='8' height='8'/%3E%3Crect class='red' x='336' y='88' width='8' height='8'/%3E%3Crect class='red' x='336' y='96' width='8' height='8'/%3E%3Crect class='red' x='328' y='104' width='8' height='8'/%3E%3C!-- Fireplace opening --%3E%3Crect class='brick' x='264' y='72' width='8' height='8'/%3E%3Crect class='brick' x='272' y='72' width='8' height='8'/%3E%3Crect class='brick' x='280' y='72' width='8' height='8'/%3E%3Crect class='brick' x='304' y='72' width='8' height='8'/%3E%3Crect class='brick' x='312' y='72' width='8' height='8'/%3E%3Crect class='brick' x='320' y='72' width='8' height='8'/%3E%3Crect class='gray' x='272' y='80' width='8' height='8'/%3E%3Crect class='gray' x='280' y='80' width='8' height='8'/%3E%3Crect class='gray' x='288' y='80' width='8' height='8'/%3E%3Crect class='gray' x='304' y='80' width='8' height='8'/%3E%3Crect class='gray' x='312' y='80' width='8' height='8'/%3E%3Crect class='gray' x='272' y='88' width='8' height='8'/%3E%3Crect class='orange' x='280' y='88' width='8' height='8'/%3E%3Crect class='orange' x='288' y='88' width='8' height='8'/%3E%3Crect class='orange' x='296' y='88' width='8' height='8'/%3E%3Crect class='orange' x='304' y='88' width='8' height='8'/%3E%3Crect class='gray' x='312' y='88' width='8' height='8'/%3E%3Crect class='orange' x='280' y='96' width='8' height='8'/%3E%3Crect class='gold' x='288' y='96' width='8' height='8'/%3E%3Crect class='gold' x='296' y='96' width='8' height='8'/%3E%3Crect class='orange' x='304' y='96' width='8' height='8'/%3E%3C!-- Christmas Tree --%3E%3Crect class='gold' x='88' y='24' width='8' height='8'/%3E%3Crect class='green' x='80' y='32' width='8' height='8'/%3E%3Crect class='green' x='88' y='32' width='8' height='8'/%3E%3Crect class='green' x='96' y='32' width='8' height='8'/%3E%3Crect class='green' x='72' y='40' width='8' height='8'/%3E%3Crect class='red' x='80' y='40' width='8' height='8'/%3E%3Crect class='green' x='88' y='40' width='8' height='8'/%3E%3Crect class='gold' x='96' y='40' width='8' height='8'/%3E%3Crect class='green' x='104' y='40' width='8' height='8'/%3E%3Crect class='green' x='64' y='48' width='8' height='8'/%3E%3Crect class='green' x='72' y='48' width='8' height='8'/%3E%3Crect class='gold' x='80' y='48' width='8' height='8'/%3E%3Crect class='green' x='88' y='48' width='8' height='8'/%3E%3Crect class='red' x='96' y='48' width='8' height='8'/%3E%3Crect class='green' x='104' y='48' width='8' height='8'/%3E%3Crect class='green' x='112' y='48' width='8' height='8'/%3E%3Crect class='green' x='56' y='56' width='8' height='8'/%3E%3Crect class='green' x='64' y='56' width='8' height='8'/%3E%3Crect class='green' x='72' y='56' width='8' height='8'/%3E%3Crect class='green' x='80' y='56' width='8' height='8'/%3E%3Crect class='red' x='88' y='56' width='8' height='8'/%3E%3Crect class='green' x='96' y='56' width='8' height='8'/%3E%3Crect class='green' x='104' y='56' width='8' height='8'/%3E%3Crect class='gold' x='112' y='56' width='8' height='8'/%3E%3Crect class='green' x='120' y='56' width='8' height='8'/%3E%3Crect class='green' x='48' y='64' width='8' height='8'/%3E%3Crect class='gold' x='56' y='64' width='8' height='8'/%3E%3Crect class='green' x='64' y='64' width='8' height='8'/%3E%3Crect class='green' x='72' y='64' width='8' height='8'/%3E%3Crect class='green' x='80' y='64' width='8' height='8'/%3E%3Crect class='green' x='88' y='64' width='8' height='8'/%3E%3Crect class='green' x='96' y='64' width='8' height='8'/%3E%3Crect class='red' x='104' y='64' width='8' height='8'/%3E%3Crect class='green' x='112' y='64' width='8' height='8'/%3E%3Crect class='green' x='120' y='64' width='8' height='8'/%3E%3Crect class='green' x='128' y='64' width='8' height='8'/%3E%3Crect class='green' x='40' y='72' width='8' height='8'/%3E%3Crect class='green' x='48' y='72' width='8' height='8'/%3E%3Crect class='red' x='56' y='72' width='8' height='8'/%3E%3Crect class='green' x='64' y='72' width='8' height='8'/%3E%3Crect class='gold' x='72' y='72' width='8' height='8'/%3E%3Crect class='green' x='80' y='72' width='8' height='8'/%3E%3Crect class='green' x='88' y='72' width='8' height='8'/%3E%3Crect class='green' x='96' y='72' width='8' height='8'/%3E%3Crect class='green' x='104' y='72' width='8' height='8'/%3E%3Crect class='green' x='112' y='72' width='8' height='8'/%3E%3Crect class='gold' x='120' y='72' width='8' height='8'/%3E%3Crect class='green' x='128' y='72' width='8' height='8'/%3E%3Crect class='green' x='136' y='72' width='8' height='8'/%3E%3Crect class='green' x='32' y='80' width='8' height='8'/%3E%3Crect class='green' x='40' y='80' width='8' height='8'/%3E%3Crect class='green' x='48' y='80' width='8' height='8'/%3E%3Crect class='green' x='56' y='80' width='8' height='8'/%3E%3Crect class='green' x='64' y='80' width='8' height='8'/%3E%3Crect class='red' x='72' y='80' width='8' height='8'/%3E%3Crect class='green' x='80' y='80' width='8' height='8'/%3E%3Crect class='green' x='88' y='80' width='8' height='8'/%3E%3Crect class='gold' x='96' y='80' width='8' height='8'/%3E%3Crect class='green' x='104' y='80' width='8' height='8'/%3E%3Crect class='green' x='112' y='80' width='8' height='8'/%3E%3Crect class='red' x='120' y='80' width='8' height='8'/%3E%3Crect class='green' x='128' y='80' width='8' height='8'/%3E%3Crect class='green' x='136' y='80' width='8' height='8'/%3E%3Crect class='green' x='144' y='80' width='8' height='8'/%3E%3C!-- Tree trunk --%3E%3Crect class='brown' x='80' y='88' width='8' height='8'/%3E%3Crect class='brown' x='88' y='88' width='8' height='8'/%3E%3Crect class='brown' x='96' y='88' width='8' height='8'/%3E%3C!-- Gifts under tree --%3E%3Crect class='red' x='40' y='88' width='8' height='8'/%3E%3Crect class='red' x='48' y='88' width='8' height='8'/%3E%3Crect class='red' x='40' y='96' width='8' height='8'/%3E%3Crect class='red' x='48' y='96' width='8' height='8'/%3E%3Crect class='gold' x='44' y='88' width='8' height='16'/%3E%3Crect class='blue' x='120' y='88' width='8' height='8'/%3E%3Crect class='blue' x='128' y='88' width='8' height='8'/%3E%3Crect class='blue' x='136' y='88' width='8' height='8'/%3E%3Crect class='gold' x='128' y='84' width='8' height='8'/%3E%3Crect class='green' x='56' y='96' width='8' height='8'/%3E%3Crect class='green' x='64' y='96' width='8' height='8'/%3E%3Crect class='red' x='60' y='92' width='8' height='8'/%3E%3C!-- Floor line --%3E%3Crect class='brown' x='0' y='104' width='400' height='8'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        .font-display { font-family: 'Limelight', cursive !important; }
+        
+        .message-overlay { 
+            position: absolute; 
+            top: 4%; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 30; 
+            text-align: center; 
+            width: 88%; 
+            padding: 10px 15px; 
+            pointer-events: none;
+        }
+        
+        .postcard-message {
+            font-family: 'Limelight', cursive;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            color: #8B0000;
+            text-shadow: 
+                1px 1px 0 #fff,
+                -1px -1px 0 #fff,
+                1px -1px 0 #fff,
+                -1px 1px 0 #fff,
+                0 2px 4px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.75);
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 2px solid rgba(139, 0, 0, 0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .letter-space {
+            width: 16px;
+        }
+        
+        .word-space {
+            width: 32px;
+        }
+        .full-height-container { min-height: 100vh; position: relative; z-index: 20; }
+        .main-content-card { background-color: transparent; }
+
+        /* --- SNOWMAN & GIFTS --- */
+        .snowman-container {
+            position: fixed;
+            bottom: 2%;
+            left: 8%;
+            z-index: 15;
+            display: flex;
+            align-items: flex-end;
+            gap: 40px;
+            transform: scale(0.85);
+            transform-origin: bottom left;
+        }
+        .snowman {
+            position: relative;
+            width: 100px;
+            height: 170px;
+        }
+        .snowman-base-ball {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e8f4f8 50%, #d0e8f0 100%);
+            border-radius: 50%;
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.08), 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .snowman-mid-ball {
+            position: absolute;
+            bottom: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e8f4f8 50%, #d0e8f0 100%);
+            border-radius: 50%;
+            box-shadow: inset -8px -8px 15px rgba(0,0,0,0.08), 0 3px 10px rgba(0,0,0,0.12);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding-top: 8px;
+        }
+        .snowman-button {
+            width: 7px;
+            height: 7px;
+            background: #1a1a1a;
+            border-radius: 50%;
+        }
+        .snowman-head-ball {
+            position: absolute;
+            bottom: 112px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e8f4f8 50%, #d0e8f0 100%);
+            border-radius: 50%;
+            box-shadow: inset -6px -6px 12px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .snowman-hat {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .hat-top {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 50%, #0d1117 100%);
+            border-radius: 3px 3px 0 0;
+            margin: 0 auto;
+            box-shadow: inset 2px 2px 4px rgba(255,255,255,0.1);
+            border-bottom: 4px solid #dc2626;
+        }
+        .hat-brim {
+            width: 50px;
+            height: 6px;
+            background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
+            border-radius: 2px;
+            margin-left: -4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .snowman-eye {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            top: 16px;
+        }
+        .snowman-eye.left { left: 14px; }
+        .snowman-eye.right { right: 14px; }
+        .snowman-nose {
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            width: 18px;
+            height: 8px;
+            background: linear-gradient(90deg, #ff6b35 0%, #ff8c42 100%);
+            clip-path: polygon(0 50%, 100% 0, 100% 100%);
+            transform: scaleX(-1);
+        }
+        .snowman-scarf {
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55px;
+            height: 10px;
+            background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
+            border-radius: 2px;
+            z-index: 2;
+        }
+        .scarf-tail {
+            position: absolute;
+            left: 5px;
+            top: 6px;
+            width: 12px;
+            height: 25px;
+            background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
+            border-radius: 0 0 4px 4px;
+            z-index: 1;
+        }
+        .gift-collection {
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+        }
+        .gift {
+            position: relative;
+            border-radius: 3px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+        .gift-large-red {
+            width: 38px;
+            height: 32px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+            z-index: 3;
+            margin-right: -8px;
+        }
+        .gift-large-red .gift-ribbon.vertical,
+        .gift-large-red .gift-ribbon.horizontal { background: linear-gradient(90deg, #22c55e 0%, #16a34a 50%, #15803d 100%); }
+        .gift-large-red .gift-bow-left { background: radial-gradient(circle at 30% 30%, #4ade80 0%, #22c55e 50%, #16a34a 100%); }
+        .gift-large-red .gift-bow-right { background: radial-gradient(circle at 30% 30%, #4ade80 0%, #22c55e 50%, #16a34a 100%); }
+        .gift-tall-blue {
+            width: 30px;
+            height: 42px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+            z-index: 1;
+            margin-right: -6px;
+        }
+        .gift-tall-blue .gift-ribbon.vertical,
+        .gift-tall-blue .gift-ribbon.horizontal { background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%); }
+        .gift-tall-blue .gift-bow-left { background: radial-gradient(circle at 30% 30%, #fde047 0%, #fbbf24 50%, #f59e0b 100%); }
+        .gift-tall-blue .gift-bow-right { background: radial-gradient(circle at 30% 30%, #fde047 0%, #fbbf24 50%, #f59e0b 100%); }
+        .gift-medium-green {
+            width: 34px;
+            height: 28px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+            z-index: 2;
+        }
+        .gift-medium-green .gift-ribbon.vertical,
+        .gift-medium-green .gift-ribbon.horizontal { background: linear-gradient(90deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%); }
+        .gift-medium-green .gift-bow-left { background: radial-gradient(circle at 30% 30%, #f87171 0%, #ef4444 50%, #dc2626 100%); }
+        .gift-medium-green .gift-bow-right { background: radial-gradient(circle at 30% 30%, #f87171 0%, #ef4444 50%, #dc2626 100%); }
+        .gift-ribbon.vertical {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 100%;
+        }
+        .gift-ribbon.horizontal {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 6px;
+        }
+        .gift-bow-left, .gift-bow-right {
+            position: absolute;
+            top: -8px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+        }
+        .gift-bow-left {
+            left: 50%;
+            transform: translateX(-90%);
+        }
+        .gift-bow-right {
+            left: 50%;
+            transform: translateX(-10%);
+        }
+
+        /* Components Button */
+        .components-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(180deg, #dc3545 0%, #c82333 50%, #b71c1c 100%);
+            color: white;
+            border-radius: 8px;
+            font-family: 'Boogaloo', cursive;
+            font-size: 1rem;
+            text-decoration: none;
+            box-shadow:
+                inset 0 1px 2px rgba(255,255,255,0.25),
+                inset 0 -2px 4px rgba(0,0,0,0.15),
+                0 3px 6px rgba(0,0,0,0.2);
+            z-index: 50;
+            transition: transform 0.1s ease, filter 0.1s ease;
+        }
+        .components-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+        .components-btn:active {
+            transform: translateY(1px);
+            filter: brightness(0.95);
+        }
+
+        /* --- 3D BUTTONS (RESTORED HEIGHT) --- */
+        .tab-button, .action-button-generate, .action-button-clear, #share-btn {
+            font-family: 'Boogaloo', cursive; letter-spacing: 0.03em; transition: transform 0.1s ease, border-width 0.1s ease, box-shadow 0.1s ease;
+            position: relative; overflow: hidden; border-radius: 0.75rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Updated height logic for action buttons to ensure they aren't "short" */
+        .action-button-generate {
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 3.5rem;
+        }
+        
+        /* Textarea wrapper for clear button positioning */
+        .textarea-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        
+        .textarea-wrapper textarea {
+            padding-right: 40px;
+        }
+        
+        .clear-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            height: 28px;
+            padding: 0 12px;
+            border: none;
+            background: rgba(185, 28, 28, 0.15);
+            border-radius: 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #b91c1c;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .clear-btn:hover {
+            background: rgba(185, 28, 28, 0.3);
+            color: #991b1b;
+        }
+        
+        .clear-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Controls row - all buttons in one row */
+        .controls-row {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        /* Unified button base style */
+        .unified-btn {
+            font-family: 'Boogaloo', cursive;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.25),
+                inset 0 -2px 4px rgba(0,0,0,0.15),
+                0 3px 6px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .unified-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.3),
+                inset 0 -2px 4px rgba(0,0,0,0.1),
+                0 5px 10px rgba(0,0,0,0.25);
+            filter: brightness(1.08);
+        }
+        
+        .unified-btn:active {
+            transform: translateY(1px);
+            box-shadow: 
+                inset 0 2px 4px rgba(0,0,0,0.2),
+                0 1px 2px rgba(0,0,0,0.15);
+            filter: brightness(0.95);
+        }
+        
+        /* Red button variant (style selectors) */
+        .unified-btn.btn-red {
+            background: linear-gradient(
+                180deg,
+                #dc3545 0%,
+                #c82333 50%,
+                #b71c1c 100%
+            );
+        }
+        
+        .unified-btn.btn-red.active {
+            background: linear-gradient(
+                180deg,
+                #ff6b6b 0%,
+                #ee5a5a 50%,
+                #dc3545 100%
+            );
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.4),
+                inset 0 -2px 4px rgba(0,0,0,0.1),
+                0 0 0 3px rgba(220,53,69,0.3),
+                0 3px 6px rgba(0,0,0,0.2);
+        }
+        
+        /* Green button variant (generate) */
+        .unified-btn.btn-green {
+            background: linear-gradient(
+                180deg,
+                #28a745 0%,
+                #218838 50%,
+                #1e7e34 100%
+            );
+        }
+        
+        /* Gray button variant (close/cancel) */
+        .unified-btn.btn-gray {
+            background: linear-gradient(
+                180deg,
+                #6c757d 0%,
+                #5a6268 50%,
+                #4e555b 100%
+            );
+        }
+        
+        /* Style button specific sizing */
+        .tab-button-mini {
+            min-width: 120px;
+            flex: 1;
+        }
+        
+        /* Postcard theme selector buttons */
+        .postcard-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .postcard-btn {
+            font-family: 'Boogaloo', cursive;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.25),
+                inset 0 -2px 4px rgba(0,0,0,0.15),
+                0 3px 6px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 140px;
+            flex: 1;
+            background: linear-gradient(
+                180deg,
+                #dc3545 0%,
+                #c82333 50%,
+                #b71c1c 100%
+            );
+        }
+        
+        .postcard-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.3),
+                inset 0 -2px 4px rgba(0,0,0,0.1),
+                0 5px 10px rgba(0,0,0,0.25);
+            filter: brightness(1.08);
+        }
+        
+        .postcard-btn:active {
+            transform: translateY(1px);
+            box-shadow: 
+                inset 0 2px 4px rgba(0,0,0,0.2),
+                0 1px 2px rgba(0,0,0,0.15);
+            filter: brightness(0.95);
+        }
+        
+        .postcard-btn.active {
+            background: linear-gradient(
+                180deg,
+                #ff6b6b 0%,
+                #ee5a5a 50%,
+                #dc3545 100%
+            );
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.4),
+                inset 0 -2px 4px rgba(0,0,0,0.1),
+                0 0 0 3px rgba(220,53,69,0.3),
+                0 3px 6px rgba(0,0,0,0.2);
+        }
+        
+        .postcard-btn .postcard-icon {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
+        }
+        
+        .postcard-btn .postcard-title {
+            font-family: 'Boogaloo', cursive;
+            font-size: 0.95rem;
+            color: white;
+        }
+        
+        .postcard-btn .postcard-tagline {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.8);
+            font-style: italic;
+        }
+
+        /* Generate button sizing */
+        .action-button-generate {
+            min-width: 120px;
+            flex: 1;
+        }
+        
+        /* Half-width buttons for shuffle/generate row */
+        .action-button-half {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .bg-red-3d { background: var(--btn-red-gradient) !important; border-bottom: 4px solid #7F1D1D !important; color: white !important; }
+        .bg-red-3d:hover { filter: brightness(1.05); }
+        .bg-red-3d:active { box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important; }
+        
+        .bg-green-3d { background: var(--btn-green-gradient) !important; border-bottom: 4px solid #044031 !important; color: white !important; }
+        .bg-green-3d:hover { filter: brightness(1.05); box-shadow: 0 6px 12px rgba(6, 95, 70, 0.3); }
+        .bg-green-3d:active { border-bottom-width: 1px !important; transform: translateY(3px); box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important; }
+
+        .bg-gray-3d { background: var(--btn-gray-gradient) !important; border-bottom: 4px solid #4B5563 !important; color: #1F2937 !important; }
+        .bg-gray-3d:active { border-bottom-width: 1px !important; transform: translateY(3px); }
+
+        .tab-button.active { background: var(--btn-white-gradient) !important; border: 2px solid var(--primary-red) !important; border-bottom: 3px solid var(--primary-red) !important; color: var(--primary-red) !important; transform: translateY(2px); }
+        #share-btn { 
+            font-size: 1.4rem; 
+            padding: 1rem 2rem; 
+            min-width: 260px; 
+            transition: all 0.2s ease;
+            background: linear-gradient(
+                180deg,
+                rgba(255,255,255,0.15) 0%,
+                rgba(255,255,255,0.05) 50%,
+                rgba(0,0,0,0.05) 100%
+            ),
+            linear-gradient(
+                180deg,
+                #dc4444 0%,
+                #c62828 15%,
+                #b71c1c 50%,
+                #c62828 85%,
+                #dc4444 100%
+            ) !important;
+            border: none !important;
+            border-radius: 6px;
+            box-shadow: 
+                inset 0 2px 3px rgba(255,255,255,0.35),
+                inset 0 -2px 4px rgba(0,0,0,0.2),
+                inset 2px 0 3px rgba(0,0,0,0.08),
+                inset -2px 0 3px rgba(0,0,0,0.08),
+                0 3px 6px rgba(0,0,0,0.25);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            color: white !important;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            position: relative;
+        }
+        
+        .btn-pin {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffd700 0%, #daa520 30%, #b8860b 60%, #8b6914 100%);
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.4),
+                inset 0 2px 3px rgba(255,255,255,0.5),
+                inset 0 -1px 2px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        .btn-pin::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, #fff8dc 0%, #ffd700 50%, #daa520 100%);
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.8);
+        }
+        .btn-pin-tl { top: -5px; left: -5px; }
+        .btn-pin-tr { top: -5px; right: -5px; }
+        .btn-pin-bl { bottom: -5px; left: -5px; }
+        .btn-pin-br { bottom: -5px; right: -5px; }
+        
+        /* String Lights */
+        .string-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .light-cord {
+            position: absolute;
+            background: linear-gradient(180deg, #2d4a2d 0%, #1a3a1a 50%, #2d4a2d 100%);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Cord coming from top of sign - removed */
+        
+        /* Top horizontal cord - subtle wave */
+        .cord-top {
+            top: -7px;
+            left: -3px;
+            right: -3px;
+            height: 4px;
+            border-radius: 40% 60% 60% 40% / 100% 100% 100% 100%;
+        }
+        
+        /* Right vertical cord - subtle wave */
+        .cord-right {
+            top: -3px;
+            right: -7px;
+            width: 4px;
+            bottom: -3px;
+            border-radius: 100% 100% 100% 100% / 40% 60% 60% 40%;
+        }
+        
+        /* Bottom horizontal cord - subtle wave */
+        .cord-bottom {
+            bottom: -7px;
+            left: -3px;
+            right: -3px;
+            height: 4px;
+            border-radius: 60% 40% 40% 60% / 100% 100% 100% 100%;
+        }
+        
+        /* Left vertical cord - subtle wave */
+        .cord-left {
+            top: -3px;
+            left: -7px;
+            width: 4px;
+            bottom: -3px;
+            border-radius: 100% 100% 100% 100% / 60% 40% 40% 60%;
+        }
+        
+        /* Corner pieces */
+        .cord-corner {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 4px solid transparent;
+            background: transparent;
+            box-sizing: border-box;
+        }
+        
+        .cord-corner-tl {
+            top: -9px;
+            left: -9px;
+            border-top: 4px solid #1f3f1f;
+            border-left: 4px solid #1f3f1f;
+            border-radius: 8px 0 0 0;
+        }
+        
+        .cord-corner-tr {
+            top: -9px;
+            right: -9px;
+            border-top: 4px solid #1f3f1f;
+            border-right: 4px solid #1f3f1f;
+            border-radius: 0 8px 0 0;
+        }
+        
+        .cord-corner-br {
+            bottom: -9px;
+            right: -9px;
+            border-bottom: 4px solid #1f3f1f;
+            border-right: 4px solid #1f3f1f;
+            border-radius: 0 0 8px 0;
+        }
+        
+        .cord-corner-bl {
+            bottom: -9px;
+            left: -9px;
+            border-bottom: 4px solid #1f3f1f;
+            border-left: 4px solid #1f3f1f;
+            border-radius: 0 0 0 8px;
+        }
+        
+        /* Light bulb base style */
+        .light-bulb {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 
+                inset 0 -3px 4px rgba(0,0,0,0.2),
+                inset 0 2px 3px rgba(255,255,255,0.5);
+            z-index: 6;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        #share-btn:hover .light-bulb {
+            box-shadow: 
+                0 0 8px 2px currentColor,
+                0 0 12px 4px currentColor,
+                inset 0 -3px 4px rgba(0,0,0,0.2),
+                inset 0 2px 3px rgba(255,255,255,0.5);
+        }
+        
+        .light-bulb::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(180deg, #3d5a3d 0%, #2d4a2d 100%);
+            border-radius: 1px;
+        }
+        
+        /* Light colors */
+        .light-red { 
+            background: radial-gradient(ellipse at 30% 25%, #ff6b6b 0%, #ff4444 40%, #cc0000 100%);
+            color: rgba(255, 68, 68, 0.6);
+        }
+        .light-blue { 
+            background: radial-gradient(ellipse at 30% 25%, #6bb5ff 0%, #4499ff 40%, #0066cc 100%);
+            color: rgba(68, 153, 255, 0.6);
+        }
+        .light-green { 
+            background: radial-gradient(ellipse at 30% 25%, #6bff6b 0%, #44ff44 40%, #00cc00 100%);
+            color: rgba(68, 255, 68, 0.6);
+        }
+        .light-yellow { 
+            background: radial-gradient(ellipse at 30% 25%, #ffff6b 0%, #ffff44 40%, #cccc00 100%);
+            color: rgba(255, 255, 68, 0.6);
+        }
+        .light-orange { 
+            background: radial-gradient(ellipse at 30% 25%, #ffb86b 0%, #ffa544 40%, #cc7700 100%);
+            color: rgba(255, 165, 68, 0.6);
+        }
+        .light-purple { 
+            background: radial-gradient(ellipse at 30% 25%, #b86bff 0%, #a544ff 40%, #7700cc 100%);
+            color: rgba(165, 68, 255, 0.6);
+        }
+        
+        /* Position lights along the cord path */
+        .light-top-1 { top: -18px; left: 10%; transform: rotate(180deg); }
+        .light-top-2 { top: -18px; left: 36%; transform: rotate(180deg); }
+        .light-top-3 { top: -18px; left: 63%; transform: rotate(180deg); }
+        .light-top-4 { top: -18px; left: 90%; transform: rotate(180deg); }
+        
+        .light-right-1 { top: 20%; right: -17px; transform: rotate(-90deg); }
+        .light-right-2 { top: 50%; right: -17px; transform: rotate(-90deg); }
+        .light-right-3 { top: 80%; right: -17px; transform: rotate(-90deg); }
+        
+        .light-bottom-1 { bottom: -18px; left: 90%; }
+        .light-bottom-2 { bottom: -18px; left: 63%; }
+        .light-bottom-3 { bottom: -18px; left: 36%; }
+        .light-bottom-4 { bottom: -18px; left: 10%; }
+        
+        .light-left-1 { bottom: 20%; left: -17px; transform: rotate(90deg); }
+        .light-left-2 { bottom: 50%; left: -17px; transform: rotate(90deg); }
+        .light-left-3 { bottom: 80%; left: -17px; transform: rotate(90deg); }
+        
+        #share-btn::before {
+            display: none;
+        }
+        
+        #share-btn:hover { 
+            background: linear-gradient(
+                180deg,
+                rgba(255,255,255,0.25) 0%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(0,0,0,0.02) 100%
+            ),
+            linear-gradient(
+                180deg,
+                #e04a4a 0%,
+                #d32f2f 15%,
+                #c62828 50%,
+                #d32f2f 85%,
+                #e04a4a 100%
+            ) !important;
+        }
+        
+        #share-btn:active { 
+            box-shadow: 
+                inset 0 2px 4px rgba(0,0,0,0.2),
+                inset 0 -1px 2px rgba(255,255,255,0.1),
+                0 1px 3px rgba(0,0,0,0.2) !important;
+        }
+
+        /* Wooden Sign Container */
+        /* Wooden Pole - REMOVED */
+
+        .wooden-sign-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: -45px;
+            z-index: 1;
+        }
+
+        /* Tinsel Ropes */
+        .tinsel-ropes {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tinsel-rope {
+            width: 12px;
+            height: 60px;
+            background: linear-gradient(180deg, 
+                #C0C0C0 0%, #2d5a2d 8%, #FFD700 16%, #C0C0C0 24%, 
+                #2d5a2d 32%, #FFD700 40%, #C0C0C0 48%, 
+                #2d5a2d 56%, #FFD700 64%, #C0C0C0 72%, 
+                #2d5a2d 80%, #FFD700 88%, #C0C0C0 100%);
+            border-radius: 6px;
+            position: absolute;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tinsel-rope:first-child {
+            left: calc(50% - 140px);
+            height: 72px;
+        }
+
+        .tinsel-rope:last-child {
+            right: calc(50% - 140px);
+        }
+
+        .tinsel-rope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.4) 0%, 
+                rgba(255,255,255,0.1) 50%, 
+                rgba(0,0,0,0.1) 100%);
+            border-radius: 6px;
+        }
+
+        /* Fuzzy tinsel effect */
+        .tinsel-rope::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -4px;
+            right: -4px;
+            bottom: -2px;
+            background: radial-gradient(circle at 20% 20%, rgba(192,192,192,0.3) 1px, transparent 1px),
+                        radial-gradient(circle at 80% 40%, rgba(45,90,45,0.3) 1px, transparent 1px),
+                        radial-gradient(circle at 40% 60%, rgba(255,215,0,0.3) 1px, transparent 1px),
+                        radial-gradient(circle at 60% 80%, rgba(192,192,192,0.3) 1px, transparent 1px);
+            background-size: 8px 8px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        /* Top connector hardware (attaches to candy cane frame) */
+        .rope-connector-top {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 16px;
+            background: linear-gradient(180deg, 
+                #9a9a9a 0%, 
+                #888 15%,
+                #666 50%, 
+                #555 85%,
+                #444 100%);
+            border-radius: 4px;
+            box-shadow: 
+                0 3px 4px rgba(0,0,0,0.5),
+                inset 0 2px 3px rgba(255,255,255,0.4),
+                inset 0 -2px 3px rgba(0,0,0,0.3);
+            z-index: 10;
+            border: 1px solid #3a3a3a;
+        }
+
+        .rope-connector-top::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 30% 30%, 
+                #666 0%, 
+                #444 40%, 
+                #333 70%,
+                #222 100%);
+            border-radius: 50%;
+            box-shadow: 
+                inset 1px 1px 2px rgba(255,255,255,0.3),
+                inset -1px -1px 2px rgba(0,0,0,0.5),
+                0 1px 2px rgba(0,0,0,0.3);
+            border: 1px solid #222;
+        }
+        
+        .rope-connector-top::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            height: 4px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* Bottom connector hardware (attaches to wooden sign) */
+        .rope-connector-bottom {
+            position: absolute;
+            bottom: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 16px;
+            background: linear-gradient(180deg, 
+                #9a9a9a 0%, 
+                #888 15%,
+                #666 50%, 
+                #555 85%,
+                #444 100%);
+            border-radius: 4px;
+            box-shadow: 
+                0 3px 4px rgba(0,0,0,0.5),
+                inset 0 2px 3px rgba(255,255,255,0.4),
+                inset 0 -2px 3px rgba(0,0,0,0.3);
+            z-index: 10;
+            border: 1px solid #3a3a3a;
+        }
+
+        .rope-connector-bottom::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 30% 30%, 
+                #666 0%, 
+                #444 40%, 
+                #333 70%,
+                #222 100%);
+            border-radius: 50%;
+            box-shadow: 
+                inset 1px 1px 2px rgba(255,255,255,0.3),
+                inset -1px -1px 2px rgba(0,0,0,0.5),
+                0 1px 2px rgba(0,0,0,0.3);
+            border: 1px solid #222;
+        }
+        
+        .rope-connector-bottom::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            height: 4px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* Wooden Sign */
+        .wooden-sign {
+            position: relative;
+            background: 
+                /* Horizontal plank lines - deeper grooves */
+                repeating-linear-gradient(
+                    0deg,
+                    transparent 0px,
+                    transparent 26px,
+                    rgba(101,67,33,0.4) 26px,
+                    rgba(60,40,20,0.6) 28px,
+                    rgba(139,90,43,0.2) 29px,
+                    transparent 30px
+                ),
+                /* Wood grain variation */
+                repeating-linear-gradient(
+                    178deg,
+                    transparent 0px,
+                    transparent 40px,
+                    rgba(160,120,70,0.15) 40px,
+                    rgba(160,120,70,0.15) 42px,
+                    transparent 42px,
+                    transparent 80px
+                ),
+                /* Base wood color - richer tones */
+                linear-gradient(90deg, 
+                    #C4956A 0%, 
+                    #D9B07A 10%,
+                    #E8C99B 25%, 
+                    #D4A574 40%,
+                    #C9956A 55%,
+                    #D9B07A 70%,
+                    #E8C99B 85%,
+                    #D4A574 100%);
+            padding: 25px 40px 30px 40px;
+            border-radius: 8px;
+            box-shadow: 
+                /* Outer shadow */
+                0 8px 16px rgba(0,0,0,0.4),
+                0 4px 8px rgba(0,0,0,0.3),
+                /* Inner highlights and shadows for depth */
+                inset 0 2px 4px rgba(255,255,255,0.4),
+                inset 0 -3px 6px rgba(0,0,0,0.25),
+                inset 3px 0 6px rgba(0,0,0,0.1),
+                inset -3px 0 6px rgba(0,0,0,0.1);
+            border: 3px solid;
+            border-color: #8B6914 #6B4E0A #5D4E37 #7A5C1A;
+            margin-top: 55px;
+            z-index: 4;
+            transform: rotate(2deg);
+            transform-origin: top center;
+        }
+
+        /* Wood grain texture overlay */
+        .wooden-sign::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                /* Fine grain noise */
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"),
+                /* Knot holes */
+                radial-gradient(ellipse 8px 6px at 15% 40%, rgba(101,67,33,0.3) 0%, transparent 70%),
+                radial-gradient(ellipse 6px 5px at 75% 65%, rgba(101,67,33,0.25) 0%, transparent 70%),
+                /* Subtle horizontal grain lines */
+                repeating-linear-gradient(
+                    1deg,
+                    transparent 0px,
+                    transparent 3px,
+                    rgba(139,90,43,0.06) 3px,
+                    rgba(139,90,43,0.06) 4px,
+                    transparent 4px,
+                    transparent 7px
+                );
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0.5;
+            mix-blend-mode: multiply;
+        }
+        
+        /* Top highlight reflection */
+        .wooden-sign > .sign-bracket ~ *:not(.sign-bracket):first-of-type::before,
+        .wooden-sign > button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 5px 5px 0 0;
+            pointer-events: none;
+        }
+
+        /* Metal brackets on top of wooden sign */
+        .sign-bracket {
+            position: absolute;
+            top: -14px;
+            width: 22px;
+            height: 16px;
+            background: linear-gradient(180deg, 
+                #9a9a9a 0%, 
+                #888 15%,
+                #666 50%, 
+                #555 85%,
+                #444 100%);
+            border-radius: 4px;
+            box-shadow: 
+                0 3px 4px rgba(0,0,0,0.5),
+                inset 0 2px 3px rgba(255,255,255,0.4),
+                inset 0 -2px 3px rgba(0,0,0,0.3);
+            z-index: 10;
+            border: 1px solid #3a3a3a;
+        }
+        
+        .sign-bracket::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 30% 30%, 
+                #666 0%, 
+                #444 40%, 
+                #333 70%,
+                #222 100%);
+            border-radius: 50%;
+            box-shadow: 
+                inset 1px 1px 2px rgba(255,255,255,0.3),
+                inset -1px -1px 2px rgba(0,0,0,0.5),
+                0 1px 2px rgba(0,0,0,0.3);
+            border: 1px solid #222;
+        }
+        
+        .sign-bracket::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            height: 4px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 2px 2px 0 0;
+        }
+        
+        .sign-bracket-left {
+            left: calc(50% - 146px);
+        }
+        
+        .sign-bracket-right {
+            right: calc(50% - 146px);
+        }
+
+        .wooden-sign #share-btn {
+            position: relative;
+            z-index: 2;
+            overflow: visible;
+        }
+        
+        .wooden-sign {
+            overflow: visible;
+        }
+        
+        .button-wrapper {
+            height: 60px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            overflow: visible;
+        }
+        
+        /* Wooden Letters Styling */
+        .wooden-letters {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: #3D2817;
+            position: relative;
+            display: block;
+            text-align: center;
+            margin-top: -8px;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .wooden-letters span {
+            /* Etched/engraved effect - darker color that looks carved into wood */
+            color: #2a1a0a;
+            text-shadow: 
+                /* Inner shadow - light on bottom right to simulate depth */
+                1px 1px 0px rgba(255, 235, 205, 0.4),
+                /* Dark shadow on top left for carved-in look */
+                -1px -1px 1px rgba(0, 0, 0, 0.5),
+                /* Subtle inner glow */
+                0 0 2px rgba(0, 0, 0, 0.3),
+                /* Deeper shadow for more depth */
+                -0.5px -0.5px 0px rgba(0, 0, 0, 0.4),
+                0.5px 0.5px 0px rgba(210, 180, 140, 0.3);
+            display: inline-block;
+            position: relative;
+        }
+        
+        .wooden-line-1 {
+            font-size: 1.5rem;
+        }
+        
+        .wooden-line-2 {
+            font-size: 1.1rem;
+        }
+        
+        /* Sign Footer Styling */
+        .sign-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 2px solid rgba(90,60,30,0.2);
+        }
+        
+        .wood-text-small {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2a1a0a;
+            text-shadow: 
+                1px 1px 0px rgba(255, 235, 205, 0.4),
+                -1px -1px 1px rgba(0, 0, 0, 0.5),
+                0 0 2px rgba(0, 0, 0, 0.3),
+                -0.5px -0.5px 0px rgba(0, 0, 0, 0.4),
+                0.5px 0.5px 0px rgba(210, 180, 140, 0.3);
+        }
+        
+        .wood-text-brand {
+            font-family: 'Limelight', cursive;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2a1a0a;
+            text-shadow: 
+                1px 1px 0px rgba(255, 235, 205, 0.4),
+                -1px -1px 1px rgba(0, 0, 0, 0.5),
+                0 0 2px rgba(0, 0, 0, 0.3),
+                -0.5px -0.5px 0px rgba(0, 0, 0, 0.4),
+                0.5px 0.5px 0px rgba(210, 180, 140, 0.3);
+        }
+        
+        .wood-divider {
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(90,60,30,0.3) 20%,
+                rgba(90,60,30,0.4) 50%,
+                rgba(90,60,30,0.3) 80%,
+                transparent 100%
+            );
+            margin: 0 8px;
+        }
+        
+        .wood-social-links {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .wood-social-btn {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            background: transparent;
+            border: 2px solid rgba(42, 26, 10, 0.4);
+            border-radius: 4px;
+            color: #2a1a0a;
+            text-decoration: none;
+            text-shadow: 
+                1px 1px 0px rgba(255, 235, 205, 0.4),
+                -1px -1px 1px rgba(0, 0, 0, 0.5),
+                0 0 2px rgba(0, 0, 0, 0.3),
+                -0.5px -0.5px 0px rgba(0, 0, 0, 0.4),
+                0.5px 0.5px 0px rgba(210, 180, 140, 0.3);
+            box-shadow: 
+                inset 0 1px 2px rgba(0,0,0,0.1),
+                0 1px 0 rgba(255,255,255,0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .wood-social-btn:hover {
+            background: linear-gradient(
+                180deg,
+                rgba(255,255,255,0.25) 0%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(0,0,0,0.02) 100%
+            );
+            transform: translateY(-1px);
+            box-shadow: 
+                inset 0 1px 2px rgba(255,255,255,0.4),
+                inset 0 -1px 2px rgba(0,0,0,0.1),
+                0 3px 6px rgba(0,0,0,0.25);
+        }
+        
+        .wood-social-btn:active {
+            transform: translateY(1px);
+            box-shadow: 
+                inset 0 1px 3px rgba(0,0,0,0.2),
+                0 1px 2px rgba(0,0,0,0.15);
+        }
+
+        .candy-cane-border-fixed { 
+            width: 100%; 
+            height: 100%; 
+            padding: 18px; 
+            background: 
+                /* Subtle glossy highlight overlay */
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.15) 0%,
+                    rgba(255,255,255,0.05) 10%,
+                    transparent 20%
+                ),
+                /* Candy cane stripes */
+                repeating-linear-gradient(
+                    -45deg, 
+                    #ffffff 0px, 
+                    #fff8f8 8px,
+                    #fff5f5 10px,
+                    #ffffff 12px, 
+                    #ffffff 20px, 
+                    #dd2020 20px,
+                    #cc0000 22px,
+                    #bb0000 28px,
+                    #cc0000 32px,
+                    #ee3030 38px,
+                    #dd2020 40px
+                ); 
+            border-radius: 2rem; 
+            position: relative; 
+            box-shadow: 
+                /* Outer glow and shadow */
+                0 15px 35px rgba(0, 0, 0, 0.35),
+                0 5px 15px rgba(0, 0, 0, 0.25),
+                /* Inner shadow for depth */
+                inset 0 1px 2px rgba(255,255,255,0.3),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.15),
+                inset 4px 0 8px rgba(0, 0, 0, 0.08),
+                inset -4px 0 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            border: 3px solid;
+            border-color: #ffdddd #cc0000 #990000 #ee4444;
+        }
+        
+        .candy-cane-border-fixed::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            height: 50%; 
+            background: linear-gradient(
+                180deg, 
+                rgba(255, 255, 255, 0.12) 0%, 
+                rgba(255, 255, 255, 0.05) 20%,
+                rgba(255, 255, 255, 0) 100%
+            ); 
+            border-radius: 2rem 2rem 0 0;
+            z-index: 5; 
+            pointer-events: none; 
+        }
+        
+        .candy-cane-border-fixed::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            border-radius: 1.7rem;
+            box-shadow: 
+                inset 0 0 15px rgba(0,0,0,0.1),
+                inset 0 0 30px rgba(0,0,0,0.05);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .inner-canvas { width: 100%; height: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: inset 0 4px 8px rgba(0,0,0,0.5); position: relative; background: #fff; }
+        .square-frame { aspect-ratio: 1 / 1; max-width: 550px; margin: 0 auto; }
+        .frosted-glass { background-color: rgba(255, 255, 255, 0.35) !important; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .social-link { transition: all 0.3s ease; color: var(--secondary-green); border-color: var(--secondary-green); }
+        .social-link:hover { color: var(--primary-red) !important; border-color: var(--primary-red) !important; transform: translateY(-2px); }
+
+        .modal-box-frame { 
+            width: 100%; 
+            max-width: 32rem; 
+            padding: 18px; 
+            background: 
+                /* Glossy highlight overlay */
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.4) 0%,
+                    rgba(255,255,255,0.1) 15%,
+                    transparent 30%
+                ),
+                /* Candy cane stripes */
+                repeating-linear-gradient(
+                    -45deg, 
+                    #ffffff 0px, 
+                    #ffffff 8px,
+                    #ffeeee 8px,
+                    #ffeeee 10px,
+                    #ffffff 10px, 
+                    #ffffff 20px, 
+                    #dd2020 20px,
+                    #cc0000 22px,
+                    #bb0000 28px,
+                    #cc0000 32px,
+                    #ee3030 38px,
+                    #dd2020 40px
+                ); 
+            border-radius: 2rem; 
+            position: relative; 
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.35),
+                0 5px 15px rgba(0, 0, 0, 0.25),
+                inset 0 2px 4px rgba(255,255,255,0.5),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.15),
+                inset 4px 0 8px rgba(0, 0, 0, 0.08),
+                inset -4px 0 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden; 
+            height: auto;
+            border: 3px solid;
+            border-color: #ffdddd #cc0000 #990000 #ee4444;
+        }
+        .modal-box-frame::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            height: 40%; 
+            background: linear-gradient(
+                180deg, 
+                rgba(255, 255, 255, 0.35) 0%, 
+                rgba(255, 255, 255, 0.1) 80%, 
+                rgba(255, 255, 255, 0) 100%
+            ); 
+            border-radius: 2rem 2rem 0 0; 
+            pointer-events: none; 
+            z-index: 5; 
+        }
+        .modal-inner-content { width: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: inset 0 4px 8px rgba(0,0,0,0.3); position: relative; background: white; padding: 2rem; z-index: 2; }
+    </style>
+</head>
+<body class="text-gray-800 winter-background">
+    <div class="snow-layer">
+        <div class="snowflakes" aria-hidden="true">
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+            <div class="snowflake"><div class="inner">❅</div></div>
+        </div>
+    </div>
+    
+    <div class="hill-layer"></div>
+
+    <div class="scenery-layer">
+        <div class="pine-tree pine-1"><svg viewBox="0 0 60 100"><defs><linearGradient id="tree1a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#059669"/><stop offset="50%" stop-color="#047857"/><stop offset="100%" stop-color="#065F46"/></linearGradient><linearGradient id="tree1b" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#047857"/><stop offset="50%" stop-color="#065F46"/><stop offset="100%" stop-color="#064E3B"/></linearGradient><linearGradient id="trunk1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5D4E37"/><stop offset="50%" stop-color="#4A3828"/><stop offset="100%" stop-color="#3D2817"/></linearGradient></defs><path d="M30 10L55 55H5L30 10Z" fill="url(#tree1a)"/><path d="M30 35L58 90H2L30 35Z" fill="url(#tree1b)"/><rect x="25" y="90" width="10" height="10" fill="url(#trunk1)"/></svg></div>
+        <div class="pine-tree pine-2"><svg viewBox="0 0 60 100"><defs><linearGradient id="tree2a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#10B981"/><stop offset="50%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient><linearGradient id="tree2b" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#059669"/><stop offset="50%" stop-color="#047857"/><stop offset="100%" stop-color="#065F46"/></linearGradient><linearGradient id="trunk2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5D4E37"/><stop offset="50%" stop-color="#4A3828"/><stop offset="100%" stop-color="#3D2817"/></linearGradient></defs><path d="M30 10L50 50H10L30 10Z" fill="url(#tree2a)"/><path d="M30 30L55 80H5L30 30Z" fill="url(#tree2b)"/><rect x="26" y="80" width="8" height="15" fill="url(#trunk2)"/></svg></div>
+        <div class="log-cabin"><div class="cabin-chimney"><div class="chimney-smoke"><div class="smoke-puff"></div><div class="smoke-puff"></div><div class="smoke-puff"></div><div class="smoke-puff"></div></div></div><div class="cabin-roof"></div><div class="cabin-walls"><div class="cabin-window"><div class="window-tree"></div></div><div class="cabin-door"></div><div class="woodpile"><div class="log log-1"></div><div class="log log-2"></div><div class="log log-3"></div><div class="log log-4"></div><div class="log log-5"></div><div class="log log-6"></div></div></div></div>
+        <div class="pine-tree pine-3"><svg viewBox="0 0 60 100"><defs><linearGradient id="tree3a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#10B981"/><stop offset="50%" stop-color="#059669"/><stop offset="100%" stop-color="#047857"/></linearGradient><linearGradient id="tree3b" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#059669"/><stop offset="50%" stop-color="#047857"/><stop offset="100%" stop-color="#065F46"/></linearGradient><linearGradient id="trunk3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5D4E37"/><stop offset="50%" stop-color="#4A3828"/><stop offset="100%" stop-color="#3D2817"/></linearGradient></defs><path d="M30 10L50 50H10L30 10Z" fill="url(#tree3a)"/><path d="M30 30L55 80H5L30 30Z" fill="url(#tree3b)"/><rect x="26" y="80" width="8" height="15" fill="url(#trunk3)"/></svg></div>
+        <div class="pine-tree pine-4"><svg viewBox="0 0 60 100"><defs><linearGradient id="tree4a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#059669"/><stop offset="50%" stop-color="#047857"/><stop offset="100%" stop-color="#065F46"/></linearGradient><linearGradient id="tree4b" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#047857"/><stop offset="50%" stop-color="#065F46"/><stop offset="100%" stop-color="#064E3B"/></linearGradient><linearGradient id="trunk4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#5D4E37"/><stop offset="50%" stop-color="#4A3828"/><stop offset="100%" stop-color="#3D2817"/></linearGradient></defs><path d="M30 10L50 50H10L30 10Z" fill="url(#tree4a)"/><path d="M30 30L55 80H5L30 30Z" fill="url(#tree4b)"/><rect x="26" y="80" width="8" height="15" fill="url(#trunk4)"/></svg></div>
+        <div class="pine-tree pine-5"><svg viewBox="0 0 60 100"><defs><linearGradient id="tree5a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#047857"/><stop offset="50%" stop-color="#065F46"/><stop offset="100%" stop-color="#064E3B"/></linearGradient><linearGradient id="tree5b" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#065F46"/><stop offset="50%" stop-color="#064E3B"/><stop offset="100%" stop-color="#053D32"/></linearGradient></defs><path d="M30 10L50 50H10L30 10Z" fill="url(#tree5a)"/><path d="M30 30L55 80H5L30 30Z" fill="url(#tree5b)"/><rect x="26" y="80" width="8" height="15" fill="#3D2817"/></svg></div>
+        <div class="pine-tree pine-6"><svg viewBox="0 0 60 100"><defs><linearGradient id="tree6a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#065F46"/><stop offset="50%" stop-color="#064E3B"/><stop offset="100%" stop-color="#053D32"/></linearGradient><linearGradient id="tree6b" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#064E3B"/><stop offset="50%" stop-color="#053D32"/><stop offset="100%" stop-color="#042F26"/></linearGradient></defs><path d="M30 10L50 50H10L30 10Z" fill="url(#tree6a)"/><path d="M30 30L55 80H5L30 30Z" fill="url(#tree6b)"/><rect x="26" y="80" width="8" height="15" fill="#3D2817"/></svg></div>
+        <div class="pine-tree pine-7"><svg viewBox="0 0 60 100"><defs><linearGradient id="tree7a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#059669"/><stop offset="50%" stop-color="#047857"/><stop offset="100%" stop-color="#065F46"/></linearGradient><linearGradient id="tree7b" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#047857"/><stop offset="50%" stop-color="#065F46"/><stop offset="100%" stop-color="#064E3B"/></linearGradient></defs><path d="M30 10L50 50H10L30 10Z" fill="url(#tree7a)"/><path d="M30 30L55 80H5L30 30Z" fill="url(#tree7b)"/><rect x="26" y="80" width="8" height="15" fill="#3D2817"/></svg></div>
+        <div class="pine-tree pine-8"><svg viewBox="0 0 60 100"><defs><linearGradient id="tree8a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#047857"/><stop offset="50%" stop-color="#065F46"/><stop offset="100%" stop-color="#064E3B"/></linearGradient><linearGradient id="tree8b" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#065F46"/><stop offset="50%" stop-color="#064E3B"/><stop offset="100%" stop-color="#053D32"/></linearGradient></defs><path d="M30 10L50 50H10L30 10Z" fill="url(#tree8a)"/><path d="M30 30L55 80H5L30 30Z" fill="url(#tree8b)"/><rect x="26" y="80" width="8" height="15" fill="#3D2817"/></svg></div>
+    </div>
+
+    <div class="snowman-container">
+        <div class="snowman">
+            <div class="snowman-base-ball"></div>
+            <div class="snowman-mid-ball"><div class="snowman-button"></div><div class="snowman-button"></div></div>
+            <div class="snowman-head-ball"><div class="snowman-hat"><div class="hat-top"></div><div class="hat-brim"></div></div><div class="snowman-eye left"></div><div class="snowman-eye right"></div><div class="snowman-nose"></div><div class="snowman-scarf"><div class="scarf-tail"></div></div></div>
+        </div>
+        <div class="gift-collection">
+            <div class="gift gift-large-red"><div class="gift-ribbon vertical"></div><div class="gift-ribbon horizontal"></div><div class="gift-bow-left"></div><div class="gift-bow-right"></div></div>
+            <div class="gift gift-tall-blue"><div class="gift-ribbon vertical"></div><div class="gift-ribbon horizontal"></div><div class="gift-bow-left"></div><div class="gift-bow-right"></div></div>
+            <div class="gift gift-medium-green"><div class="gift-ribbon vertical"></div><div class="gift-ribbon horizontal"></div><div class="gift-bow-left"></div><div class="gift-bow-right"></div></div>
+        </div>
+    </div>
+    
+    <div class="full-height-container flex flex-col pt-8 px-4 md:pt-12 md:px-8 max-w-7xl mx-auto p-6 md:p-8 main-content-card z-20">
+        <div class="w-full flex justify-center mb-4"><div class="countdown-ribbon-wrapper"><div id="countdown" class="countdown-ticker">00D 00H 00M 00S</div></div></div>
+
+        <header class="text-center pt-[20px] pb-[15px] mb-[80px]">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-8 tracking-tight font-display" style="color: var(--primary-red);">Create Your Holiday Greeting</h1>
+            <h2 class="text-lg md:text-xl font-semibold" style="color: var(--secondary-green);">Choose a festive theme, add your message,<br>and share a virtual holiday greeting.</h2>
+        </header>
+
+        <section id="message-input-section" class="frosted-glass p-4 rounded-xl shadow-lg border border-gray-200" style="margin-top: 40px; margin-bottom: 40px; margin-left: -1rem; margin-right: -1rem; width: calc(100% + 2rem);">
+            <label for="custom-message" class="block text-md font-semibold mb-3" style="color: var(--secondary-green);">Your Custom Holiday Message:</label>
+            <div class="textarea-wrapper">
+                <textarea id="custom-message" rows="2" maxlength="80" placeholder="Type a short message here (max 80 chars)..." class="w-full p-3 pr-10 border-2 border-gray-300 rounded-lg focus:border-primary-red focus:ring-primary-red/50 focus:ring-2 resize-none text-gray-800"></textarea>
+                <button onclick="clearMessage()" class="clear-btn">✕ Clear</button>
+            </div>
+            <div class="postcard-selector">
+                <button id="btn-1" onclick="openTab(event, 'frame-1')" class="postcard-btn active">
+                    <span class="postcard-icon">🏔️</span>
+                    <span class="postcard-title">Snowy Cabin</span>
+                    <span class="postcard-tagline">Peaceful Retreat</span>
+                </button>
+                <button id="btn-2" onclick="openTab(event, 'frame-2')" class="postcard-btn">
+                    <span class="postcard-icon">🎅</span>
+                    <span class="postcard-title">Santa's Workshop</span>
+                    <span class="postcard-tagline">Magical Wonder</span>
+                </button>
+                <button id="btn-3" onclick="openTab(event, 'frame-3')" class="postcard-btn">
+                    <span class="postcard-icon">⛄</span>
+                    <span class="postcard-title">Winter Wonderland</span>
+                    <span class="postcard-tagline">Frosty Fun</span>
+                </button>
+            </div>
+            <div class="controls-row" style="margin-top: 16px; display: flex; gap: 8px;">
+                <button onclick="shuffleMessage()" class="unified-btn btn-green action-button-half">🔀 Randomize Message</button>
+                <button onclick="generateFromCustom()" class="unified-btn btn-green action-button-half">✨ Generate Custom Message</button>
+            </div>
+        </section>
+
+        <main id="tab-content" class="flex-grow flex items-center justify-center p-2">
+            <div id="frame-1" class="tab-frame w-full square-frame transition duration-500 ease-in-out">
+                <div class="candy-cane-border-fixed">
+                    <div class="inner-canvas">
+                        <div class="postcard-scene scene-snowy-cabin">
+                            <!-- Snowy Cabin Scene -->
+                            <div class="scene-sky"></div>
+                            <div class="scene-background">
+                                <div class="bg-hill-1"></div>
+                                <div class="bg-hill-2"></div>
+                                <div class="bg-tree bg-tree-1"></div>
+                                <div class="bg-tree bg-tree-2"></div>
+                                <div class="bg-tree bg-tree-3"></div>
+                                <div class="bg-tree bg-tree-4"></div>
+                                <div class="bg-tree bg-tree-5"></div>
+                                <div class="bg-tree bg-tree-6"></div>
+                                <div class="bg-tree bg-tree-7"></div>
+                                <div class="bg-tree bg-tree-8"></div>
+                                <div class="bg-tree bg-tree-9"></div>
+                                <div class="moon"></div>
+                                <div class="santa-silhouette">
+                                    <div class="reindeer-3"></div>
+                                    <div class="antler-3"></div>
+                                    <div class="reindeer-2"></div>
+                                    <div class="antler-2"></div>
+                                    <div class="reindeer-1"></div>
+                                    <div class="antler-1"></div>
+                                    <div class="santa-figure"></div>
+                                    <div class="sleigh-silhouette"></div>
+                                </div>
+                            </div>
+                            <div class="scene-midground">
+                                <div class="pine-tree-md tree-1"></div>
+                                <div class="pine-tree-sm tree-2"></div>
+                                <div class="pine-tree-md tree-3"></div>
+                                <div class="pine-tree-sm tree-4"></div>
+                                <div class="pine-tree-sm tree-5"></div>
+                                <div class="snow-path"></div>
+                                <div class="cabin">
+                                    <div class="smoke"></div>
+                                    <div class="chimney"></div>
+                                    <div class="cabin-roof"></div>
+                                    <div class="cabin-walls"></div>
+                                    <div class="cabin-window"></div>
+                                    <div class="cabin-window-right"></div>
+                                    <div class="cabin-door">
+                                        <div class="door-wreath"></div>
+                                    </div>
+                                    <div class="sleigh"></div>
+                                </div>
+                            </div>
+                            <div class="scene-foreground">
+                                <div class="icy-lake"></div>
+                                <div class="wood-fence"></div>
+                            </div>
+                        </div>
+                        <div id="text-1" class="message-overlay font-display"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="frame-2" class="tab-frame hidden w-full square-frame transition duration-500 ease-in-out">
+                <div class="candy-cane-border-fixed">
+                    <div class="inner-canvas">
+                        <div class="postcard-scene scene-santas-workshop">
+                            <!-- Santa's Workshop Scene -->
+                            <div class="scene-sky"></div>
+                            <div class="scene-background">
+                                <div class="string-lights"></div>
+                                <div class="window-1"></div>
+                                <div class="window-1-panes"></div>
+                                <div class="window-2"></div>
+                                <div class="window-2-panes"></div>
+                                <div class="bookshelf-1"></div>
+                                <div class="bookshelf-2"></div>
+                                <div class="shelf1-present-1"></div>
+                                <div class="shelf1-present-2"></div>
+                                <div class="shelf1-present-3"></div>
+                                <div class="shelf1-present-4"></div>
+                                <div class="shelf1-present-5"></div>
+                                <div class="shelf1-present-6"></div>
+                                <div class="shelf2-present-1"></div>
+                                <div class="shelf2-present-2"></div>
+                                <div class="shelf2-present-3"></div>
+                                <div class="shelf2-present-4"></div>
+                                <div class="shelf2-present-5"></div>
+                                <div class="shelf2-present-6"></div>
+                                <div class="xmas-tree"></div>
+                                <div class="tree-star"></div>
+                                <div class="tree-ornament-1"></div>
+                                <div class="tree-ornament-2"></div>
+                                <div class="tree-ornament-3"></div>
+                                <div class="tree-ornament-4"></div>
+                                <div class="tree-ornament-5"></div>
+                                <div class="tree-ornament-6"></div>
+                                <div class="tree-ornament-7"></div>
+                                <div class="tree-ornament-8"></div>
+                                <div class="tree-ornament-9"></div>
+                                <div class="tree-ornament-10"></div>
+                            </div>
+                            <div class="scene-midground">
+                            </div>
+                            <div class="scene-foreground">
+                                <!-- Santa Claus -->
+                                <div class="santa">
+                                    <div class="santa-boots"></div>
+                                    <div class="santa-legs"></div>
+                                    <div class="santa-body"></div>
+                                    <div class="santa-buckle"></div>
+                                    <div class="santa-trim"></div>
+                                    <div class="santa-arm-left"></div>
+                                    <div class="santa-arm-right"></div>
+                                    <div class="santa-head"></div>
+                                    <div class="santa-beard"></div>
+                                    <div class="santa-mustache"></div>
+                                    <div class="santa-nose"></div>
+                                    <div class="santa-face"></div>
+                                    <div class="santa-cheeks"></div>
+                                    <div class="santa-hat"></div>
+                                    <div class="santa-teddy"></div>
+                                    <div class="santa-teddy-face"></div>
+                                    <div class="santa-teddy-snout"></div>
+                                    <div class="santa-teddy-arms"></div>
+                                    <div class="santa-teddy-legs"></div>
+                                    <div class="santa-teddy-bowtie"></div>
+                                    <div class="santa-teddy-knot"></div>
+                                </div>
+                                <!-- Elf 1 - green outfit -->
+                                <div class="elf-1">
+                                    <div class="elf-1-body"></div>
+                                    <div class="elf-1-buckle"></div>
+                                    <div class="elf-1-arm-left"></div>
+                                    <div class="elf-1-arm-right"></div>
+                                    <div class="elf-1-head"></div>
+                                    <div class="elf-1-ear-left"></div>
+                                    <div class="elf-1-ear-right"></div>
+                                    <div class="elf-1-face"></div>
+                                    <div class="elf-1-smile"></div>
+                                    <div class="elf-1-hat"></div>
+                                </div>
+                                <!-- Elf 2 - red outfit, working -->
+                                <div class="elf-2">
+                                    <div class="elf-2-body"></div>
+                                    <div class="elf-2-buckle"></div>
+                                    <div class="elf-2-arm-left"></div>
+                                    <div class="elf-2-arm-right"></div>
+                                    <div class="elf-2-hair"></div>
+                                    <div class="elf-2-head"></div>
+                                    <div class="elf-2-ear-left"></div>
+                                    <div class="elf-2-ear-right"></div>
+                                    <div class="elf-2-bangs"></div>
+                                    <div class="elf-2-face"></div>
+                                    <div class="elf-2-smile"></div>
+                                    <div class="elf-2-hat"></div>
+                                </div>
+                                <!-- Conveyor belt -->
+                                <div class="conveyor-belt"></div>
+                                <div class="conveyor-dots">
+                                    <div class="conveyor-dot"></div>
+                                    <div class="conveyor-dot"></div>
+                                    <div class="conveyor-dot"></div>
+                                    <div class="conveyor-dot"></div>
+                                    <div class="conveyor-dot"></div>
+                                    <div class="conveyor-dot"></div>
+                                    <div class="conveyor-dot"></div>
+                                    <div class="conveyor-dot"></div>
+                                </div>
+                                <div class="conveyor-leg conveyor-leg-1"></div>
+                                <div class="conveyor-leg conveyor-leg-2"></div>
+                                <div class="conveyor-leg conveyor-leg-3"></div>
+                                <div class="conv-present conv-present-1"></div>
+                                <div class="conv-present conv-present-2"></div>
+                                <div class="conv-present conv-present-3"></div>
+                                <div class="conv-present conv-present-4"></div>
+                            </div>
+                        </div>
+                        <div id="text-2" class="message-overlay font-display"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="frame-3" class="tab-frame hidden w-full square-frame transition duration-500 ease-in-out">
+                <div class="candy-cane-border-fixed">
+                    <div class="inner-canvas">
+                        <div class="postcard-scene scene-winter-wonderland">
+                            <!-- Winter Wonderland Scene -->
+                            <div class="scene-sky"></div>
+                            <div class="scene-background">
+                                <div class="bg-hill-1"></div>
+                                <div class="bg-hill-2"></div>
+                                <div class="bg-tree bg-tree-1"></div>
+                                <div class="bg-tree bg-tree-2"></div>
+                                <div class="bg-tree bg-tree-3"></div>
+                                <div class="bg-tree bg-tree-4"></div>
+                            </div>
+                            <div class="scene-midground">
+                                <!-- Pine trees -->
+                                <div class="pine-tree tree-1"></div>
+                                <div class="pine-tree-sm tree-2"></div>
+                                <div class="pine-tree tree-3"></div>
+                                <div class="pine-tree-sm tree-4"></div>
+                                <!-- Frozen pond -->
+                                <div class="frozen-pond"></div>
+                                <!-- Gifts with bows -->
+                                <div class="gift gift-1">
+                                    <div class="bow bow-left"></div>
+                                    <div class="bow bow-right"></div>
+                                </div>
+                                <div class="gift gift-2">
+                                    <div class="bow bow-left"></div>
+                                    <div class="bow bow-right"></div>
+                                </div>
+                                <!-- Tall pine tree behind gifts -->
+                                <div class="pine-tree-tall"></div>
+                                <!-- Igloo in the distance -->
+                                <div class="igloo"></div>
+                            </div>
+                            <div class="scene-foreground">
+                                <!-- Standing penguin -->
+                                <div class="penguin penguin-1">
+                                    <div class="body"></div>
+                                    <div class="belly"></div>
+                                    <div class="flipper left"></div>
+                                    <div class="flipper right"></div>
+                                    <div class="head"></div>
+                                    <div class="face"></div>
+                                    <div class="eye left"></div>
+                                    <div class="eye right"></div>
+                                    <div class="beak"></div>
+                                    <div class="foot left"></div>
+                                    <div class="foot right"></div>
+                                </div>
+                                <!-- Baby penguin with hat -->
+                                <div class="baby-penguin baby-penguin-1">
+                                    <div class="body"></div>
+                                    <div class="belly"></div>
+                                    <div class="flipper left"></div>
+                                    <div class="flipper right"></div>
+                                    <div class="head"></div>
+                                    <div class="face"></div>
+                                    <div class="eye left"></div>
+                                    <div class="eye right"></div>
+                                    <div class="beak"></div>
+                                    <div class="foot left"></div>
+                                    <div class="foot right"></div>
+                                    <div class="hat"></div>
+                                </div>
+                                <!-- Snowball pile (4-3-2-1 pyramid) -->
+                                <div class="snowball-pile">
+                                    <div class="snowball sb1"></div>
+                                    <div class="snowball sb2"></div>
+                                    <div class="snowball sb3"></div>
+                                    <div class="snowball sb4"></div>
+                                    <div class="snowball sb5"></div>
+                                    <div class="snowball sb6"></div>
+                                    <div class="snowball sb7"></div>
+                                    <div class="snowball sb8"></div>
+                                    <div class="snowball sb9"></div>
+                                    <div class="snowball sb10"></div>
+                                </div>
+                                <!-- Ice skating polar bear on pond (one foot) -->
+                                <div class="skating-penguin">
+                                    <div class="body"></div>
+                                    <div class="belly"></div>
+                                    <div class="flipper left"></div>
+                                    <div class="flipper right"></div>
+                                    <div class="head"></div>
+                                    <div class="face"></div>
+                                    <div class="eye left"></div>
+                                    <div class="eye right"></div>
+                                    <div class="beak"></div>
+                                    <div class="skate left"></div>
+                                    <div class="skate right"></div>
+                                </div>
+                                <!-- Penguin on sled sliding down hill -->
+                                <div class="penguin-sled">
+                                    <div class="sled"></div>
+                                    <div class="sled-penguin">
+                                        <div class="body"></div>
+                                        <div class="belly"></div>
+                                        <div class="flipper left"></div>
+                                        <div class="flipper right"></div>
+                                        <div class="foot left"></div>
+                                        <div class="foot right"></div>
+                                        <div class="head"></div>
+                                        <div class="face"></div>
+                                        <div class="eye left"></div>
+                                        <div class="eye right"></div>
+                                        <div class="beak"></div>
+                                    </div>
+                                    <div class="scarf"></div>
+                                    <div class="scarf-tail"></div>
+                                </div>
+                                <!-- Snowflakes -->
+                                <div class="snowflake snowflake-1">❄</div>
+                                <div class="snowflake snowflake-2">❄</div>
+                                <div class="snowflake snowflake-3">❄</div>
+                                <div class="snowflake snowflake-4">❄</div>
+                                <div class="snowflake snowflake-5">❄</div>
+                                <div class="snowflake snowflake-6">❄</div>
+                                <div class="snowflake snowflake-7">❄</div>
+                                <div class="snowflake snowflake-8">❄</div>
+                                <div class="snowflake snowflake-9">❄</div>
+                                <div class="snowflake snowflake-10">❄</div>
+                                <div class="snowflake snowflake-11">❄</div>
+                                <div class="snowflake snowflake-12">❄</div>
+                                <div class="snowflake snowflake-13">❄</div>
+                                <div class="snowflake snowflake-14">❄</div>
+                                <div class="snowflake snowflake-15">❄</div>
+                                <div class="snowflake snowflake-16">❄</div>
+                                <div class="snowflake snowflake-17">❄</div>
+                                <div class="snowflake snowflake-18">❄</div>
+                                <div class="snowflake snowflake-19">❄</div>
+                                <div class="snowflake snowflake-20">❄</div>
+                                <div class="snowflake snowflake-21">❄</div>
+                                <div class="snowflake snowflake-22">❄</div>
+                                <div class="snowflake snowflake-23">❄</div>
+                                <div class="snowflake snowflake-24">❄</div>
+                            </div>
+                        </div>
+                        <div id="text-3" class="message-overlay font-display"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div class="text-center mt-8 mb-8">
+            <div class="wooden-sign-container">
+                <div class="tinsel-ropes">
+                    <div class="tinsel-rope"><div class="rope-connector-top"></div><div class="rope-connector-bottom"></div></div>
+                    <div class="tinsel-rope"><div class="rope-connector-top"></div><div class="rope-connector-bottom"></div></div>
+                </div>
+                <div class="wooden-sign">
+                    <div class="sign-bracket sign-bracket-left"></div>
+                    <div class="sign-bracket sign-bracket-right"></div>
+                    <p class="wooden-letters font-display mb-4"><span class="wooden-line-1">Merry Christmas</span><br><span class="wooden-line-2">and thank you for stopping by!</span></p>
+                    <div class="button-wrapper">
+                        <button id="share-btn" onclick="openShareModal()" class="bg-red-3d rounded-2xl focus:outline-none"><span class="btn-pin btn-pin-tl"></span><span class="btn-pin btn-pin-tr"></span><span class="btn-pin btn-pin-bl"></span><span class="btn-pin btn-pin-br"></span><div class="string-lights"><div class="light-cord cord-top"></div><div class="light-cord cord-right"></div><div class="light-cord cord-bottom"></div><div class="light-cord cord-left"></div><div class="cord-corner cord-corner-tl"></div><div class="cord-corner cord-corner-tr"></div><div class="cord-corner cord-corner-br"></div><div class="cord-corner cord-corner-bl"></div><div class="light-bulb light-red light-top-1"></div><div class="light-bulb light-blue light-top-2"></div><div class="light-bulb light-green light-top-3"></div><div class="light-bulb light-yellow light-top-4"></div><div class="light-bulb light-orange light-right-1"></div><div class="light-bulb light-purple light-right-2"></div><div class="light-bulb light-red light-right-3"></div><div class="light-bulb light-blue light-bottom-1"></div><div class="light-bulb light-green light-bottom-2"></div><div class="light-bulb light-yellow light-bottom-3"></div><div class="light-bulb light-orange light-bottom-4"></div><div class="light-bulb light-purple light-left-1"></div><div class="light-bulb light-red light-left-2"></div><div class="light-bulb light-blue light-left-3"></div></div>Share Your Greeting!</button>
+                    </div>
+                    <div class="sign-footer">
+                        <span class="wood-text-small">Created By:</span>
+                        <span class="wood-text-brand">Studio Lou</span>
+                        <div class="wood-divider"></div>
+                        <div class="wood-social-links">
+                            <a href="https://www.linkedin.com/company/studio-lou-interiors" target="_blank" class="wood-social-btn">LinkedIn</a>
+                            <a href="https://www.studiolouinteriors.com" target="_blank" class="wood-social-btn">Website</a>
+                            <a href="https://www.pinterest.com/designbylaurensimon/?actingBusinessId=975099894228621417" target="_blank" class="wood-social-btn">Pinterest</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center mt-8 pb-4">
+        </footer>
+        
+        <div class="pb-[160px]"></div>
+    </div>
+
+    <a href="components.html" class="components-btn">Components</a>
+
+    <div id="share-modal" class="fixed inset-0 z-50 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden transition-opacity duration-300">
+        <div class="modal-box-frame w-11/12">
+            <div class="modal-inner-content flex flex-col">
+                <h3 class="text-3xl font-bold mb-4 font-display text-center" style="color: var(--primary-red);">Share Your Festive Design</h3>
+                <p class="text-secondary-green mb-6 text-center">Share this virtual holiday greeting with friends and family!</p>
+                <div class="mb-6">
+                    <label for="share-link" class="block text-sm font-medium text-gray-700 mb-2">Greeting Link:</label>
+                    <div class="flex h-12">
+                        <input type="text" id="share-link" value="" readonly class="flex-grow p-3 border border-gray-300 rounded-l-xl bg-gray-50 text-sm focus:outline-none">
+                        <button onclick="copyLink()" class="unified-btn btn-green" style="border-radius: 0 12px 12px 0; min-width: auto; padding: 0 1rem;">📋 Copy Link</button>
+                    </div>
+                    <p id="copy-message" class="text-sm font-medium text-primary-red mt-2 hidden">Link copied successfully!</p>
+                </div>
+                <div class="flex justify-center gap-6">
+                    <a id="email-share-btn" href="#" class="unified-btn btn-red" style="display: flex; align-items: center; gap: 8px; text-decoration: none; margin-right: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                        <span>Share via Email</span>
+                    </a>
+                    <button onclick="closeShareModal()" class="unified-btn btn-gray" style="margin-left: 8px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentThemeId = 'frame-1'; 
+        const shareThemeMap = { 
+            'frame-1': { index: 1, name: 'Snowy Cabin' }, 
+            'frame-2': { index: 2, name: 'Santas Workshop' }, 
+            'frame-3': { index: 3, name: 'Winter Wonderland' }
+        };
+        
+        // Message pools for each theme
+        const messagePools = {
+            'frame-1': [
+                "Wishing you a season filled with cozy moments, warm drinks, and peaceful winter nights.",
+                "May your holidays be as warm and inviting as a cabin in the woods.",
+                "Here's to quiet evenings, crackling fires, and the comfort of loved ones.",
+                "Wishing you peace, warmth, and a cozy place to call home this season.",
+                "May the stillness of winter bring you rest, joy, and comfort.",
+                "Sending warm wishes from our hearth to yours.",
+                "Hope your holidays are filled with good books, warm blankets, and hot cocoa.",
+                "Wishing you the gift of quiet moments and cozy company."
+            ],
+            'frame-2': [
+                "May your holidays be filled with wonder, surprises, and a little bit of magic!",
+                "Wishing you a season as magical as Christmas morning.",
+                "Hope the holiday magic finds you wherever you are!",
+                "May your days be merry, bright, and full of delightful surprises.",
+                "Wishing you the wonder of a child and the joy of the season!",
+                "Here's to believing in the magic of the holidays!",
+                "May your season sparkle with joy, laughter, and a touch of enchantment.",
+                "Sending wishes for a holiday filled with wonder and whimsy!"
+            ],
+            'frame-3': [
+                "Hope your holidays are filled with snowball fights, belly laughs, and frosty adventures!",
+                "Wishing you a winter full of fun, friends, and a little friendly mischief!",
+                "May your season be as fun as a snow day with no school!",
+                "Here's to sled rides, snowmen, and making memories in the snow!",
+                "Wishing you a holiday packed with laughter, play, and joy!",
+                "May your winter be filled with adventure and your cocoa with extra marshmallows!",
+                "Hope you have a flurry of fun this holiday season!",
+                "Sending cool wishes and warm hugs your way!"
+            ]
+        };
+        
+        let lastMessageIndex = {};
+        
+        function shuffleMessage() {
+            const pool = messagePools[currentThemeId];
+            if (!pool) return;
+            
+            let index;
+            do {
+                index = Math.floor(Math.random() * pool.length);
+            } while (index === lastMessageIndex[currentThemeId] && pool.length > 1);
+            
+            lastMessageIndex[currentThemeId] = index;
+            document.getElementById('custom-message').value = pool[index];
+            generateMessage();
+        }
+        
+        function generateFromCustom() {
+            generateMessage();
+        }
+
+        function updateCountdown() {
+            const now = new Date(); 
+            const christmasDate = new Date(now.getFullYear(), 11, 25);
+            const christmasEnd = new Date(now.getFullYear(), 11, 26); // End of Christmas Day
+            
+            // Check if it's Christmas Day (Dec 25)
+            const isChristmasDay = now.getMonth() === 11 && now.getDate() === 25;
+            
+            if (now > christmasEnd) christmasDate.setFullYear(now.getFullYear() + 1);
+            
+            const diff = christmasDate - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24)); 
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); 
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            const el = document.getElementById('countdown'); 
+            if (el) {
+                if (isChristmasDay) {
+                    el.innerHTML = "🎄 MERRY CHRISTMAS! 🎄";
+                    // Start confetti if not already running
+                    if (!window.christmasConfettiStarted) {
+                        window.christmasConfettiStarted = true;
+                        startChristmasConfetti();
+                    }
+                } else {
+                    el.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+                }
+            }
+        }
+        
+        // Christmas confetti animation
+        function startChristmasConfetti() {
+            const ribbon = document.querySelector('.countdown-ribbon-wrapper');
+            if (!ribbon) return;
+            
+            // Create container that's positioned relative to the ribbon
+            const confettiContainer = document.createElement('div');
+            confettiContainer.id = 'christmas-confetti';
+            confettiContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
+            document.body.appendChild(confettiContainer);
+            
+            const colors = ['#c41e3a', '#228b22', '#ffd700', '#ff6b6b', '#4ecdc4', '#fff'];
+            let confettiInterval;
+            
+            function createConfetti() {
+                // Get ribbon position
+                const ribbonRect = ribbon.getBoundingClientRect();
+                const ribbonCenterY = ribbonRect.top + ribbonRect.height / 2;
+                
+                // Choose left or right side randomly
+                const isLeftSide = Math.random() > 0.5;
+                const startX = isLeftSide ? ribbonRect.left : ribbonRect.right;
+                
+                const confetti = document.createElement('div');
+                const size = Math.random() * 8 + 4;
+                const isCircle = Math.random() > 0.5;
+                
+                // Burst direction based on which side
+                const horizontalSpeed = isLeftSide ? -(Math.random() * 80 + 40) : (Math.random() * 80 + 40);
+                const verticalSpeed = Math.random() * 150 + 50;
+                const duration = Math.random() * 1.5 + 1.5;
+                
+                confetti.style.cssText = `
+                    position: fixed;
+                    top: ${ribbonCenterY}px;
+                    left: ${startX}px;
+                    width: ${size}px;
+                    height: ${isCircle ? size : size * 0.6}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: ${isCircle ? '50%' : '2px'};
+                    transform: rotate(0deg);
+                    animation: confetti-burst-${isLeftSide ? 'left' : 'right'} ${duration}s ease-out forwards;
+                    --moveX: ${horizontalSpeed}px;
+                    --moveY: ${verticalSpeed}px;
+                    --rotation: ${Math.random() * 720 - 360}deg;
+                `;
+                confettiContainer.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => confetti.remove(), duration * 1000);
+            }
+            
+            // Initial burst of confetti
+            for (let i = 0; i < 60; i++) {
+                setTimeout(createConfetti, i * 15);
+            }
+            
+            // Continue for a few seconds then stop
+            confettiInterval = setInterval(createConfetti, 60);
+            setTimeout(() => {
+                clearInterval(confettiInterval);
+            }, 3000);
+            
+            // Stop confetti on scroll
+            function stopOnScroll() {
+                clearInterval(confettiInterval);
+                window.removeEventListener('scroll', stopOnScroll);
+            }
+            window.addEventListener('scroll', stopOnScroll);
+        }
+        
+        // Add confetti animation keyframes
+        const confettiStyle = document.createElement('style');
+        confettiStyle.textContent = `
+            @keyframes confetti-burst-left {
+                0% { 
+                    transform: translate(0, 0) rotate(0deg); 
+                    opacity: 1; 
+                }
+                100% { 
+                    transform: translate(var(--moveX), var(--moveY)) rotate(var(--rotation)); 
+                    opacity: 0; 
+                }
+            }
+            @keyframes confetti-burst-right {
+                0% { 
+                    transform: translate(0, 0) rotate(0deg); 
+                    opacity: 1; 
+                }
+                100% { 
+                    transform: translate(var(--moveX), var(--moveY)) rotate(var(--rotation)); 
+                    opacity: 0; 
+                }
+            }
+        `;
+        document.head.appendChild(confettiStyle);
+
+        // Cross-stitch letter patterns (5x7 grid, 1 = filled, 0 = empty)
+        const stitchPatterns = {
+            'A': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1]
+            ],
+            'B': [
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,0]
+            ],
+            'C': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            'D': [
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,0]
+            ],
+            'E': [
+                [1,1,1,1,1],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,1]
+            ],
+            'F': [
+                [1,1,1,1,1],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0]
+            ],
+            'G': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,0],
+                [1,0,1,1,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            'H': [
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1]
+            ],
+            'I': [
+                [1,1,1,1,1],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [1,1,1,1,1]
+            ],
+            'J': [
+                [0,0,1,1,1],
+                [0,0,0,1,0],
+                [0,0,0,1,0],
+                [0,0,0,1,0],
+                [1,0,0,1,0],
+                [1,0,0,1,0],
+                [0,1,1,0,0]
+            ],
+            'K': [
+                [1,0,0,0,1],
+                [1,0,0,1,0],
+                [1,0,1,0,0],
+                [1,1,0,0,0],
+                [1,0,1,0,0],
+                [1,0,0,1,0],
+                [1,0,0,0,1]
+            ],
+            'L': [
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,1]
+            ],
+            'M': [
+                [1,0,0,0,1],
+                [1,1,0,1,1],
+                [1,0,1,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1]
+            ],
+            'N': [
+                [1,0,0,0,1],
+                [1,1,0,0,1],
+                [1,0,1,0,1],
+                [1,0,0,1,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1]
+            ],
+            'O': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            'P': [
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0]
+            ],
+            'Q': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,1,0,1],
+                [1,0,0,1,0],
+                [0,1,1,0,1]
+            ],
+            'R': [
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,1,1,1,0],
+                [1,0,1,0,0],
+                [1,0,0,1,0],
+                [1,0,0,0,1]
+            ],
+            'S': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,0],
+                [0,1,1,1,0],
+                [0,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            'T': [
+                [1,1,1,1,1],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0]
+            ],
+            'U': [
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            'V': [
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,0,1,0],
+                [0,1,0,1,0],
+                [0,0,1,0,0]
+            ],
+            'W': [
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [1,0,1,0,1],
+                [1,1,0,1,1],
+                [1,0,0,0,1]
+            ],
+            'X': [
+                [1,0,0,0,1],
+                [0,1,0,1,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,1,0,1,0],
+                [1,0,0,0,1]
+            ],
+            'Y': [
+                [1,0,0,0,1],
+                [0,1,0,1,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0]
+            ],
+            'Z': [
+                [1,1,1,1,1],
+                [0,0,0,0,1],
+                [0,0,0,1,0],
+                [0,0,1,0,0],
+                [0,1,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,1]
+            ],
+            '0': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,1,1],
+                [1,0,1,0,1],
+                [1,1,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            '1': [
+                [0,0,1,0,0],
+                [0,1,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,1,1,1,0]
+            ],
+            '2': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [0,0,0,0,1],
+                [0,0,0,1,0],
+                [0,0,1,0,0],
+                [0,1,0,0,0],
+                [1,1,1,1,1]
+            ],
+            '3': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [0,0,0,0,1],
+                [0,0,1,1,0],
+                [0,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            '4': [
+                [0,0,0,1,0],
+                [0,0,1,1,0],
+                [0,1,0,1,0],
+                [1,0,0,1,0],
+                [1,1,1,1,1],
+                [0,0,0,1,0],
+                [0,0,0,1,0]
+            ],
+            '5': [
+                [1,1,1,1,1],
+                [1,0,0,0,0],
+                [1,1,1,1,0],
+                [0,0,0,0,1],
+                [0,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            '6': [
+                [0,1,1,1,0],
+                [1,0,0,0,0],
+                [1,0,0,0,0],
+                [1,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            '7': [
+                [1,1,1,1,1],
+                [0,0,0,0,1],
+                [0,0,0,1,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0]
+            ],
+            '8': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            '9': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [1,0,0,0,1],
+                [0,1,1,1,1],
+                [0,0,0,0,1],
+                [0,0,0,0,1],
+                [0,1,1,1,0]
+            ],
+            '!': [
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0],
+                [0,0,1,0,0]
+            ],
+            '?': [
+                [0,1,1,1,0],
+                [1,0,0,0,1],
+                [0,0,0,0,1],
+                [0,0,0,1,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0],
+                [0,0,1,0,0]
+            ],
+            '.': [
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,1,0,0]
+            ],
+            ',': [
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,1,0,0],
+                [0,1,0,0,0]
+            ],
+            "'": [
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0]
+            ],
+            '-': [
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [1,1,1,1,1],
+                [0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0]
+            ],
+            '&': [
+                [0,1,1,0,0],
+                [1,0,0,1,0],
+                [1,0,0,1,0],
+                [0,1,1,0,0],
+                [1,0,0,1,1],
+                [1,0,0,1,0],
+                [0,1,1,0,1]
+            ],
+            '♥': [
+                [0,0,0,0,0],
+                [0,1,0,1,0],
+                [1,1,1,1,1],
+                [1,1,1,1,1],
+                [0,1,1,1,0],
+                [0,0,1,0,0],
+                [0,0,0,0,0]
+            ],
+            '★': [
+                [0,0,1,0,0],
+                [0,0,1,0,0],
+                [1,1,1,1,1],
+                [0,1,1,1,0],
+                [0,1,0,1,0],
+                [1,0,0,0,1],
+                [0,0,0,0,0]
+            ]
+        };
+
+        function createStitchLetter(char, colorClass = '') {
+            const upperChar = char.toUpperCase();
+            if (upperChar === ' ') {
+                return '<div class="word-space"></div>';
+            }
+            const pattern = stitchPatterns[upperChar];
+            if (!pattern) {
+                return '<div class="letter-space"></div>';
+            }
+            
+            let html = '<div class="cross-stitch-letter">';
+            for (let row of pattern) {
+                for (let cell of row) {
+                    if (cell === 1) {
+                        html += `<div class="stitch ${colorClass}"></div>`;
+                    } else {
+                        html += '<div class="empty"></div>';
+                    }
+                }
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function generateMessage() { 
+            const message = document.getElementById('custom-message').value.trim(); 
+            const activeFrame = document.querySelector('.tab-frame:not(.hidden)');
+            const textOverlay = document.getElementById(activeFrame.id.replace('frame', 'text')); 
+            
+            if (textOverlay) {
+                if (message) {
+                    textOverlay.innerHTML = '<div class="postcard-message">' + message + '</div>';
+                } else {
+                    textOverlay.innerHTML = '';
+                }
+            }
+        }
+
+        function clearMessage() { 
+            document.getElementById('custom-message').value = ''; 
+            const activeFrame = document.querySelector('.tab-frame:not(.hidden)');
+            const textOverlay = document.getElementById(activeFrame.id.replace('frame', 'text')); 
+            if (textOverlay) textOverlay.innerHTML = ''; 
+        }
+
+        function openTab(event, tabId) {
+            document.querySelectorAll('.tab-frame').forEach(f => f.classList.add('hidden')); 
+            document.querySelectorAll('.message-overlay').forEach(t => t.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden'); 
+            document.getElementById(tabId.replace('frame', 'text')).classList.remove('hidden');
+            currentThemeId = tabId; 
+            
+            // Update postcard button active states
+            document.querySelectorAll('.postcard-btn').forEach(b => { 
+                b.classList.remove('active'); 
+            });
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active'); 
+            } else {
+                const btn = document.getElementById('btn-' + shareThemeMap[tabId].index);
+                if (btn) {
+                    btn.classList.add('active');
+                }
+            }
+            
+            // Load a random message for this theme
+            shuffleMessage();
+        }
+
+        function openShareModal() {
+            const themeData = shareThemeMap[currentThemeId];
+            const message = document.getElementById('custom-message').value.trim();
+            const url = new URL(window.location.href);
+            url.searchParams.set('t', themeData.index);
+            if (message) url.searchParams.set('m', message);
+            const shareLink = url.toString();
+            document.getElementById('share-link').value = shareLink; 
+            const sub = encodeURIComponent(`A Virtual Holiday Greeting: ${themeData.name}`); 
+            const body = encodeURIComponent(`Check out my festive holiday greeting!\n\n${shareLink}`);
+            document.getElementById('email-share-btn').href = `mailto:?subject=${sub}&body=${body}`; 
+            document.getElementById('share-modal').classList.remove('hidden');
+        }
+
+        function closeShareModal() { document.getElementById('share-modal').classList.add('hidden'); }
+        function copyLink() { 
+            const input = document.getElementById('share-link'); 
+            input.select(); 
+            document.execCommand('copy'); 
+            document.getElementById('copy-message').classList.remove('hidden'); 
+            setTimeout(() => document.getElementById('copy-message').classList.add('hidden'), 3000); 
+        }
+
+        window.onload = () => {
+            updateCountdown(); 
+            setInterval(updateCountdown, 1000);
+            const params = new URLSearchParams(window.location.search);
+            const incomingTheme = params.get('t');
+            const incomingMsg = params.get('m');
+            if (incomingTheme && shareThemeMap['frame-' + incomingTheme]) {
+                if (incomingMsg) { document.getElementById('custom-message').value = incomingMsg; }
+                openTab(null, 'frame-' + incomingTheme);
+            } else {
+                openTab(null, 'frame-1');
+            }
+            document.getElementById('share-modal').addEventListener('click', e => { 
+                if (e.target.id === 'share-modal') closeShareModal(); 
+            });
+        };
+    </script>
+</body>
+</html>
