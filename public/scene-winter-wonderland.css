@@ -1,0 +1,1073 @@
+/* =========================== */
+/* WINTER WONDERLAND SCENE     */
+/* =========================== */
+
+/* Sky - Bright winter day */
+.scene-winter-wonderland .scene-sky {
+    background: linear-gradient(180deg,
+        #87CEEB 0%,
+        #B0E0E6 40%,
+        #E0F4FF 100%
+    );
+}
+
+/* Background */
+.scene-winter-wonderland .scene-background {
+    background: none;
+}
+
+/* Hide background hills - we'll use the sledding hill instead */
+.scene-winter-wonderland .bg-hill-1 { display: none; }
+.scene-winter-wonderland .bg-hill-2 { display: none; }
+
+/* Hide background trees completely */
+.scene-winter-wonderland .bg-tree { display: none; }
+.scene-winter-wonderland .bg-tree-1 { display: none; }
+.scene-winter-wonderland .bg-tree-2 { display: none; }
+.scene-winter-wonderland .bg-tree-3 { display: none; }
+.scene-winter-wonderland .bg-tree-4 { display: none; }
+
+/* Midground - Main snow ground */
+.scene-winter-wonderland .scene-midground::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -5%;
+    width: 110%;
+    height: 45%;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F0F7FA 100%);
+    border-radius: 45% 55% 0 0 / 25% 30% 0 0;
+    box-shadow: inset 0 10px 30px rgba(135, 206, 235, 0.15);
+    z-index: 1;
+}
+
+/* Sledding Hill - HIGH on LEFT, slopes DOWN to right - slightly curved */
+.scene-winter-wonderland .scene-midground::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -5%;
+    width: 60%;
+    height: 85%;
+    background: linear-gradient(180deg,
+        #FFFFFF 0%,
+        #FFFFFF 70%,
+        #F0F7FA 100%
+    );
+    clip-path: polygon(0% 5%, 0% 100%, 100% 100%, 100% 55%, 70% 45%, 40% 30%, 20% 18%, 0% 5%);
+    box-shadow:
+        inset 5px -5px 20px rgba(135, 206, 235, 0.08);
+    z-index: 2;
+}
+
+/* Frozen Pond - Central position */
+.scene-winter-wonderland .frozen-pond {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 70px;
+    z-index: 3;
+}
+
+.scene-winter-wonderland .frozen-pond::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.6) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.4) 0%, transparent 40%),
+        linear-gradient(135deg, #a8daef 0%, #87ceeb 20%, #7ec8e3 40%, #6bb9d9 60%, #5aaccc 80%, #4a9fc0 100%);
+    border-radius: 50%;
+    box-shadow:
+        inset 0 5px 15px rgba(255,255,255,0.5),
+        inset 0 -5px 15px rgba(0,80,120,0.2),
+        0 4px 8px rgba(0,0,0,0.1);
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+/* Pine trees - positioned around scene, not overlapping pond */
+.scene-winter-wonderland .pine-tree {
+    position: absolute;
+    width: 50px;
+    height: 85px;
+    z-index: 4;
+}
+
+.scene-winter-wonderland .pine-tree::before {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 65px solid #2D5A3D;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+}
+
+.scene-winter-wonderland .pine-tree::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 18px;
+    background: #4A3525;
+}
+
+.scene-winter-wonderland .pine-tree-sm {
+    position: absolute;
+    width: 35px;
+    height: 60px;
+    z-index: 4;
+}
+
+.scene-winter-wonderland .pine-tree-sm::before {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-bottom: 45px solid #2D5A3D;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+}
+
+.scene-winter-wonderland .pine-tree-sm::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7px;
+    height: 14px;
+    background: #4A3525;
+}
+
+/* Pine tree positions - FAR right only, moved UP */
+.scene-winter-wonderland .tree-1 { display: none; }
+.scene-winter-wonderland .tree-2 { display: none; }
+.scene-winter-wonderland .tree-3 { right: 2%; bottom: 22%; z-index: 4; }
+.scene-winter-wonderland .tree-4 { right: 10%; bottom: 26%; z-index: 4; }
+
+/* Tall pine tree behind gifts - significantly larger */
+.scene-winter-wonderland .pine-tree-tall {
+    position: absolute;
+    width: 100px;
+    height: 180px;
+    z-index: 3;
+    left: 8%;
+    bottom: 12%;
+}
+
+.scene-winter-wonderland .pine-tree-tall::before {
+    content: '';
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 145px solid #2D5A3D;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.25));
+}
+
+.scene-winter-wonderland .pine-tree-tall::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 32px;
+    background: #4A3525;
+}
+
+/* Igloo in the distance - larger with ice block detail */
+.scene-winter-wonderland .igloo {
+    position: absolute;
+    width: 100px;
+    height: 70px;
+    z-index: 3;
+    right: 20%;
+    bottom: 32%;
+}
+
+/* Igloo dome with ice block lines */
+.scene-winter-wonderland .igloo::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 60px;
+    background:
+        /* Horizontal ice block lines */
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 10px,
+            rgba(180, 210, 230, 0.4) 10px,
+            rgba(180, 210, 230, 0.4) 12px
+        ),
+        /* Vertical staggered lines for block pattern */
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 14px,
+            rgba(180, 210, 230, 0.25) 14px,
+            rgba(180, 210, 230, 0.25) 15px
+        ),
+        /* Base ice gradient */
+        radial-gradient(ellipse at 40% 30%,
+            rgba(255,255,255,0.95) 0%,
+            rgba(220, 240, 250, 0.9) 30%,
+            rgba(200, 225, 240, 0.85) 60%,
+            rgba(180, 210, 230, 0.8) 100%
+        );
+    border-radius: 50px 50px 0 0;
+    box-shadow:
+        inset 3px 3px 10px rgba(255,255,255,0.6),
+        inset -4px -4px 12px rgba(100,150,180,0.15),
+        2px 3px 8px rgba(0,0,0,0.1);
+    border: 1px solid rgba(180, 210, 230, 0.5);
+}
+
+/* Igloo entrance - arched doorway (lighter) */
+.scene-winter-wonderland .igloo::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 26px;
+    background:
+        radial-gradient(ellipse at 50% 80%,
+            #6a8098 0%,
+            #5a7088 60%,
+            #4a6078 100%
+        );
+    border-radius: 14px 14px 0 0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* === PENGUIN BASE STYLES === */
+.scene-winter-wonderland .penguin {
+    position: absolute;
+    width: 50px;
+    height: 70px;
+    z-index: 6;
+}
+
+.scene-winter-wonderland .penguin .body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 42px;
+    height: 50px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    border-radius: 21px 21px 18px 18px;
+}
+
+.scene-winter-wonderland .penguin .belly {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 38px;
+    background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+    border-radius: 14px 14px 12px 12px;
+}
+
+.scene-winter-wonderland .penguin .head {
+    position: absolute;
+    bottom: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 32px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .penguin .face {
+    position: absolute;
+    bottom: 46px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 22px;
+    background: radial-gradient(ellipse at 50% 40%, #ffffff 0%, #f5f5f5 100%);
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .penguin .eye {
+    position: absolute;
+    width: 5px;
+    height: 6px;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #fff 20%, #1a1a1a 35%, #000 100%);
+    border-radius: 50%;
+    bottom: 56px;
+}
+
+.scene-winter-wonderland .penguin .eye.left { left: 15px; }
+.scene-winter-wonderland .penguin .eye.right { right: 15px; }
+
+.scene-winter-wonderland .penguin .beak {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 10px solid #ff9500;
+}
+
+.scene-winter-wonderland .penguin .flipper {
+    position: absolute;
+    bottom: 12px;
+    width: 11px;
+    height: 28px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 6px 6px 8px 8px;
+}
+
+.scene-winter-wonderland .penguin .flipper.left { left: 0; transform: rotate(18deg); }
+.scene-winter-wonderland .penguin .flipper.right { right: 0; transform: rotate(-18deg); }
+
+.scene-winter-wonderland .penguin .foot {
+    position: absolute;
+    bottom: -2px;
+    width: 14px;
+    height: 6px;
+    background: linear-gradient(180deg, #ff9500 0%, #e68600 100%);
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .penguin .foot.left { left: 10px; }
+.scene-winter-wonderland .penguin .foot.right { right: 10px; }
+
+/* Penguin position - RIGHT side, in front of pond */
+.scene-winter-wonderland .penguin-1 { right: 18%; bottom: 14%; left: auto; }
+
+/* === BABY PENGUIN === */
+.scene-winter-wonderland .baby-penguin {
+    position: absolute;
+    width: 38px;
+    height: 50px;
+    z-index: 6;
+}
+
+.scene-winter-wonderland .baby-penguin .body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 35px;
+    background: linear-gradient(135deg, #374151 0%, #1f2937 50%, #111827 100%);
+    border-radius: 15px 15px 12px 12px;
+}
+
+.scene-winter-wonderland .baby-penguin .belly {
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 26px;
+    background: radial-gradient(ellipse at 50% 30%, #f3f4f6 0%, #e5e7eb 70%, #d1d5db 100%);
+    border-radius: 10px 10px 8px 8px;
+}
+
+.scene-winter-wonderland .baby-penguin .head {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 24px;
+    background: linear-gradient(135deg, #374151 0%, #1f2937 50%, #111827 100%);
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .baby-penguin .face {
+    position: absolute;
+    bottom: 31px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 15px;
+    background: #f3f4f6;
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .baby-penguin .eye {
+    position: absolute;
+    width: 4px;
+    height: 5px;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #fff 20%, #1a1a1a 35%, #000 100%);
+    border-radius: 50%;
+    bottom: 38px;
+}
+
+.scene-winter-wonderland .baby-penguin .eye.left { left: 10px; }
+.scene-winter-wonderland .baby-penguin .eye.right { right: 10px; }
+
+.scene-winter-wonderland .baby-penguin .beak {
+    position: absolute;
+    bottom: 33px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 7px solid #ff9500;
+}
+
+.scene-winter-wonderland .baby-penguin .flipper {
+    position: absolute;
+    bottom: 8px;
+    width: 8px;
+    height: 18px;
+    background: #1f2937;
+    border-radius: 4px 4px 6px 6px;
+}
+
+.scene-winter-wonderland .baby-penguin .flipper.left { left: 2px; transform: rotate(15deg); }
+.scene-winter-wonderland .baby-penguin .flipper.right { right: 2px; transform: rotate(-15deg); }
+
+.scene-winter-wonderland .baby-penguin .foot {
+    position: absolute;
+    bottom: -2px;
+    width: 10px;
+    height: 5px;
+    background: #ff9500;
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .baby-penguin .foot.left { left: 8px; }
+.scene-winter-wonderland .baby-penguin .foot.right { right: 8px; }
+
+/* Baby penguin hat */
+.scene-winter-wonderland .baby-penguin .hat {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 12px;
+    background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+    border-radius: 13px 13px 0 0;
+    z-index: 7;
+}
+
+.scene-winter-wonderland .baby-penguin .hat::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: -2px;
+    width: 30px;
+    height: 5px;
+    background: linear-gradient(180deg, #fde047 0%, #facc15 100%);
+    border-radius: 3px;
+}
+
+.scene-winter-wonderland .baby-penguin .hat::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle at 40% 30%, #fef08a 0%, #facc15 100%);
+    border-radius: 50%;
+}
+
+/* Baby penguin next to parent - RIGHT side, in front of pond */
+.scene-winter-wonderland .baby-penguin-1 { right: 10%; bottom: 12%; left: auto; }
+
+/* === SNOWBALL PILE (10 snowballs in 4-3-2-1 pyramid) === */
+.scene-winter-wonderland .snowball-pile {
+    position: absolute;
+    right: 15%;
+    bottom: 4%;
+    width: 55px;
+    height: 45px;
+    z-index: 6;
+}
+
+.scene-winter-wonderland .snowball-pile .snowball {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f5f5f5 40%, #e0e5e8 100%);
+    border-radius: 50%;
+    box-shadow: inset -2px -2px 5px rgba(0,0,0,0.18);
+}
+
+/* Bottom row - 4 snowballs */
+.scene-winter-wonderland .snowball-pile .sb1 { bottom: 0; left: 0; }
+.scene-winter-wonderland .snowball-pile .sb2 { bottom: 0; left: 13px; }
+.scene-winter-wonderland .snowball-pile .sb3 { bottom: 0; left: 26px; }
+.scene-winter-wonderland .snowball-pile .sb4 { bottom: 0; left: 39px; }
+
+/* Second row - 3 snowballs */
+.scene-winter-wonderland .snowball-pile .sb5 { bottom: 10px; left: 6px; }
+.scene-winter-wonderland .snowball-pile .sb6 { bottom: 10px; left: 19px; }
+.scene-winter-wonderland .snowball-pile .sb7 { bottom: 10px; left: 32px; }
+
+/* Third row - 2 snowballs */
+.scene-winter-wonderland .snowball-pile .sb8 { bottom: 20px; left: 13px; }
+.scene-winter-wonderland .snowball-pile .sb9 { bottom: 20px; left: 26px; }
+
+/* Top - 1 snowball */
+.scene-winter-wonderland .snowball-pile .sb10 { bottom: 30px; left: 19px; }
+
+/* === PENGUIN ON SLED - on the hill (LEFT side, going down-right) === */
+.scene-winter-wonderland .penguin-sled {
+    position: absolute;
+    width: 100px;
+    height: 85px;
+    z-index: 8;
+    bottom: 45%;
+    left: 22%;
+    transform: rotate(45deg) scaleX(-1);
+}
+
+.scene-winter-wonderland .penguin-sled .sled {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75px;
+    height: 18px;
+    background: linear-gradient(180deg, #c41e3a 0%, #a01830 50%, #8b1528 100%);
+    border-radius: 4px 40px 6px 4px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+.scene-winter-wonderland .penguin-sled .sled::before {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 4px;
+    width: 70px;
+    height: 8px;
+    border: 3px solid #8B4513;
+    border-top: none;
+    border-radius: 0 0 12px 20px;
+    background: transparent;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 42px;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 35px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    border-radius: 16px 16px 14px 14px;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .belly {
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 28px;
+    background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0f0f0 100%);
+    border-radius: 11px 11px 9px 9px;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .head {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 25px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .face {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 17px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .eye {
+    position: absolute;
+    width: 4px;
+    height: 5px;
+    background: radial-gradient(circle at 30% 30%, #fff 0%, #fff 20%, #1a1a1a 35%, #000 100%);
+    border-radius: 50%;
+    top: -10px;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .eye.left { left: 8px; }
+.scene-winter-wonderland .penguin-sled .sled-penguin .eye.right { right: 8px; }
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .beak {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid #ff9500;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .flipper {
+    position: absolute;
+    top: 4px;
+    width: 9px;
+    height: 22px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 5px 5px 7px 7px;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .flipper.left { left: -5px; transform: rotate(40deg); }
+.scene-winter-wonderland .penguin-sled .sled-penguin .flipper.right { right: -5px; transform: rotate(-40deg); }
+
+/* Feet for sled penguin - large flat ovals sticking out front like sitting */
+.scene-winter-wonderland .penguin-sled .sled-penguin .foot {
+    position: absolute;
+    bottom: -2px;
+    width: 18px;
+    height: 10px;
+    background: radial-gradient(ellipse at 50% 40%, #ffaa00 0%, #ff9500 50%, #e68600 100%);
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .penguin-sled .sled-penguin .foot.left {
+    left: -8px;
+    transform: rotate(-35deg);
+}
+.scene-winter-wonderland .penguin-sled .sled-penguin .foot.right {
+    right: -8px;
+    transform: rotate(35deg);
+}
+
+/* Scarf for sled penguin */
+.scene-winter-wonderland .penguin-sled .scarf {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 6px;
+    background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+    border-radius: 3px;
+    z-index: 7;
+}
+
+.scene-winter-wonderland .penguin-sled .scarf-tail {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    margin-left: 10px;
+    width: 22px;
+    height: 5px;
+    background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+    border-radius: 3px;
+    z-index: 6;
+    transform: scaleX(-1) rotate(0deg);
+}
+
+/* Gift boxes - bottom left corner */
+.scene-winter-wonderland .gift {
+    position: absolute;
+    border-radius: 3px;
+    z-index: 5;
+}
+
+.scene-winter-wonderland .gift-1 {
+    bottom: 3%;
+    left: 5%;
+    width: 35px;
+    height: 28px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.scene-winter-wonderland .gift-1::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+}
+
+.scene-winter-wonderland .gift-1::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+}
+
+.scene-winter-wonderland .gift-2 {
+    bottom: 2%;
+    left: 13%;
+    width: 28px;
+    height: 35px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.scene-winter-wonderland .gift-2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+}
+
+.scene-winter-wonderland .gift-2::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+}
+
+/* Gift bows */
+.scene-winter-wonderland .gift .bow {
+    position: absolute;
+    top: -6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    z-index: 6;
+}
+
+.scene-winter-wonderland .gift-1 .bow {
+    background: radial-gradient(circle at 30% 30%, #4ade80 0%, #22c55e 50%, #16a34a 100%);
+}
+
+.scene-winter-wonderland .gift-1 .bow-left { left: calc(50% - 11px); }
+.scene-winter-wonderland .gift-1 .bow-right { left: calc(50% + 1px); }
+
+.scene-winter-wonderland .gift-2 .bow {
+    background: radial-gradient(circle at 30% 30%, #fde047 0%, #fbbf24 50%, #f59e0b 100%);
+}
+
+.scene-winter-wonderland .gift-2 .bow-left { left: calc(50% - 9px); }
+.scene-winter-wonderland .gift-2 .bow-right { left: calc(50% + 1px); }
+
+/* Snowflakes - STATIC, no animation */
+.scene-winter-wonderland .snowflake {
+    position: absolute;
+    color: #fff;
+    font-size: 14px;
+    text-shadow: 0 0 4px rgba(255,255,255,0.8);
+    opacity: 0.7;
+    animation: none !important;
+    transform: none !important;
+}
+
+/* Snowflakes distributed throughout the sky */
+.scene-winter-wonderland .snowflake-1 { left: 5%; top: 4%; font-size: 16px; }
+.scene-winter-wonderland .snowflake-2 { left: 92%; top: 8%; font-size: 14px; }
+.scene-winter-wonderland .snowflake-3 { left: 35%; top: 6%; font-size: 12px; }
+.scene-winter-wonderland .snowflake-4 { left: 65%; top: 12%; font-size: 10px; }
+.scene-winter-wonderland .snowflake-5 { left: 18%; top: 15%; font-size: 16px; }
+.scene-winter-wonderland .snowflake-6 { left: 50%; top: 10%; font-size: 14px; }
+.scene-winter-wonderland .snowflake-7 { left: 78%; top: 18%; font-size: 12px; }
+.scene-winter-wonderland .snowflake-8 { left: 28%; top: 22%; font-size: 10px; }
+
+/* Additional snowflakes (9-16) */
+.scene-winter-wonderland .snowflake-9 { left: 12%; top: 28%; font-size: 14px; }
+.scene-winter-wonderland .snowflake-10 { left: 85%; top: 25%; font-size: 12px; }
+.scene-winter-wonderland .snowflake-11 { left: 42%; top: 20%; font-size: 16px; }
+.scene-winter-wonderland .snowflake-12 { left: 58%; top: 30%; font-size: 10px; }
+.scene-winter-wonderland .snowflake-13 { left: 8%; top: 35%; font-size: 12px; }
+.scene-winter-wonderland .snowflake-14 { left: 72%; top: 5%; font-size: 14px; }
+.scene-winter-wonderland .snowflake-15 { left: 95%; top: 32%; font-size: 10px; }
+.scene-winter-wonderland .snowflake-16 { left: 22%; top: 8%; font-size: 12px; }
+
+/* More snowflakes extending down to base (17-24) */
+.scene-winter-wonderland .snowflake-17 { left: 55%; top: 38%; font-size: 14px; }
+.scene-winter-wonderland .snowflake-18 { left: 78%; top: 42%; font-size: 10px; }
+.scene-winter-wonderland .snowflake-19 { left: 35%; top: 45%; font-size: 12px; }
+.scene-winter-wonderland .snowflake-20 { left: 92%; top: 48%; font-size: 16px; }
+.scene-winter-wonderland .snowflake-21 { left: 62%; top: 52%; font-size: 10px; }
+.scene-winter-wonderland .snowflake-22 { left: 48%; top: 42%; font-size: 14px; }
+.scene-winter-wonderland .snowflake-23 { left: 88%; top: 55%; font-size: 12px; }
+.scene-winter-wonderland .snowflake-24 { left: 70%; top: 48%; font-size: 10px; }
+
+/* === ICE SKATING POLAR BEAR - Graceful pose === */
+.scene-winter-wonderland .skating-penguin {
+    position: absolute;
+    width: 90px;
+    height: 120px;
+    z-index: 7;
+    bottom: 12%;
+    left: 38%;
+}
+
+/* Polar bear body - chubby, leaning forward */
+.scene-winter-wonderland .skating-penguin .body {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-10deg);
+    width: 55px;
+    height: 60px;
+    background: radial-gradient(ellipse at 45% 35%, #ffffff 0%, #f8f8f8 30%, #f0f0f0 60%, #e5e5e5 100%);
+    border-radius: 28px 28px 24px 24px;
+    box-shadow:
+        inset -4px -4px 12px rgba(0,0,0,0.15),
+        inset 4px 4px 12px rgba(0,0,0,0.08),
+        2px 3px 8px rgba(0,0,0,0.1);
+}
+
+/* Hide penguin belly */
+.scene-winter-wonderland .skating-penguin .belly {
+    display: none;
+}
+
+
+/* Polar bear head - round, friendly, shifted right for leaning forward into motion */
+.scene-winter-wonderland .skating-penguin .head {
+    position: absolute;
+    bottom: 68px;
+    left: 68%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 40px;
+    background: radial-gradient(ellipse at 45% 35%, #ffffff 0%, #f8f8f8 40%, #f0f0f0 100%);
+    border-radius: 50%;
+    box-shadow:
+        inset -3px -3px 10px rgba(0,0,0,0.12),
+        inset 3px 3px 10px rgba(0,0,0,0.06),
+        1px 2px 5px rgba(0,0,0,0.1);
+    z-index: 3;
+}
+
+/* Hide penguin face */
+.scene-winter-wonderland .skating-penguin .face {
+    display: none;
+}
+
+/* Polar bear snout - oval muzzle, shifted with head */
+.scene-winter-wonderland .skating-penguin .beak {
+    position: absolute;
+    bottom: 71px;
+    left: 68%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 14px;
+    background: radial-gradient(ellipse at 50% 40%, #f5f5f5 0%, #e8e8e8 100%);
+    border-radius: 50%;
+    border: none;
+    z-index: 4;
+}
+
+/* Polar bear nose - black oval */
+.scene-winter-wonderland .skating-penguin .beak::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 9px;
+    height: 6px;
+    background: #2d2d2d;
+    border-radius: 50%;
+}
+
+/* Polar bear eyes - small, friendly, shifted with head */
+.scene-winter-wonderland .skating-penguin .eye {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle at 35% 35%, #fff 0%, #fff 25%, #1a1a1a 40%, #000 100%);
+    border-radius: 50%;
+    bottom: 90px;
+    z-index: 4;
+}
+
+.scene-winter-wonderland .skating-penguin .eye.left { left: 48px; }
+.scene-winter-wonderland .skating-penguin .eye.right { left: 68px; right: auto; }
+
+/* Polar bear ears - small rounded, adjusted with head */
+.scene-winter-wonderland .skating-penguin .eye.left::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    left: -6px;
+    width: 14px;
+    height: 12px;
+    background: radial-gradient(ellipse at 50% 50%, #f5f5f5 0%, #e8e8e8 100%);
+    border-radius: 50%;
+}
+
+.scene-winter-wonderland .skating-penguin .eye.right::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    left: -6px;
+    width: 14px;
+    height: 12px;
+    background: radial-gradient(ellipse at 50% 50%, #f5f5f5 0%, #e8e8e8 100%);
+    border-radius: 50%;
+}
+
+/* Polar bear arms */
+.scene-winter-wonderland .skating-penguin .flipper {
+    position: absolute;
+    width: 14px;
+    height: 32px;
+    background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f5f5f5 50%, #e8e8e8 100%);
+    border-radius: 7px;
+    box-shadow: inset -2px -2px 6px rgba(0,0,0,0.12);
+}
+
+/* Left arm raised up */
+.scene-winter-wonderland .skating-penguin .flipper.left {
+    left: 5px;
+    bottom: 60px;
+    transform: rotate(60deg);
+}
+
+/* Right arm out to side */
+.scene-winter-wonderland .skating-penguin .flipper.right {
+    right: 5px;
+    bottom: 50px;
+    transform: rotate(-40deg);
+}
+
+/* Standing leg - RIGHT side (front) */
+.scene-winter-wonderland .skating-penguin::after {
+    content: '';
+    position: absolute;
+    bottom: 14px;
+    right: 30px;
+    width: 16px;
+    height: 18px;
+    background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f5f5f5 50%, #e8e8e8 100%);
+    border-radius: 8px;
+    box-shadow: inset -2px -2px 6px rgba(0,0,0,0.12);
+}
+
+/* LEFT leg kicked back behind */
+.scene-winter-wonderland .skating-penguin .skate.left {
+    position: absolute;
+    bottom: 35px;
+    left: 8px;
+    width: 14px;
+    height: 24px;
+    background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f5f5f5 50%, #e8e8e8 100%);
+    border-radius: 7px;
+    transform: rotate(40deg);
+    box-shadow: inset -2px -2px 6px rgba(0,0,0,0.12);
+}
+
+/* Kicked up skate boot - red (LEFT) */
+.scene-winter-wonderland .skating-penguin .skate.left::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-10deg);
+    width: 20px;
+    height: 14px;
+    background: linear-gradient(180deg, #c41e3a 0%, #a01830 100%);
+    border-radius: 4px 10px 4px 4px;
+}
+
+/* Kicked up skate blade (LEFT) */
+.scene-winter-wonderland .skating-penguin .skate.left::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-10deg);
+    width: 26px;
+    height: 4px;
+    background: linear-gradient(180deg, #c0c0c0 0%, #999 100%);
+    border-radius: 1px;
+}
+
+/* Standing skate boot - red (RIGHT foot) */
+.scene-winter-wonderland .skating-penguin .skate.right {
+    position: absolute;
+    bottom: 0;
+    right: 22px;
+    width: 26px;
+    height: 18px;
+    background: linear-gradient(180deg, #c41e3a 0%, #a01830 100%);
+    border-radius: 5px 12px 5px 5px;
+    display: block;
+    transform: none;
+}
+
+/* Standing skate blade (RIGHT) */
+.scene-winter-wonderland .skating-penguin .skate.right::before {
+    display: none;
+}
+
+.scene-winter-wonderland .skating-penguin .skate.right::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: -4px;
+    width: 34px;
+    height: 5px;
+    background: linear-gradient(180deg, #c0c0c0 0%, #999 100%);
+    border-radius: 1px 1px 2px 2px;
+    transform: none;
+}
+
+/* Remove the old raised leg pseudo-element */
+.scene-winter-wonderland .skating-penguin::before {
+    display: none;
+}

@@ -2679,12 +2679,40 @@
 
     <script>
         let currentThemeId = 'frame-1'; 
-        const shareThemeMap = { 
-            'frame-1': { index: 1, name: 'Snowy Cabin' }, 
-            'frame-2': { index: 2, name: 'Santas Workshop' }, 
+        const shareThemeMap = {
+            'frame-1': { index: 1, name: 'Snowy Cabin' },
+            'frame-2': { index: 2, name: 'Santas Workshop' },
             'frame-3': { index: 3, name: 'Winter Wonderland' }
         };
-        
+
+        // === CARD URL ROUTING ===
+        // Uses /card?t=1&m=encoded_message for server-rendered OG tags
+        // Serverless function injects meta tags, client JS renders the card
+
+        function getCardUrl(themeIndex, message) {
+            const baseUrl = window.location.origin;
+            const params = new URLSearchParams();
+            params.set('t', themeIndex);
+            if (message) params.set('m', message);
+            return `${baseUrl}/card?${params.toString()}`;
+        }
+
+        function parseCardRoute() {
+            // Check if we're on the /card route
+            if (!window.location.pathname.endsWith('/card')) return null;
+
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const t = params.get('t');
+                const m = params.get('m');
+                if (!t) return null;
+                return { t: parseInt(t, 10), m: m || '' };
+            } catch (e) {
+                console.error('Failed to parse card route:', e);
+                return null;
+            }
+        }
+
         // Message pools for each theme
         const messagePools = {
             'frame-1': [
@@ -2718,7 +2746,44 @@
                 "Sending cool wishes and warm hugs your way!"
             ]
         };
-        
+
+        // Short, friendly share messages for social/email (URL appended separately)
+        const shareMessagePools = {
+            'frame-1': [
+                "Sending you cozy cabin vibes this holiday season!",
+                "Warm wishes from a snowy cabin to you!",
+                "Here's a little winter warmth for your day!",
+                "A cozy holiday greeting just for you!"
+            ],
+            'frame-2': [
+                "Special delivery from Santa's Workshop!",
+                "A little holiday magic heading your way!",
+                "The elves helped me send you this!",
+                "Straight from the North Pole with love!"
+            ],
+            'frame-3': [
+                "Sending you a winter wonderland greeting!",
+                "A flurry of holiday cheer for you!",
+                "Cool wishes from a snowy scene!",
+                "Let it snow! Here's a frosty hello!"
+            ]
+        };
+
+        let lastShareMessageIndex = {};
+
+        function getShareMessage(themeId) {
+            const pool = shareMessagePools[themeId];
+            if (!pool) return "Sending you a festive holiday greeting!";
+
+            let index;
+            do {
+                index = Math.floor(Math.random() * pool.length);
+            } while (index === lastShareMessageIndex[themeId] && pool.length > 1);
+
+            lastShareMessageIndex[themeId] = index;
+            return pool[index];
+        }
+
         let lastMessageIndex = {};
         
         function shuffleMessage() {
@@ -3347,32 +3412,43 @@
 
         function openShareModal() {
             const themeData = shareThemeMap[currentThemeId];
-            const message = document.getElementById('custom-message').value.trim();
-            const url = new URL(window.location.href);
-            url.searchParams.set('t', themeData.index);
-            if (message) url.searchParams.set('m', message);
-            const shareLink = url.toString();
-            document.getElementById('share-link').value = shareLink;
+            const userMessage = document.getElementById('custom-message').value.trim();
 
-            const shareText = `Check out my festive holiday greeting: ${themeData.name}`;
-            const encodedUrl = encodeURIComponent(shareLink);
-            const encodedText = encodeURIComponent(shareText);
+            // Use server-provided values if available, otherwise generate client-side
+            const cardUrl = window.cardUrl || getCardUrl(themeData.index, userMessage);
+            const shareMessage = window.shareMessage || buildClientShareMessage(userMessage);
 
-            // Facebook
-            document.getElementById('facebook-share-btn').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+            // Display the share link in the input field
+            document.getElementById('share-link').value = cardUrl;
 
-            // X/Twitter
-            document.getElementById('twitter-share-btn').href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
+            // Encode for URLs
+            const encodedUrl = encodeURIComponent(cardUrl);
+            const encodedMessage = encodeURIComponent(shareMessage);
 
-            // LinkedIn
-            document.getElementById('linkedin-share-btn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+            // Facebook (share URL with quote)
+            document.getElementById('facebook-share-btn').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedMessage}`;
 
-            // Email
-            const sub = encodeURIComponent(`A Virtual Holiday Greeting: ${themeData.name}`);
-            const body = encodeURIComponent(`Check out my festive holiday greeting!\n\n${shareLink}`);
-            document.getElementById('email-share-btn').href = `mailto:?subject=${sub}&body=${body}`;
+            // X/Twitter (message + URL)
+            document.getElementById('twitter-share-btn').href = `https://twitter.com/intent/tweet?text=${encodedMessage}&url=${encodedUrl}`;
+
+            // LinkedIn (share URL with summary)
+            document.getElementById('linkedin-share-btn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedMessage}`;
+
+            // Email (subject + body with message and link)
+            const emailSubject = encodeURIComponent(`A Holiday Greeting: ${themeData.name}`);
+            const emailBody = encodeURIComponent(`${shareMessage}\n\n${cardUrl}`);
+            document.getElementById('email-share-btn').href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
 
             document.getElementById('share-modal').classList.remove('hidden');
+        }
+
+        // Fallback for client-side share message generation (mirrors serverless logic)
+        function buildClientShareMessage(userMessage) {
+            const baseMessage = "Happy Holidays! 🎄✨ Check out this custom holiday greeting I made using the Virtual Holiday Greeting Card app.";
+            if (userMessage && userMessage.trim()) {
+                return `${userMessage.trim()} ${baseMessage}`;
+            }
+            return baseMessage;
         }
 
         function closeShareModal() { document.getElementById('share-modal').classList.add('hidden'); }
@@ -3385,19 +3461,24 @@
         }
 
         window.onload = () => {
-            updateCountdown(); 
+            updateCountdown();
             setInterval(updateCountdown, 1000);
-            const params = new URLSearchParams(window.location.search);
-            const incomingTheme = params.get('t');
-            const incomingMsg = params.get('m');
-            if (incomingTheme && shareThemeMap['frame-' + incomingTheme]) {
-                if (incomingMsg) { document.getElementById('custom-message').value = incomingMsg; }
-                openTab(null, 'frame-' + incomingTheme);
+
+            // Check if we're on the /card route with URL params
+            const cardData = parseCardRoute();
+            if (cardData && cardData.t && shareThemeMap['frame-' + cardData.t]) {
+                // Render the shared card
+                if (cardData.m) {
+                    document.getElementById('custom-message').value = cardData.m;
+                }
+                openTab(null, 'frame-' + cardData.t);
             } else {
+                // Main page - default to first theme
                 openTab(null, 'frame-1');
             }
-            document.getElementById('share-modal').addEventListener('click', e => { 
-                if (e.target.id === 'share-modal') closeShareModal(); 
+
+            document.getElementById('share-modal').addEventListener('click', e => {
+                if (e.target.id === 'share-modal') closeShareModal();
             });
         };
     </script>
