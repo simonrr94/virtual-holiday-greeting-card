@@ -2635,6 +2635,12 @@
                     </div>
                     <p id="copy-message" class="text-sm font-medium text-primary-red mt-2 hidden">Link copied successfully!</p>
                 </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Export Image:</label>
+                    <div class="flex h-12">
+                        <button onclick="exportAsPng()" class="unified-btn btn-green w-full" style="border-radius: 12px;">📥 Download as PNG</button>
+                    </div>
+                </div>
                 <div class="flex justify-center">
                     <button onclick="closeShareModal()" class="unified-btn btn-gray">Close</button>
                 </div>
@@ -3389,12 +3395,17 @@
         }
 
         function closeShareModal() { document.getElementById('share-modal').classList.add('hidden'); }
-        function copyLink() { 
-            const input = document.getElementById('share-link'); 
-            input.select(); 
-            document.execCommand('copy'); 
-            document.getElementById('copy-message').classList.remove('hidden'); 
-            setTimeout(() => document.getElementById('copy-message').classList.add('hidden'), 3000); 
+        function copyLink() {
+            const input = document.getElementById('share-link');
+            input.select();
+            document.execCommand('copy');
+            document.getElementById('copy-message').classList.remove('hidden');
+            setTimeout(() => document.getElementById('copy-message').classList.add('hidden'), 3000);
+        }
+
+        function exportAsPng() {
+            // TODO: Implement PNG export functionality
+            console.log('PNG export clicked');
         }
 
         window.onload = () => {
