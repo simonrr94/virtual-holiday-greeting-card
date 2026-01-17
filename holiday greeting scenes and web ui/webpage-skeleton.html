@@ -10,7 +10,10 @@
     <link href="scene-snowy-cabin.css" rel="stylesheet">
     <link href="scene-santas-workshop.css" rel="stylesheet">
     <link href="scene-winter-wonderland.css" rel="stylesheet">
-    
+
+    <!-- html2canvas for PNG export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
         /* === UTILITY CLASSES (replacing Tailwind) === */
         *, *::before, *::after { box-sizing: border-box; }
@@ -3404,8 +3407,24 @@
         }
 
         function exportAsPng() {
-            // TODO: Implement PNG export functionality
-            console.log('PNG export clicked');
+            const activeFrame = document.querySelector('.tab-frame:not(.hidden) .candy-cane-border-fixed');
+            if (!activeFrame) {
+                console.error('No active frame found');
+                return;
+            }
+
+            html2canvas(activeFrame, {
+                backgroundColor: null,
+                scale: 2, // Higher resolution
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'holiday-greeting.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error('PNG export failed:', err);
+            });
         }
 
         window.onload = () => {
