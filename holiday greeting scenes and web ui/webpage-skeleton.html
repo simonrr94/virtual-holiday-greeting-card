@@ -1008,26 +1008,6 @@
             filter: brightness(0.95);
         }
 
-        /* Social Share Buttons */
-        .social-share-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-        .social-share-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        .social-share-btn:active {
-            transform: translateY(0);
-        }
-
         /* --- 3D BUTTONS (RESTORED HEIGHT) --- */
         .tab-button, .action-button-generate, .action-button-clear, #share-btn {
             font-family: 'Boogaloo', cursive; letter-spacing: 0.03em; transition: transform 0.1s ease, border-width 0.1s ease, box-shadow 0.1s ease;
@@ -2655,21 +2635,6 @@
                     </div>
                     <p id="copy-message" class="text-sm font-medium text-primary-red mt-2 hidden">Link copied successfully!</p>
                 </div>
-                <p class="text-sm text-gray-600 mb-3 text-center">Share on social media:</p>
-                <div class="flex justify-center gap-3 mb-4">
-                    <a id="facebook-share-btn" href="#" target="_blank" class="social-share-btn" style="background: #1877F2;" title="Share on Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                    <a id="twitter-share-btn" href="#" target="_blank" class="social-share-btn" style="background: #000000;" title="Share on X">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </a>
-                    <a id="linkedin-share-btn" href="#" target="_blank" class="social-share-btn" style="background: #0A66C2;" title="Share on LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    </a>
-                    <a id="email-share-btn" href="#" class="social-share-btn" style="background: #EA4335;" title="Share via Email">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    </a>
-                </div>
                 <div class="flex justify-center">
                     <button onclick="closeShareModal()" class="unified-btn btn-gray">Close</button>
                 </div>
@@ -3416,39 +3381,11 @@
 
             // Use server-provided values if available, otherwise generate client-side
             const cardUrl = window.cardUrl || getCardUrl(themeData.index, userMessage);
-            const shareMessage = window.shareMessage || buildClientShareMessage(userMessage);
 
             // Display the share link in the input field
             document.getElementById('share-link').value = cardUrl;
 
-            // Encode for URLs
-            const encodedUrl = encodeURIComponent(cardUrl);
-            const encodedMessage = encodeURIComponent(shareMessage);
-
-            // Facebook (share URL with quote)
-            document.getElementById('facebook-share-btn').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedMessage}`;
-
-            // X/Twitter (message + URL)
-            document.getElementById('twitter-share-btn').href = `https://twitter.com/intent/tweet?text=${encodedMessage}&url=${encodedUrl}`;
-
-            // LinkedIn (share URL with summary)
-            document.getElementById('linkedin-share-btn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&summary=${encodedMessage}`;
-
-            // Email (subject + body with message and link)
-            const emailSubject = encodeURIComponent(`A Holiday Greeting: ${themeData.name}`);
-            const emailBody = encodeURIComponent(`${shareMessage}\n\n${cardUrl}`);
-            document.getElementById('email-share-btn').href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
-
             document.getElementById('share-modal').classList.remove('hidden');
-        }
-
-        // Fallback for client-side share message generation (mirrors serverless logic)
-        function buildClientShareMessage(userMessage) {
-            const baseMessage = "Happy Holidays! 🎄✨ Check out this custom holiday greeting I made using the Virtual Holiday Greeting Card app.";
-            if (userMessage && userMessage.trim()) {
-                return `${userMessage.trim()} ${baseMessage}`;
-            }
-            return baseMessage;
         }
 
         function closeShareModal() { document.getElementById('share-modal').classList.add('hidden'); }
