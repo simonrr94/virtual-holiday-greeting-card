@@ -18,7 +18,6 @@ module.exports = async (req, res) => {
     let browser = null;
 
     try {
-        // Launch browser with serverless chromium
         browser = await puppeteer.launch({
             args: chromium.args,
             defaultViewport: {
@@ -28,6 +27,7 @@ module.exports = async (req, res) => {
             },
             executablePath: await chromium.executablePath(),
             headless: chromium.headless,
+            ignoreHTTPSErrors: true,
         });
 
         const page = await browser.newPage();
