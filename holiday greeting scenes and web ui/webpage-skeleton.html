@@ -11,8 +11,8 @@
     <link href="scene-santas-workshop.css" rel="stylesheet">
     <link href="scene-winter-wonderland.css" rel="stylesheet">
 
-    <!-- html2canvas for PNG export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- dom-to-image-more for PNG export -->
+    <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.4.5/dist/dom-to-image-more.min.js"></script>
 
     <style>
         /* === UTILITY CLASSES (replacing Tailwind) === */
@@ -3413,14 +3413,13 @@
                 return;
             }
 
-            html2canvas(activeFrame, {
-                backgroundColor: null,
-                scale: 2, // Higher resolution
-                useCORS: true
-            }).then(canvas => {
+            domtoimage.toPng(activeFrame, {
+                quality: 1,
+                scale: 2
+            }).then(dataUrl => {
                 const link = document.createElement('a');
                 link.download = 'holiday-greeting.png';
-                link.href = canvas.toDataURL('image/png');
+                link.href = dataUrl;
                 link.click();
             }).catch(err => {
                 console.error('PNG export failed:', err);
