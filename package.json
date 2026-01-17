@@ -1,0 +1,9 @@
+{
+  "name": "holiday-greeting-generator",
+  "version": "1.0.0",
+  "description": "Virtual Holiday Greeting Card Generator",
+  "dependencies": {
+    "@sparticuz/chromium": "^131.0.0",
+    "puppeteer-core": "^23.0.0"
+  }
+}
