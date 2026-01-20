@@ -2187,14 +2187,13 @@
         }
         .modal-inner-content { width: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: inset 0 4px 8px rgba(0,0,0,0.3); position: relative; background: white; padding: 2rem; z-index: 2; }
 
-        /* === EXPORT MODE - Remove filters for clean image export === */
-        /* Only remove filter property (drop-shadow causes artifacts) */
-        /* Keep box-shadow - needed for string light bulbs, snow dots, bow loops */
+        /* === EXPORT MODE - Remove shadows for clean image export === */
         .export-mode *,
         .export-mode *::before,
         .export-mode *::after {
             filter: none !important;
             -webkit-filter: none !important;
+            box-shadow: none !important;
         }
     </style>
 </head>
