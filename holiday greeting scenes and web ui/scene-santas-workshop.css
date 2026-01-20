@@ -21,8 +21,8 @@
             z-index: 3;
         }
         
-        .scene-santas-workshop .string-lights::before {
-            content: '';
+        /* Wire - converted from ::before to real element */
+        .scene-santas-workshop .string-lights .lights-wire {
             position: absolute;
             top: 5px;
             left: 0;
@@ -30,34 +30,31 @@
             height: 2px;
             background: #333;
         }
-        
-        .scene-santas-workshop .string-lights::after {
-            content: '';
+
+        /* Individual bulbs - each as its own DOM element for reliable export */
+        .scene-santas-workshop .string-lights .bulb {
             position: absolute;
-            top: 7px;
-            left: 20px;
             width: 10px;
             height: 12px;
-            background: radial-gradient(ellipse, #ff6666 0%, #cc0000 100%);
             border-radius: 50%;
-            box-shadow: 
-                28px 3px 0 0 #66ff66,
-                56px -2px 0 0 #ffff66,
-                84px 2px 0 0 #6666ff,
-                112px -1px 0 0 #ff66ff,
-                140px 3px 0 0 #66ffff,
-                168px -2px 0 0 #ff6666,
-                196px 2px 0 0 #66ff66,
-                224px -1px 0 0 #ffff66,
-                252px 3px 0 0 #6666ff,
-                280px -2px 0 0 #ff66ff,
-                308px 2px 0 0 #66ffff,
-                336px -1px 0 0 #ff6666,
-                364px 3px 0 0 #66ff66,
-                392px -2px 0 0 #ffff66,
-                420px 2px 0 0 #6666ff,
-                448px -1px 0 0 #ff66ff;
         }
+        .scene-santas-workshop .bulb-1 { left: 20px; top: 7px; background: radial-gradient(ellipse, #ff6666 0%, #cc0000 100%); }
+        .scene-santas-workshop .bulb-2 { left: 48px; top: 10px; background: radial-gradient(ellipse, #66ff66 0%, #339933 100%); }
+        .scene-santas-workshop .bulb-3 { left: 76px; top: 5px; background: radial-gradient(ellipse, #ffff66 0%, #cccc00 100%); }
+        .scene-santas-workshop .bulb-4 { left: 104px; top: 9px; background: radial-gradient(ellipse, #6666ff 0%, #3333cc 100%); }
+        .scene-santas-workshop .bulb-5 { left: 132px; top: 6px; background: radial-gradient(ellipse, #ff66ff 0%, #cc33cc 100%); }
+        .scene-santas-workshop .bulb-6 { left: 160px; top: 10px; background: radial-gradient(ellipse, #66ffff 0%, #33cccc 100%); }
+        .scene-santas-workshop .bulb-7 { left: 188px; top: 5px; background: radial-gradient(ellipse, #ff6666 0%, #cc0000 100%); }
+        .scene-santas-workshop .bulb-8 { left: 216px; top: 9px; background: radial-gradient(ellipse, #66ff66 0%, #339933 100%); }
+        .scene-santas-workshop .bulb-9 { left: 244px; top: 6px; background: radial-gradient(ellipse, #ffff66 0%, #cccc00 100%); }
+        .scene-santas-workshop .bulb-10 { left: 272px; top: 10px; background: radial-gradient(ellipse, #6666ff 0%, #3333cc 100%); }
+        .scene-santas-workshop .bulb-11 { left: 300px; top: 5px; background: radial-gradient(ellipse, #ff66ff 0%, #cc33cc 100%); }
+        .scene-santas-workshop .bulb-12 { left: 328px; top: 9px; background: radial-gradient(ellipse, #66ffff 0%, #33cccc 100%); }
+        .scene-santas-workshop .bulb-13 { left: 356px; top: 6px; background: radial-gradient(ellipse, #ff6666 0%, #cc0000 100%); }
+        .scene-santas-workshop .bulb-14 { left: 384px; top: 10px; background: radial-gradient(ellipse, #66ff66 0%, #339933 100%); }
+        .scene-santas-workshop .bulb-15 { left: 412px; top: 5px; background: radial-gradient(ellipse, #ffff66 0%, #cccc00 100%); }
+        .scene-santas-workshop .bulb-16 { left: 440px; top: 9px; background: radial-gradient(ellipse, #6666ff 0%, #3333cc 100%); }
+        .scene-santas-workshop .bulb-17 { left: 468px; top: 6px; background: radial-gradient(ellipse, #ff66ff 0%, #cc33cc 100%); }
         
         /* Arched window 1 - left side */
         .scene-santas-workshop .window-1 {
@@ -74,36 +71,34 @@
             overflow: hidden;
         }
         
-        /* Snow in window 1 - static, full height */
-        .scene-santas-workshop .window-1::before {
-            content: '';
+        /* Snow in window 1 - converted from ::before to real element */
+        /* Individual snow dots for window-1 - each as its own DOM element */
+        .scene-santas-workshop .window-1 .snow-dot {
             position: absolute;
-            top: 8%;
-            left: 18%;
             width: 4px;
             height: 4px;
             background: #fff;
             border-radius: 50%;
-            box-shadow: 
-                15px 15px 0 #fff,
-                -5px 30px 0 #fff,
-                20px 45px 0 #fff,
-                8px 60px 0 #fff,
-                -8px 12px 0 #fff,
-                25px 28px 0 #fff,
-                5px 75px 0 #fff,
-                18px 5px 0 #fff,
-                -3px 52px 0 #fff,
-                12px 38px 0 #fff,
-                30px 58px 0 #fff,
-                22px 72px 0 #fff,
-                3px 88px 0 #fff,
-                28px 95px 0 #fff,
-                -2px 105px 0 #fff,
-                15px 115px 0 #fff,
-                8px 130px 0 #fff,
-                25px 140px 0 #fff;
         }
+        .scene-santas-workshop .window-1 .snow-dot-1 { top: 8%; left: 18%; }
+        .scene-santas-workshop .window-1 .snow-dot-2 { top: calc(8% + 15px); left: calc(18% + 15px); }
+        .scene-santas-workshop .window-1 .snow-dot-3 { top: calc(8% + 30px); left: calc(18% - 5px); }
+        .scene-santas-workshop .window-1 .snow-dot-4 { top: calc(8% + 45px); left: calc(18% + 20px); }
+        .scene-santas-workshop .window-1 .snow-dot-5 { top: calc(8% + 60px); left: calc(18% + 8px); }
+        .scene-santas-workshop .window-1 .snow-dot-6 { top: calc(8% + 12px); left: calc(18% - 8px); }
+        .scene-santas-workshop .window-1 .snow-dot-7 { top: calc(8% + 28px); left: calc(18% + 25px); }
+        .scene-santas-workshop .window-1 .snow-dot-8 { top: calc(8% + 75px); left: calc(18% + 5px); }
+        .scene-santas-workshop .window-1 .snow-dot-9 { top: calc(8% + 5px); left: calc(18% + 18px); }
+        .scene-santas-workshop .window-1 .snow-dot-10 { top: calc(8% + 52px); left: calc(18% - 3px); }
+        .scene-santas-workshop .window-1 .snow-dot-11 { top: calc(8% + 38px); left: calc(18% + 12px); }
+        .scene-santas-workshop .window-1 .snow-dot-12 { top: calc(8% + 58px); left: calc(18% + 30px); }
+        .scene-santas-workshop .window-1 .snow-dot-13 { top: calc(8% + 72px); left: calc(18% + 22px); }
+        .scene-santas-workshop .window-1 .snow-dot-14 { top: calc(8% + 88px); left: calc(18% + 3px); }
+        .scene-santas-workshop .window-1 .snow-dot-15 { top: calc(8% + 95px); left: calc(18% + 28px); }
+        .scene-santas-workshop .window-1 .snow-dot-16 { top: calc(8% + 105px); left: calc(18% - 2px); }
+        .scene-santas-workshop .window-1 .snow-dot-17 { top: calc(8% + 115px); left: calc(18% + 15px); }
+        .scene-santas-workshop .window-1 .snow-dot-18 { top: calc(8% + 130px); left: calc(18% + 8px); }
+        .scene-santas-workshop .window-1 .snow-dot-19 { top: calc(8% + 140px); left: calc(18% + 25px); }
         
         /* Window 1 cross panes */
         .scene-santas-workshop .window-1-panes {
@@ -155,36 +150,34 @@
             overflow: hidden;
         }
         
-        /* Snow in window 2 - static, full height */
-        .scene-santas-workshop .window-2::before {
-            content: '';
+        /* Snow in window 2 - converted from ::before to real element */
+        /* Individual snow dots for window-2 - each as its own DOM element */
+        .scene-santas-workshop .window-2 .snow-dot {
             position: absolute;
-            top: 5%;
-            left: 12%;
             width: 4px;
             height: 4px;
             background: #fff;
             border-radius: 50%;
-            box-shadow: 
-                12px 18px 0 #fff,
-                -3px 35px 0 #fff,
-                22px 50px 0 #fff,
-                6px 65px 0 #fff,
-                -6px 10px 0 #fff,
-                28px 30px 0 #fff,
-                8px 80px 0 #fff,
-                15px 8px 0 #fff,
-                -2px 58px 0 #fff,
-                18px 42px 0 #fff,
-                25px 62px 0 #fff,
-                10px 25px 0 #fff,
-                5px 95px 0 #fff,
-                20px 108px 0 #fff,
-                -4px 120px 0 #fff,
-                30px 85px 0 #fff,
-                12px 135px 0 #fff,
-                22px 145px 0 #fff;
         }
+        .scene-santas-workshop .window-2 .snow-dot-1 { top: 5%; left: 12%; }
+        .scene-santas-workshop .window-2 .snow-dot-2 { top: calc(5% + 18px); left: calc(12% + 12px); }
+        .scene-santas-workshop .window-2 .snow-dot-3 { top: calc(5% + 35px); left: calc(12% - 3px); }
+        .scene-santas-workshop .window-2 .snow-dot-4 { top: calc(5% + 50px); left: calc(12% + 22px); }
+        .scene-santas-workshop .window-2 .snow-dot-5 { top: calc(5% + 65px); left: calc(12% + 6px); }
+        .scene-santas-workshop .window-2 .snow-dot-6 { top: calc(5% + 10px); left: calc(12% - 6px); }
+        .scene-santas-workshop .window-2 .snow-dot-7 { top: calc(5% + 30px); left: calc(12% + 28px); }
+        .scene-santas-workshop .window-2 .snow-dot-8 { top: calc(5% + 80px); left: calc(12% + 8px); }
+        .scene-santas-workshop .window-2 .snow-dot-9 { top: calc(5% + 8px); left: calc(12% + 15px); }
+        .scene-santas-workshop .window-2 .snow-dot-10 { top: calc(5% + 58px); left: calc(12% - 2px); }
+        .scene-santas-workshop .window-2 .snow-dot-11 { top: calc(5% + 42px); left: calc(12% + 18px); }
+        .scene-santas-workshop .window-2 .snow-dot-12 { top: calc(5% + 62px); left: calc(12% + 25px); }
+        .scene-santas-workshop .window-2 .snow-dot-13 { top: calc(5% + 25px); left: calc(12% + 10px); }
+        .scene-santas-workshop .window-2 .snow-dot-14 { top: calc(5% + 95px); left: calc(12% + 5px); }
+        .scene-santas-workshop .window-2 .snow-dot-15 { top: calc(5% + 108px); left: calc(12% + 20px); }
+        .scene-santas-workshop .window-2 .snow-dot-16 { top: calc(5% + 120px); left: calc(12% - 4px); }
+        .scene-santas-workshop .window-2 .snow-dot-17 { top: calc(5% + 85px); left: calc(12% + 30px); }
+        .scene-santas-workshop .window-2 .snow-dot-18 { top: calc(5% + 135px); left: calc(12% + 12px); }
+        .scene-santas-workshop .window-2 .snow-dot-19 { top: calc(5% + 145px); left: calc(12% + 22px); }
         
         /* Window 2 cross panes */
         .scene-santas-workshop .window-2-panes {
@@ -420,8 +413,7 @@
             z-index: 2;
         }
         
-        .scene-santas-workshop .shelf1-present-1::before {
-            content: '';
+        .scene-santas-workshop .shelf1-present-1 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -430,9 +422,8 @@
             height: 100%;
             background: #c41e3a;
         }
-        
-        .scene-santas-workshop .shelf1-present-1::after {
-            content: '';
+
+        .scene-santas-workshop .shelf1-present-1 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -441,10 +432,18 @@
             height: 8px;
             background: #c41e3a;
             border-radius: 50%;
-            box-shadow:
-                -8px 2px 0 0 #c41e3a,
-                8px 2px 0 0 #c41e3a;
         }
+        .scene-santas-workshop .shelf1-present-1 .bow-loop-left,
+        .scene-santas-workshop .shelf1-present-1 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 8px;
+            background: #c41e3a;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .shelf1-present-1 .bow-loop-left { left: -8px; }
+        .scene-santas-workshop .shelf1-present-1 .bow-loop-right { right: -8px; }
         
         .scene-santas-workshop .shelf1-present-2 {
             display: none;
@@ -461,8 +460,7 @@
             z-index: 2;
         }
         
-        .scene-santas-workshop .shelf1-present-3::before {
-            content: '';
+        .scene-santas-workshop .shelf1-present-3 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -471,9 +469,8 @@
             height: 100%;
             background: #4169e1;
         }
-        
-        .scene-santas-workshop .shelf1-present-3::after {
-            content: '';
+
+        .scene-santas-workshop .shelf1-present-3 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -482,10 +479,18 @@
             height: 8px;
             background: #4169e1;
             border-radius: 50%;
-            box-shadow:
-                -8px 2px 0 0 #4169e1,
-                8px 2px 0 0 #4169e1;
         }
+        .scene-santas-workshop .shelf1-present-3 .bow-loop-left,
+        .scene-santas-workshop .shelf1-present-3 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 8px;
+            background: #4169e1;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .shelf1-present-3 .bow-loop-left { left: -8px; }
+        .scene-santas-workshop .shelf1-present-3 .bow-loop-right { right: -8px; }
         
         .scene-santas-workshop .shelf1-present-4 {
             display: none;
@@ -502,8 +507,7 @@
             z-index: 2;
         }
         
-        .scene-santas-workshop .shelf1-present-5::before {
-            content: '';
+        .scene-santas-workshop .shelf1-present-5 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -512,9 +516,8 @@
             height: 100%;
             background: #2e8b57;
         }
-        
-        .scene-santas-workshop .shelf1-present-5::after {
-            content: '';
+
+        .scene-santas-workshop .shelf1-present-5 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -523,10 +526,18 @@
             height: 8px;
             background: #2e8b57;
             border-radius: 50%;
-            box-shadow:
-                -8px 2px 0 0 #2e8b57,
-                8px 2px 0 0 #2e8b57;
         }
+        .scene-santas-workshop .shelf1-present-5 .bow-loop-left,
+        .scene-santas-workshop .shelf1-present-5 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 8px;
+            background: #2e8b57;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .shelf1-present-5 .bow-loop-left { left: -8px; }
+        .scene-santas-workshop .shelf1-present-5 .bow-loop-right { right: -8px; }
         
         .scene-santas-workshop .shelf1-present-6 {
             display: none;
@@ -567,8 +578,7 @@
             z-index: 2;
         }
         
-        .scene-santas-workshop .shelf2-present-1::before {
-            content: '';
+        .scene-santas-workshop .shelf2-present-1 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -577,9 +587,8 @@
             height: 100%;
             background: #ff6347;
         }
-        
-        .scene-santas-workshop .shelf2-present-1::after {
-            content: '';
+
+        .scene-santas-workshop .shelf2-present-1 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -588,10 +597,18 @@
             height: 8px;
             background: #ff6347;
             border-radius: 50%;
-            box-shadow:
-                -8px 2px 0 0 #ff6347,
-                8px 2px 0 0 #ff6347;
         }
+        .scene-santas-workshop .shelf2-present-1 .bow-loop-left,
+        .scene-santas-workshop .shelf2-present-1 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 8px;
+            background: #ff6347;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .shelf2-present-1 .bow-loop-left { left: -8px; }
+        .scene-santas-workshop .shelf2-present-1 .bow-loop-right { right: -8px; }
         
         .scene-santas-workshop .shelf2-present-2 {
             display: none;
@@ -608,8 +625,7 @@
             z-index: 2;
         }
         
-        .scene-santas-workshop .shelf2-present-3::before {
-            content: '';
+        .scene-santas-workshop .shelf2-present-3 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -618,9 +634,8 @@
             height: 100%;
             background: #ffd700;
         }
-        
-        .scene-santas-workshop .shelf2-present-3::after {
-            content: '';
+
+        .scene-santas-workshop .shelf2-present-3 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -629,10 +644,18 @@
             height: 8px;
             background: #ffd700;
             border-radius: 50%;
-            box-shadow:
-                -8px 2px 0 0 #ffd700,
-                8px 2px 0 0 #ffd700;
         }
+        .scene-santas-workshop .shelf2-present-3 .bow-loop-left,
+        .scene-santas-workshop .shelf2-present-3 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 8px;
+            background: #ffd700;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .shelf2-present-3 .bow-loop-left { left: -8px; }
+        .scene-santas-workshop .shelf2-present-3 .bow-loop-right { right: -8px; }
         
         .scene-santas-workshop .shelf2-present-4 {
             display: none;
@@ -649,8 +672,7 @@
             z-index: 2;
         }
         
-        .scene-santas-workshop .shelf2-present-5::before {
-            content: '';
+        .scene-santas-workshop .shelf2-present-5 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -659,9 +681,8 @@
             height: 100%;
             background: #ff69b4;
         }
-        
-        .scene-santas-workshop .shelf2-present-5::after {
-            content: '';
+
+        .scene-santas-workshop .shelf2-present-5 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -670,10 +691,18 @@
             height: 8px;
             background: #ff69b4;
             border-radius: 50%;
-            box-shadow:
-                -8px 2px 0 0 #ff69b4,
-                8px 2px 0 0 #ff69b4;
         }
+        .scene-santas-workshop .shelf2-present-5 .bow-loop-left,
+        .scene-santas-workshop .shelf2-present-5 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 8px;
+            background: #ff69b4;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .shelf2-present-5 .bow-loop-left { left: -8px; }
+        .scene-santas-workshop .shelf2-present-5 .bow-loop-right { right: -8px; }
         
         .scene-santas-workshop .shelf2-present-6 {
             display: none;
@@ -1812,8 +1841,7 @@
             background: linear-gradient(180deg, #4ecdc4 0%, #3ab5ad 100%);
         }
         
-        .scene-santas-workshop .conv-present-1::before {
-            content: '';
+        .scene-santas-workshop .conv-present-1 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -1822,9 +1850,8 @@
             height: 100%;
             background: #fff;
         }
-        
-        .scene-santas-workshop .conv-present-1::after {
-            content: '';
+
+        .scene-santas-workshop .conv-present-1 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -1833,10 +1860,18 @@
             height: 8px;
             background: #fff;
             border-radius: 50%;
-            box-shadow:
-                -7px 2px 0 0 #fff,
-                7px 2px 0 0 #fff;
         }
+        .scene-santas-workshop .conv-present-1 .bow-loop-left,
+        .scene-santas-workshop .conv-present-1 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .conv-present-1 .bow-loop-left { left: -7px; }
+        .scene-santas-workshop .conv-present-1 .bow-loop-right { right: -7px; }
         
         /* Present 2 - yellow with gold ribbon */
         .scene-santas-workshop .conv-present-2 {
@@ -1846,8 +1881,7 @@
             background: linear-gradient(180deg, #f9dc5c 0%, #e8c84a 100%);
         }
         
-        .scene-santas-workshop .conv-present-2::before {
-            content: '';
+        .scene-santas-workshop .conv-present-2 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -1856,9 +1890,8 @@
             height: 100%;
             background: #d4a400;
         }
-        
-        .scene-santas-workshop .conv-present-2::after {
-            content: '';
+
+        .scene-santas-workshop .conv-present-2 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -1867,10 +1900,18 @@
             height: 7px;
             background: #d4a400;
             border-radius: 50%;
-            box-shadow:
-                -6px 2px 0 0 #d4a400,
-                6px 2px 0 0 #d4a400;
         }
+        .scene-santas-workshop .conv-present-2 .bow-loop-left,
+        .scene-santas-workshop .conv-present-2 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 7px;
+            height: 7px;
+            background: #d4a400;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .conv-present-2 .bow-loop-left { left: -6px; }
+        .scene-santas-workshop .conv-present-2 .bow-loop-right { right: -6px; }
         
         /* Present 3 - coral/salmon with teal ribbon */
         .scene-santas-workshop .conv-present-3 {
@@ -1880,8 +1921,7 @@
             background: linear-gradient(180deg, #ff8a80 0%, #e57373 100%);
         }
         
-        .scene-santas-workshop .conv-present-3::before {
-            content: '';
+        .scene-santas-workshop .conv-present-3 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -1890,9 +1930,8 @@
             height: 100%;
             background: #26a69a;
         }
-        
-        .scene-santas-workshop .conv-present-3::after {
-            content: '';
+
+        .scene-santas-workshop .conv-present-3 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -1901,10 +1940,18 @@
             height: 8px;
             background: #26a69a;
             border-radius: 50%;
-            box-shadow:
-                -7px 2px 0 0 #26a69a,
-                7px 2px 0 0 #26a69a;
         }
+        .scene-santas-workshop .conv-present-3 .bow-loop-left,
+        .scene-santas-workshop .conv-present-3 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 8px;
+            height: 8px;
+            background: #26a69a;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .conv-present-3 .bow-loop-left { left: -7px; }
+        .scene-santas-workshop .conv-present-3 .bow-loop-right { right: -7px; }
         
         /* Present 4 - mint green with pink ribbon */
         .scene-santas-workshop .conv-present-4 {
@@ -1914,8 +1961,7 @@
             background: linear-gradient(180deg, #a8e6cf 0%, #88d8b0 100%);
         }
         
-        .scene-santas-workshop .conv-present-4::before {
-            content: '';
+        .scene-santas-workshop .conv-present-4 .present-ribbon {
             position: absolute;
             top: 0;
             left: 50%;
@@ -1924,9 +1970,8 @@
             height: 100%;
             background: #f48fb1;
         }
-        
-        .scene-santas-workshop .conv-present-4::after {
-            content: '';
+
+        .scene-santas-workshop .conv-present-4 .present-bow {
             position: absolute;
             top: -10px;
             left: 50%;
@@ -1935,9 +1980,17 @@
             height: 7px;
             background: #f48fb1;
             border-radius: 50%;
-            box-shadow:
-                -6px 2px 0 0 #f48fb1,
-                6px 2px 0 0 #f48fb1;
         }
+        .scene-santas-workshop .conv-present-4 .bow-loop-left,
+        .scene-santas-workshop .conv-present-4 .bow-loop-right {
+            position: absolute;
+            top: 2px;
+            width: 7px;
+            height: 7px;
+            background: #f48fb1;
+            border-radius: 50%;
+        }
+        .scene-santas-workshop .conv-present-4 .bow-loop-left { left: -6px; }
+        .scene-santas-workshop .conv-present-4 .bow-loop-right { right: -6px; }
         
         /* =========================== */

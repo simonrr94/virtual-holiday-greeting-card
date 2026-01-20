@@ -10,7 +10,10 @@
     <link href="scene-snowy-cabin.css" rel="stylesheet">
     <link href="scene-santas-workshop.css" rel="stylesheet">
     <link href="scene-winter-wonderland.css" rel="stylesheet">
-    
+
+    <!-- html-to-image library for client-side PNG export -->
+    <script src="https://unpkg.com/html-to-image@1.11.11/dist/html-to-image.js"></script>
+
     <style>
         /* === UTILITY CLASSES (replacing Tailwind) === */
         *, *::before, *::after { box-sizing: border-box; }
@@ -264,11 +267,15 @@
             border: 3px solid;
             border-color: #5a3d0a #2a1504 #2a1504 #4A2508;
             border-radius: 2px; 
-            box-shadow: 
+            box-shadow:
                 0 0 20px rgba(254, 243, 199, 0.8),
                 0 0 40px rgba(254, 243, 199, 0.4),
                 inset 0 0 10px rgba(255,255,255,0.5);
             animation: windowGlow 3s ease-in-out infinite;
+        }
+        /* Scene cabin window - static for export */
+        .postcard-scene .cabin-window {
+            animation: none !important;
         }
         .cabin-window::before {
             content: '';
@@ -452,12 +459,12 @@
             filter: blur(3px);
             animation: smoke-base 3s ease-in-out infinite;
         }
-        
+
         @keyframes smoke-base {
             0%, 100% { transform: translateX(-50%) scaleX(1) scaleY(1); }
             50% { transform: translateX(-50%) scaleX(1.15) scaleY(1.05); }
         }
-        
+
         /* Main smoke column */
         .smoke-puff {
             position: absolute;
@@ -477,29 +484,29 @@
             filter: blur(3px);
             animation: smoke-wisp 4s ease-in-out infinite;
         }
-        
+
         .smoke-puff:nth-child(1) {
             animation-delay: 0s;
         }
-        
+
         .smoke-puff:nth-child(2) {
             animation-delay: 1s;
             width: 10px;
             height: 60px;
         }
-        
+
         .smoke-puff:nth-child(3) {
             animation-delay: 2s;
             width: 11px;
             height: 65px;
         }
-        
+
         .smoke-puff:nth-child(4) {
             animation-delay: 3s;
             width: 9px;
             height: 55px;
         }
-        
+
         @keyframes smoke-wisp {
             0% {
                 transform: translateX(-50%) translateY(0) scaleX(1) scaleY(0.6);
@@ -2179,6 +2186,16 @@
             z-index: 5; 
         }
         .modal-inner-content { width: 100%; border-radius: 1.5rem; overflow: hidden; box-shadow: inset 0 4px 8px rgba(0,0,0,0.3); position: relative; background: white; padding: 2rem; z-index: 2; }
+
+        /* === EXPORT MODE - Remove filters for clean image export === */
+        /* Only remove filter property (drop-shadow causes artifacts) */
+        /* Keep box-shadow - needed for string light bulbs, snow dots, bow loops */
+        .export-mode *,
+        .export-mode *::before,
+        .export-mode *::after {
+            filter: none !important;
+            -webkit-filter: none !important;
+        }
     </style>
 </head>
 <body class="text-gray-800 winter-background">
@@ -2330,24 +2347,83 @@
                             <!-- Santa's Workshop Scene -->
                             <div class="scene-sky"></div>
                             <div class="scene-background">
-                                <div class="string-lights"></div>
-                                <div class="window-1"></div>
+                                <div class="string-lights">
+                                    <div class="lights-wire"></div>
+                                    <div class="bulb bulb-1"></div>
+                                    <div class="bulb bulb-2"></div>
+                                    <div class="bulb bulb-3"></div>
+                                    <div class="bulb bulb-4"></div>
+                                    <div class="bulb bulb-5"></div>
+                                    <div class="bulb bulb-6"></div>
+                                    <div class="bulb bulb-7"></div>
+                                    <div class="bulb bulb-8"></div>
+                                    <div class="bulb bulb-9"></div>
+                                    <div class="bulb bulb-10"></div>
+                                    <div class="bulb bulb-11"></div>
+                                    <div class="bulb bulb-12"></div>
+                                    <div class="bulb bulb-13"></div>
+                                    <div class="bulb bulb-14"></div>
+                                    <div class="bulb bulb-15"></div>
+                                    <div class="bulb bulb-16"></div>
+                                    <div class="bulb bulb-17"></div>
+                                </div>
+                                <div class="window-1">
+                                    <div class="snow-dot snow-dot-1"></div>
+                                    <div class="snow-dot snow-dot-2"></div>
+                                    <div class="snow-dot snow-dot-3"></div>
+                                    <div class="snow-dot snow-dot-4"></div>
+                                    <div class="snow-dot snow-dot-5"></div>
+                                    <div class="snow-dot snow-dot-6"></div>
+                                    <div class="snow-dot snow-dot-7"></div>
+                                    <div class="snow-dot snow-dot-8"></div>
+                                    <div class="snow-dot snow-dot-9"></div>
+                                    <div class="snow-dot snow-dot-10"></div>
+                                    <div class="snow-dot snow-dot-11"></div>
+                                    <div class="snow-dot snow-dot-12"></div>
+                                    <div class="snow-dot snow-dot-13"></div>
+                                    <div class="snow-dot snow-dot-14"></div>
+                                    <div class="snow-dot snow-dot-15"></div>
+                                    <div class="snow-dot snow-dot-16"></div>
+                                    <div class="snow-dot snow-dot-17"></div>
+                                    <div class="snow-dot snow-dot-18"></div>
+                                    <div class="snow-dot snow-dot-19"></div>
+                                </div>
                                 <div class="window-1-panes"></div>
-                                <div class="window-2"></div>
+                                <div class="window-2">
+                                    <div class="snow-dot snow-dot-1"></div>
+                                    <div class="snow-dot snow-dot-2"></div>
+                                    <div class="snow-dot snow-dot-3"></div>
+                                    <div class="snow-dot snow-dot-4"></div>
+                                    <div class="snow-dot snow-dot-5"></div>
+                                    <div class="snow-dot snow-dot-6"></div>
+                                    <div class="snow-dot snow-dot-7"></div>
+                                    <div class="snow-dot snow-dot-8"></div>
+                                    <div class="snow-dot snow-dot-9"></div>
+                                    <div class="snow-dot snow-dot-10"></div>
+                                    <div class="snow-dot snow-dot-11"></div>
+                                    <div class="snow-dot snow-dot-12"></div>
+                                    <div class="snow-dot snow-dot-13"></div>
+                                    <div class="snow-dot snow-dot-14"></div>
+                                    <div class="snow-dot snow-dot-15"></div>
+                                    <div class="snow-dot snow-dot-16"></div>
+                                    <div class="snow-dot snow-dot-17"></div>
+                                    <div class="snow-dot snow-dot-18"></div>
+                                    <div class="snow-dot snow-dot-19"></div>
+                                </div>
                                 <div class="window-2-panes"></div>
                                 <div class="bookshelf-1"></div>
                                 <div class="bookshelf-2"></div>
-                                <div class="shelf1-present-1"></div>
+                                <div class="shelf1-present-1"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
                                 <div class="shelf1-present-2"></div>
-                                <div class="shelf1-present-3"></div>
+                                <div class="shelf1-present-3"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
                                 <div class="shelf1-present-4"></div>
-                                <div class="shelf1-present-5"></div>
+                                <div class="shelf1-present-5"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
                                 <div class="shelf1-present-6"></div>
-                                <div class="shelf2-present-1"></div>
+                                <div class="shelf2-present-1"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
                                 <div class="shelf2-present-2"></div>
-                                <div class="shelf2-present-3"></div>
+                                <div class="shelf2-present-3"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
                                 <div class="shelf2-present-4"></div>
-                                <div class="shelf2-present-5"></div>
+                                <div class="shelf2-present-5"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
                                 <div class="shelf2-present-6"></div>
                                 <div class="xmas-tree"></div>
                                 <div class="tree-star"></div>
@@ -2432,10 +2508,10 @@
                                 <div class="conveyor-leg conveyor-leg-1"></div>
                                 <div class="conveyor-leg conveyor-leg-2"></div>
                                 <div class="conveyor-leg conveyor-leg-3"></div>
-                                <div class="conv-present conv-present-1"></div>
-                                <div class="conv-present conv-present-2"></div>
-                                <div class="conv-present conv-present-3"></div>
-                                <div class="conv-present conv-present-4"></div>
+                                <div class="conv-present conv-present-1"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
+                                <div class="conv-present conv-present-2"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
+                                <div class="conv-present conv-present-3"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
+                                <div class="conv-present conv-present-4"><div class="present-ribbon"></div><div class="present-bow"><div class="bow-loop-left"></div><div class="bow-loop-right"></div></div></div>
                             </div>
                         </div>
                         <div id="text-2" class="message-overlay font-display"></div>
@@ -2634,6 +2710,15 @@
                         <button onclick="copyLink()" class="unified-btn btn-green" style="border-radius: 0 12px 12px 0; min-width: auto; padding: 0 1rem;">📋 Copy Link</button>
                     </div>
                     <p id="copy-message" class="text-sm font-medium text-primary-red mt-2 hidden">Link copied successfully!</p>
+                </div>
+                <!-- Download as Image Section -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Download as Image:</label>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="downloadCardAsImage('png')" class="unified-btn btn-green" id="download-png-btn">📥 Download PNG</button>
+                        <button onclick="downloadCardAsImage('jpeg')" class="unified-btn btn-red" id="download-jpeg-btn">📥 Download JPEG</button>
+                    </div>
+                    <p id="download-message" class="text-sm font-medium text-primary-red mt-2 hidden text-center"></p>
                 </div>
                 <div class="flex justify-center">
                     <button onclick="closeShareModal()" class="unified-btn btn-gray">Close</button>
@@ -3389,12 +3474,135 @@
         }
 
         function closeShareModal() { document.getElementById('share-modal').classList.add('hidden'); }
-        function copyLink() { 
-            const input = document.getElementById('share-link'); 
-            input.select(); 
-            document.execCommand('copy'); 
-            document.getElementById('copy-message').classList.remove('hidden'); 
-            setTimeout(() => document.getElementById('copy-message').classList.add('hidden'), 3000); 
+        function copyLink() {
+            const input = document.getElementById('share-link');
+            input.select();
+            document.execCommand('copy');
+            document.getElementById('copy-message').classList.remove('hidden');
+            setTimeout(() => document.getElementById('copy-message').classList.add('hidden'), 3000);
+        }
+
+        async function downloadCardAsImage(format) {
+            const downloadMsg = document.getElementById('download-message');
+            const pngBtn = document.getElementById('download-png-btn');
+            const jpegBtn = document.getElementById('download-jpeg-btn');
+
+            // Show loading state
+            const originalPngText = pngBtn.textContent;
+            const originalJpegText = jpegBtn.textContent;
+            pngBtn.disabled = true;
+            jpegBtn.disabled = true;
+            pngBtn.textContent = 'Generating...';
+            jpegBtn.textContent = 'Generating...';
+            downloadMsg.classList.add('hidden');
+
+            try {
+                // Get the active card element
+                const activeFrame = document.querySelector('.tab-frame:not(.hidden)');
+                if (!activeFrame) {
+                    throw new Error('No active card found');
+                }
+
+                const cardElement = activeFrame.querySelector('.candy-cane-border-fixed');
+                if (!cardElement) {
+                    throw new Error('Card element not found');
+                }
+
+                // Wait for fonts to be ready
+                await document.fonts.ready;
+
+                // Additional delay to ensure fonts are fully painted
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                // Fetch Google Fonts CSS and embed it for proper font rendering
+                let fontEmbedCSS = '';
+                try {
+                    const fontResponse = await fetch('https://fonts.googleapis.com/css2?family=Limelight&family=Boogaloo&display=swap');
+                    const fontCSS = await fontResponse.text();
+
+                    // Extract font-face URLs and fetch them as base64
+                    const fontUrls = fontCSS.match(/url\([^)]+\)/g) || [];
+                    let processedCSS = fontCSS;
+
+                    for (const urlMatch of fontUrls) {
+                        const url = urlMatch.replace(/url\(['"]?([^'")\s]+)['"]?\)/, '$1');
+                        if (url.startsWith('https://')) {
+                            try {
+                                const fontFileResponse = await fetch(url);
+                                const fontBlob = await fontFileResponse.blob();
+                                const base64 = await new Promise((resolve) => {
+                                    const reader = new FileReader();
+                                    reader.onloadend = () => resolve(reader.result);
+                                    reader.readAsDataURL(fontBlob);
+                                });
+                                processedCSS = processedCSS.replace(url, base64);
+                            } catch (e) {
+                                console.warn('Could not fetch font file:', url, e);
+                            }
+                        }
+                    }
+                    fontEmbedCSS = processedCSS;
+                } catch (e) {
+                    console.warn('Could not fetch Google Fonts CSS:', e);
+                }
+
+                // Export options
+                const options = {
+                    pixelRatio: 2,
+                    cacheBust: true,
+                    skipFonts: false,
+                    fontEmbedCSS: fontEmbedCSS || undefined,
+                    backgroundColor: format === 'jpeg' ? '#ffffff' : undefined,
+                    quality: format === 'jpeg' ? 0.92 : undefined
+                };
+
+                // Add export-mode class to simplify shadows for clean capture
+                cardElement.classList.add('export-mode');
+
+                let dataUrl;
+                const themeName = shareThemeMap[currentThemeId].name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+                let filename = `holiday-greeting-${themeName}`;
+
+                try {
+                    if (format === 'jpeg') {
+                        dataUrl = await htmlToImage.toJpeg(cardElement, options);
+                        filename += '.jpg';
+                    } else {
+                        dataUrl = await htmlToImage.toPng(cardElement, options);
+                        filename += '.png';
+                    }
+                } finally {
+                    // Always remove export-mode class after capture
+                    cardElement.classList.remove('export-mode');
+                }
+
+                // Trigger download
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = dataUrl;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Show success message
+                downloadMsg.textContent = 'Download started!';
+                downloadMsg.style.color = 'var(--secondary-green)';
+                downloadMsg.classList.remove('hidden');
+                setTimeout(() => downloadMsg.classList.add('hidden'), 3000);
+
+            } catch (error) {
+                console.error('Download failed:', error);
+                downloadMsg.textContent = 'Download failed. Please try again.';
+                downloadMsg.style.color = 'var(--primary-red)';
+                downloadMsg.classList.remove('hidden');
+            } finally {
+                // Restore buttons
+                pngBtn.disabled = false;
+                jpegBtn.disabled = false;
+                pngBtn.textContent = originalPngText;
+                jpegBtn.textContent = originalJpegText;
+            }
         }
 
         window.onload = () => {
